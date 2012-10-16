@@ -1,0 +1,69 @@
+".container": {
+	backgroundColor: "#000",
+	title:null
+},
+"#DriveNav":{
+	right:5,
+	bottom:5,
+	width:'size',
+	height:30
+},
+"#containerView":{
+	top:10,
+	bottom:"50%",
+	left:10,
+	right:10,
+	backgroundColor:'#000'
+	
+},
+"#details":{
+	top:0,
+	bottom:0,
+	left:0,
+	right:0,
+	backgroundColor:'#fff',
+	contentHeight:'auto',
+	contentWidth:'auto',
+	borderRadius:5
+},
+"#detailLabel":{
+	height:'size',
+	left:10,
+	right:10,
+	top:5,
+	bottom:5,
+	verticalAlign:Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP
+},
+"#Image":{
+	top:0,
+	bottom:0,
+	left:0,
+	right:0,
+	borderWidth:10,
+	width:'size',
+	height:'size',
+	borderColor:"#fff",
+	preventDefaultImage:true,
+	backgroundColor:'#fff',
+	borderRadius:5
+	
+},
+"#Mapview":{
+	top:"55%",
+	width:"fill",
+	regionFit:true,
+	mapType: Titanium.Map.STANDARD_TYPE,
+	regionFit:true,
+	animate:true,
+	userLocation:false,
+	left:0,
+	bottom:0,
+	right:0
+},
+"#mapType":{
+	height:30,
+	width:'size',
+	top:'56%',
+	left:5,
+	title:'Standard'
+}

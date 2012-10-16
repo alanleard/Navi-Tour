@@ -1,0 +1,65 @@
+".container": {
+	backgroundColor: "#000"
+},
+"#mainView":{
+	layout:'vertical'
+},
+".text":{
+	top: 10 , 
+	left: 20,
+	right: 20 ,
+	height: 30 ,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	clearButtonMode:Ti.UI.INPUT_BUTTONMODE_ONFOCUS		         
+},
+".textArea":{
+	top: 10 , 
+	left: 20,
+	right: 20 ,
+	height: 30 ,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	clearButtonMode:Ti.UI.INPUT_BUTTONMODE_ONFOCUS		         
+},
+".button":{
+	top:10,
+	left:20,
+	right:20,
+	height:30
+},
+"#photo":{
+	title:'Add a Photo',
+	
+},
+"#submit":{
+	title:'Submit Destination'
+},
+"#name":{
+	hintText:'Destination Name'
+},
+"#address":{
+	hintText:'Destination Address'
+},
+"#city":{
+	hintText:'Destination City'
+},
+"#state":{
+	hintText:'Destination State'
+},
+"#notes":{
+	hintText:'Add destination notes'
+},
+"#details":{
+	hintText:'Add destination details'
+},
+"#order":{
+	hintText:'Destination order in tour',
+	keyboardType:Ti.UI.KEYBOARD_NUMBERS_PUNCTUATION
+},
+"#tours":{
+	height:100,
+	left:20,
+	right:20,
+	top:10,
+	borderRadius:10
+}
+

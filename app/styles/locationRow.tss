@@ -1,0 +1,39 @@
+".container": {
+	backgroundColor: "#000",
+	height:75,
+	width:'fill'
+	//layout:'horizontal',
+	//hasCheck:true
+},
+"#rowImage":{
+	width:75,
+	defaultImage:'appicon@2x.png',
+	left:0
+},
+"#rowTitle":{
+	left:85,
+	height:20,
+	width:'fill',
+	top:5,
+	color: "#fff",
+	verticalAlign:Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP
+
+},
+"#notesLabel":{
+	
+	left:85,
+	right:65,
+	top:25,
+	bottom:5,
+	color:'#fff',
+	font:{fontSize:12},
+	textAlign:'left'
+},
+"#distanceLabel":{
+	right: 5,
+	width:60,
+	color:'#fff',
+	font:{fontSize:12},
+	bottom:5,
+	textAlign:'right'
+}

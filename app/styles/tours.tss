@@ -1,0 +1,10 @@
+".container": {
+	backgroundColor: "#000",
+	
+},
+"#container":{
+	title:'Available Tours'
+},
+"#table": {
+	backgroundColor: "#000"
+}

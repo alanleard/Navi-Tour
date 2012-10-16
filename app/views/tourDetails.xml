@@ -1,0 +1,8 @@
+<Alloy>
+	<View class="container">
+		
+		<View ns="Ti.Map" id="map"/>
+		<Require type="view" src="locations" id="locations"/>   
+		<Button id="start" onClick = "startClick">Get Started!</Button>
+	</View>
+</Alloy>

@@ -1,5 +1,26 @@
 <Alloy>
 	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, World</Label>
+	
+		<View id="NavBar">
+			<Button id="BackButton" onClick="backClick">Back</Button>
+			<Label id ="NavTitle"/>
+			<Button id="rightButton" onClick="addDestinationClick"/>
+			<View id="line"/>
+		</View>
+		<View id="MainView">
+			<View id="ButtonView">
+				<!--<Button id="InstallButton" onClick="installClick">Install NaviBridge</Button>-->
+				<View id = "destination" class="button" onClick="destinationsClick">
+					<Label id="destinationLabel"/>
+				</View>
+				<View id="tour" class="button" onClick="toursClick">
+					<Label id="tourLabel"/>
+				</View>
+
+				<!--<Button id="CreateTourButton" class="button" onClick="createTourClick">Create a Tour</Button>-->
+				<!--<Button id="AddDestinationButton" class="button" onClick="addDestinationClick">Add a Destination</Button>-->
+			</View>
+		</View>
+		
 	</Window>
 </Alloy>

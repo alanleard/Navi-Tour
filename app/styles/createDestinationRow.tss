@@ -1,0 +1,29 @@
+".container": {
+	backgroundColor: "#000",
+	height:75,
+	width:'fill'
+	//layout:'horizontal',
+	//hasCheck:true
+},
+"#rowImage":{
+	width:75,
+	defaultImage:'appicon@2x.png',
+	left:0
+},
+"#rowTitle":{
+	left:80,
+	width:'fill',
+	top:5,
+	height:20,
+	color:'#fff'
+
+},
+"#addressLabel":{
+	left:80,
+	color:'black',
+	height:55,
+	width:'fill',
+	bottom:0,
+	font:{fontSize:12},
+	color:'#fff'
+}

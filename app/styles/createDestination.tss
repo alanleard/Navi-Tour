@@ -1,0 +1,14 @@
+".container": {
+	backgroundColor: "#000",
+	layout:'vertical'
+},
+"#container":{
+	title:'Add a Destination'
+},
+"#searchBar":{
+	hintText:"Destination, City and State or Zip",
+	barColor:'#000'
+},
+"#searchTable":{
+	backgroundColor: "#000"
+}

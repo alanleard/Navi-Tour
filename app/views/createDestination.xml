@@ -1,0 +1,6 @@
+<Alloy>
+	<View class="container" id="container">
+		<SearchBar id="searchBar" onReturn = "searchWeb"/>
+		<TableView id="searchTable"/>
+	</View>
+</Alloy>
