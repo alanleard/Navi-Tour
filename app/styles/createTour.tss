@@ -1,3 +1,37 @@
-".container": {
-	backgroundColor: "white"
+"#container": {
+	backgroundColor: "#000"
+},
+"#mainView":{
+	layout:'vertical'
+},
+".text":{
+	top: 10 , 
+	left: 20,
+	right: 20 ,
+	height: 30 ,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	clearButtonMode:Ti.UI.INPUT_BUTTONMODE_ONFOCUS		         
+},
+".button":{
+	top:10,
+	left:20,
+	right:20,
+	height:30
+},
+"#photo":{
+	title:'Add a Photo',
+	
+},
+"#submit":{
+	title:'Submit Tour'
+},
+"#name":{
+	hintText:'Tour Name'
+},
+"#notes":{
+	hintText:'Add tour notes'
+},
+"#time":{
+	hintText:'Add total tour time'
 }
+

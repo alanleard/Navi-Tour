@@ -1,14 +1,15 @@
-".container": {
+"#container": {
 	backgroundColor: "#000",
 	title:null
 },
-"#DriveNav":{
+"#driveNav":{
 	right:5,
 	bottom:5,
-	width:'size',
-	height:30
+	width:107,
+	height:30,
+	image:'drive.png'
 },
-"#containerView":{
+"#flipView":{
 	top:10,
 	bottom:"50%",
 	left:10,
@@ -35,21 +36,19 @@
 	bottom:5,
 	verticalAlign:Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP
 },
-"#Image":{
-	top:0,
-	bottom:0,
-	left:0,
-	right:0,
-	borderWidth:10,
-	width:'size',
-	height:'size',
-	borderColor:"#fff",
-	preventDefaultImage:true,
-	backgroundColor:'#fff',
-	borderRadius:5
+"#imageView":{
+	//borderWidth:10,
+	width:'fill',
+	height:'fill',
+	//left:10,
+	//borderColor:"#fff",
+	//preventDefaultImage:true,
+	defaultImage:'imgDefault.png',
+	//backgroundColor:'#000',
+	//borderRadius:5
 	
 },
-"#Mapview":{
+"#mapView":{
 	top:"55%",
 	width:"fill",
 	regionFit:true,
@@ -62,9 +61,10 @@
 	right:0
 },
 "#mapType":{
-	height:30,
-	width:'size',
+	height:20,
+	width:80,
 	top:'56%',
 	left:5,
-	title:'Standard'
+	title:'Standard',
+	backgroundImage:'button.png'
 }

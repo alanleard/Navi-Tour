@@ -1,6 +1,6 @@
 function Controller() {
     function rowClick(e) {
-        var tourView = Alloy.createController("locations", e.rowData.args).getView();
+        var tourView = Alloy.createController("tourDetails", e.rowData.args).getView();
         APP.index.add(tourView);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
@@ -55,7 +55,7 @@ function Controller() {
     $.__views.row.add($.__views.tourNotes);
     _.extend($, $.__views);
     var APP = require("alloy/controllers/core"), args = arguments[0];
-    $.rowImage.image = args.photo ? args.photo.urls.square_75 : "appicon.png";
+    $.rowImage.image = args.photo ? args.photo.urls.square_75 : "imgDefault.png";
     $.rowTitle.text = args.name;
     $.tourTime.text = args.time;
     $.tourNotes.text = args.notes;

@@ -24,53 +24,6 @@ Cloud.Users.login({
 }, function (e) {
 
 });
-	
-	// if(Ti.Facebook.loggedIn){
-		// $.submit.show();
-	// } else {
-		//var loginBtn = Ti.Facebook.createLoginButton({});
-		// var loginBtn = Ti.UI.createButton({
-			// width:200,
-			// height:30,
-			// title:'Login'
-		// });
-// 		
-		// loginBtn.addEventListener('click', function(e){
-			// Cloud.Users.login({
-			    // login: 'testUser',
-			    // password: 'NaviTour2012'
-			// }, function (e) {
-			    // if (e.success) {
-// 			    	
-			    	// loginBtn.hide();
-					// $.submit.show();
-			    // }
-			// });
-		// })
-		// $.mainView.add(loginBtn);
-		
-		// Ti.Facebook.addEventListener('login', function(e) {
-// 			
-		    // if (e.success) {
-		    // loginBtn.hide();
-			// $.submit.show();
-		      // Cloud.SocialIntegrations.externalAccountLogin({
-				    // type: 'facebook',
-				    // token: Ti.Facebook.accessToken
-				// }, function (e) {
-				    // if (e.success) {
-// 						
-		    		// }
-		            // else {
-// 		            	
-		               // alert("Error: "+e.message);
-// 		
-		            // }
-				// });
-// 		       
-		    // }
-		// });
-	//}
 
 function nameChange(e){
 	destinationData.name = e.source.value
@@ -89,8 +42,8 @@ function detailsChange(e){
 }
 
 function orderChange(e){
-	
-	destinationData.custom_fields.order = e.source.value
+	//destinationData.tags = e.source.value
+	destinationData.custom_fields.order = parseInt(e.source.value);
 }
 
 // function toursChange(e){
@@ -117,7 +70,7 @@ function toursList(e){
 	        	
 	        	var row = Ti.UI.createTableViewRow({
 	        		title:e.tour[i].name,
-	        		tag:e.tour[i].tags,
+	        		id:e.tour[i].id,
 	        		hasCheck:false,
 	        		font:{fontSize:14},
 	        		height:30
@@ -142,7 +95,7 @@ function toursList(e){
             		
             		e.rowData.hasCheck=true
             		//var prevTag = destinationData.tags
-            		destinationData.custom_fields.tours = e.rowData.tag
+            		destinationData.custom_fields.tours = e.rowData.id
             		
             	}
             });
@@ -157,14 +110,23 @@ function toursList(e){
 
 function submitDestination(e){
 	
-			
+			var actInd = Ti.UI.createActivityIndicator({
+				message:'Loading...',
+				color:'#fff',
+				opacity:0.8,
+				borderRadius:20,
+				width:200,
+				height:150
+			});
+			$.container.add(actInd);
+			actInd.show();
 		
 			Ti.API.info('[ACS] Create Destination')
 						
 	    	Cloud.Places.create(destinationData, function (x) {
 		    	if (x.success) {
 		    		alert(destinationData.name + " Added!");
-					
+					$.container.remove(actInd);
 		    	} else {
 		    		
 		        	alert("Error: "+x.message)

@@ -1,8 +1,8 @@
 <Alloy>
-	<View class="container">
-		
-		<View ns="Ti.Map" id="map"/>
-		<Require type="view" src="locations" id="locations"/>   
-		<Button id="start" onClick = "startClick">Get Started!</Button>
+	<View id="container">
+		<TableView id="destinationsTable"/>
+		<View ns="Ti.Map" id="mapView"/>
+		<Button id="driveNav" onClick = "driveClick"/>
+		<Button id="mapType" onClick = "mapClick"/>
 	</View>
 </Alloy>

@@ -3,12 +3,12 @@ function Controller() {
         APP.nav.installNavi();
     }
     function toursClick(e) {
-        var tourView = Alloy.createController("tours").getView();
-        $.destination.animate({
+        var tourView = Alloy.createController("toursView").getView();
+        $.destinationButton.animate({
             opacity: 0,
             duration: 100
         }, function() {
-            $.tour.animate({
+            $.tourButton.animate({
                 opacity: 0,
                 duration: 500
             }, function() {
@@ -18,7 +18,8 @@ function Controller() {
                     opacity: 1,
                     duration: 200
                 });
-                $.BackButton.show();
+                $.backButton.show();
+                APP.rightNav.show();
             });
         });
     }
@@ -29,59 +30,59 @@ function Controller() {
         if (x == 2) {
             e.source.hide();
             APP.rightNav.hide();
-            $.destination.animate({
+            $.destinationButton.animate({
                 opacity: 1,
                 duration: 200
             });
-            $.tour.animate({
+            $.tourButton.animate({
                 opacity: 1,
                 duration: 200
             });
         }
     }
     function destinationsClick(e) {
-        var desView = Alloy.createController("locations").getView();
-        $.tour.animate({
+        var destinationView = Alloy.createController("destinationsView").getView();
+        $.tourButton.animate({
             opacity: 0,
             duration: 100
         }, function() {
-            $.destination.animate({
+            $.destinationButton.animate({
                 opacity: 0,
                 duration: 500
             }, function() {
-                desView.opacity = 0;
-                APP.index.add(desView);
-                desView.animate({
+                destinationView.opacity = 0;
+                APP.index.add(destinationView);
+                destinationView.animate({
                     opacity: 1,
                     duration: 200
                 });
-                $.BackButton.show();
+                $.backButton.show();
                 APP.rightNav.show();
             });
         });
     }
     function createTourClick(e) {}
-    function addDestinationClick(e) {
-        $.BackButton.show();
-        APP.index.add(Alloy.createController("createDestination").getView());
+    function addClick(e) {
+        $.backButton.show();
+        APP.navTitle.text == "Available Destinations" ? APP.index.add(Alloy.createController("createDestination").getView()) : APP.navTitle.text == "Available Tours" && APP.index.add(Alloy.createController("createTour").getView());
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
-    $.__views.index = A$(Ti.UI.createWindow({
+    $.__views.container = A$(Ti.UI.createWindow({
         backgroundColor: "#000",
         height: "fill",
-        id: "index"
+        id: "container"
     }), "Window", null);
-    $.addTopLevelView($.__views.index);
-    $.__views.NavBar = A$(Ti.UI.createView({
+    $.addTopLevelView($.__views.container);
+    $.__views.navBar = A$(Ti.UI.createView({
         height: 50,
         top: 0,
         width: "fill",
         backgroundColor: "#000",
-        id: "NavBar"
-    }), "View", $.__views.index);
-    $.__views.index.add($.__views.NavBar);
-    $.__views.BackButton = A$(Ti.UI.createButton({
+        id: "navBar"
+    }), "View", $.__views.container);
+    $.__views.container.add($.__views.navBar);
+    $.__views.backButton = A$(Ti.UI.createButton({
         visible: !1,
         left: 10,
         height: 30,
@@ -89,11 +90,11 @@ function Controller() {
         width: 50,
         image: "back.png",
         title: "Back",
-        id: "BackButton"
-    }), "Button", $.__views.NavBar);
-    $.__views.NavBar.add($.__views.BackButton);
-    $.__views.BackButton.on("click", backClick);
-    $.__views.NavTitle = A$(Ti.UI.createLabel({
+        id: "backButton"
+    }), "Button", $.__views.navBar);
+    $.__views.navBar.add($.__views.backButton);
+    $.__views.backButton.on("click", backClick);
+    $.__views.navTitle = A$(Ti.UI.createLabel({
         text: "Navi-Tour",
         width: "fill",
         height: 50,
@@ -109,49 +110,49 @@ function Controller() {
         right: 45,
         minimumFontSize: 8,
         verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
-        id: "NavTitle"
-    }), "Label", $.__views.NavBar);
-    $.__views.NavBar.add($.__views.NavTitle);
-    $.__views.rightButton = A$(Ti.UI.createButton({
+        id: "navTitle"
+    }), "Label", $.__views.navBar);
+    $.__views.navBar.add($.__views.navTitle);
+    $.__views.rightNav = A$(Ti.UI.createButton({
         visible: !1,
         right: 5,
         height: 30,
         top: 10,
         width: 30,
         image: "add.png",
-        id: "rightButton"
-    }), "Button", $.__views.NavBar);
-    $.__views.NavBar.add($.__views.rightButton);
-    $.__views.rightButton.on("click", addDestinationClick);
+        id: "rightNav"
+    }), "Button", $.__views.navBar);
+    $.__views.navBar.add($.__views.rightNav);
+    $.__views.rightNav.on("click", addClick);
     $.__views.line = A$(Ti.UI.createView({
         height: 2,
         bottom: 0,
         width: "fill",
         backgroundColor: "#fff",
         id: "line"
-    }), "View", $.__views.NavBar);
-    $.__views.NavBar.add($.__views.line);
-    $.__views.MainView = A$(Ti.UI.createView({
+    }), "View", $.__views.navBar);
+    $.__views.navBar.add($.__views.line);
+    $.__views.mainView = A$(Ti.UI.createView({
         top: 50,
         title: "Navi-Tours",
-        id: "MainView"
-    }), "View", $.__views.index);
-    $.__views.index.add($.__views.MainView);
-    $.__views.ButtonView = A$(Ti.UI.createView({
+        id: "mainView"
+    }), "View", $.__views.container);
+    $.__views.container.add($.__views.mainView);
+    $.__views.buttonView = A$(Ti.UI.createView({
         layout: "vertical",
         title: "Navi-Tours",
-        id: "ButtonView"
-    }), "View", $.__views.MainView);
-    $.__views.MainView.add($.__views.ButtonView);
-    $.__views.destination = A$(Ti.UI.createView({
+        id: "buttonView"
+    }), "View", $.__views.mainView);
+    $.__views.mainView.add($.__views.buttonView);
+    $.__views.destinationButton = A$(Ti.UI.createView({
         width: "fill",
         height: "50%",
         top: 0,
         backgroundImage: "destination.jpg",
-        id: "destination"
-    }), "View", $.__views.ButtonView);
-    $.__views.ButtonView.add($.__views.destination);
-    $.__views.destination.on("click", destinationsClick);
+        id: "destinationButton"
+    }), "View", $.__views.buttonView);
+    $.__views.buttonView.add($.__views.destinationButton);
+    $.__views.destinationButton.on("click", destinationsClick);
     $.__views.destinationLabel = A$(Ti.UI.createLabel({
         text: "Discover Destinations",
         font: {
@@ -167,17 +168,17 @@ function Controller() {
         color: "#000",
         height: "size",
         id: "destinationLabel"
-    }), "Label", $.__views.destination);
-    $.__views.destination.add($.__views.destinationLabel);
-    $.__views.tour = A$(Ti.UI.createView({
+    }), "Label", $.__views.destinationButton);
+    $.__views.destinationButton.add($.__views.destinationLabel);
+    $.__views.tourButton = A$(Ti.UI.createView({
         width: "fill",
         height: "50%",
         top: 0,
         backgroundImage: "tour.jpg",
-        id: "tour"
-    }), "View", $.__views.ButtonView);
-    $.__views.ButtonView.add($.__views.tour);
-    $.__views.tour.on("click", toursClick);
+        id: "tourButton"
+    }), "View", $.__views.buttonView);
+    $.__views.buttonView.add($.__views.tourButton);
+    $.__views.tourButton.on("click", toursClick);
     $.__views.tourLabel = A$(Ti.UI.createLabel({
         text: "Explore Tours",
         font: {
@@ -193,17 +194,17 @@ function Controller() {
         color: "#000",
         height: "size",
         id: "tourLabel"
-    }), "Label", $.__views.tour);
-    $.__views.tour.add($.__views.tourLabel);
+    }), "Label", $.__views.tourButton);
+    $.__views.tourButton.add($.__views.tourLabel);
     _.extend($, $.__views);
     var APP = require("alloy/controllers/core"), Cloud = require("ti.cloud");
     APP.nav = require("ti.navibridge");
     APP.nav.setApplicationId("ICiAV4Ay");
-    APP.index = $.MainView;
-    APP.navBar = $.NavBar;
-    APP.navTitle = $.NavTitle;
-    APP.rightNav = $.rightButton;
-    $.index.open();
+    APP.index = $.mainView;
+    APP.navBar = $.navBar;
+    APP.navTitle = $.navTitle;
+    APP.rightNav = $.rightNav;
+    $.container.open();
     _.extend($, exports);
 }
 

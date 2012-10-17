@@ -1,6 +1,7 @@
 function Controller() {
     function rowClick(e) {
-        APP.index.add(Alloy.createController("createDestinationForm", e.rowData.args).getView());
+        var location = Alloy.createController("destinationDetails", e.rowData.args).getView();
+        APP.index.add(location);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
@@ -12,6 +13,18 @@ function Controller() {
     }), "TableViewRow", null);
     $.addTopLevelView($.__views.row);
     $.__views.row.on("click", rowClick);
+    $.__views.distanceLabel = A$(Ti.UI.createLabel({
+        right: 5,
+        width: 60,
+        color: "#fff",
+        font: {
+            fontSize: 12
+        },
+        bottom: 5,
+        textAlign: "right",
+        id: "distanceLabel"
+    }), "Label", $.__views.row);
+    $.__views.row.add($.__views.distanceLabel);
     $.__views.rowImage = A$(Ti.UI.createImageView({
         width: 75,
         defaultImage: "imgDefault.png",
@@ -20,31 +33,33 @@ function Controller() {
     }), "ImageView", $.__views.row);
     $.__views.row.add($.__views.rowImage);
     $.__views.rowTitle = A$(Ti.UI.createLabel({
-        left: 80,
+        left: 85,
+        height: 20,
         width: "fill",
         top: 5,
-        height: 20,
         color: "#fff",
+        verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
         id: "rowTitle"
     }), "Label", $.__views.row);
     $.__views.row.add($.__views.rowTitle);
-    $.__views.addressLabel = A$(Ti.UI.createLabel({
-        left: 80,
+    $.__views.notesLabel = A$(Ti.UI.createLabel({
+        left: 85,
+        right: 65,
+        top: 25,
+        bottom: 5,
         color: "#fff",
-        height: 55,
-        width: "fill",
-        bottom: 0,
         font: {
             fontSize: 12
         },
-        id: "addressLabel"
+        textAlign: "left",
+        id: "notesLabel"
     }), "Label", $.__views.row);
-    $.__views.row.add($.__views.addressLabel);
+    $.__views.row.add($.__views.notesLabel);
     _.extend($, $.__views);
     var APP = require("alloy/controllers/core"), args = arguments[0];
-    $.rowImage.image = args.icon ? args.icon : "imgDefault.png";
+    $.rowImage.image = args.photo ? args.photo.urls.square_75 : "imgDefault.png";
     $.rowTitle.text = args.name;
-    $.addressLabel.text = args.formatted_address;
+    $.notesLabel.text = args.custom_fields.notes ? args.custom_fields.notes : null;
     $.row.args = args;
     _.extend($, exports);
 }

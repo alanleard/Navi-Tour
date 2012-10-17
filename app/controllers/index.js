@@ -1,26 +1,27 @@
-var APP = require('alloy/controllers/core');
-var Cloud = require('ti.cloud');
+var 
+APP = require('alloy/controllers/core'),
+Cloud = require('ti.cloud');
 
 APP.nav = require('ti.navibridge');
 APP.nav.setApplicationId('ICiAV4Ay');
+APP.index = $.mainView;
+APP.navBar = $.navBar;
+APP.navTitle = $.navTitle;
+APP.rightNav = $.rightNav;
 
-APP.index = $.MainView;
-APP.navBar = $.NavBar;
-APP.navTitle = $.NavTitle;
-
-APP.rightNav = $.rightButton
 function installClick( e ) {  
     APP.nav.installNavi(); 
 }
 
 function toursClick( e ){
-	var tourView = Alloy.createController('tours').getView()
-	$.destination.animate({opacity:0.0, duration:100}, function(){
-		$.tour.animate({opacity:0.0, duration:500}, function(){
+	var tourView = Alloy.createController('toursView').getView()
+	$.destinationButton.animate({opacity:0.0, duration:100}, function(){
+		$.tourButton.animate({opacity:0.0, duration:500}, function(){
 			tourView.opacity= 0.0;
 			APP.index.add(tourView);
 			tourView.animate({opacity:1.0, duration:200});
-			$.BackButton.show();
+			$.backButton.show();
+			APP.rightNav.show();
 		});
 		
 	});
@@ -36,37 +37,37 @@ function backClick( e ){
 	if(x==2){
 		e.source.hide();
 		APP.rightNav.hide();
-		$.destination.animate({opacity:1.0, duration:200});
-		$.tour.animate({opacity:1.0, duration:200})
+		$.destinationButton.animate({opacity:1.0, duration:200});
+		$.tourButton.animate({opacity:1.0, duration:200})
 	}
 }
 
 function destinationsClick( e ){
 	
-	var desView = Alloy.createController('locations').getView()
-	$.tour.animate({opacity:0.0, duration:100}, function(){
-		$.destination.animate({opacity:0.0, duration:500}, function(){
-			desView.opacity= 0.0;
-			APP.index.add(desView);
-			desView.animate({opacity:1.0, duration:200});
-			$.BackButton.show();
+	var destinationView = Alloy.createController('destinationsView').getView()
+	$.tourButton.animate({opacity:0.0, duration:100}, function(){
+		$.destinationButton.animate({opacity:0.0, duration:500}, function(){
+			destinationView.opacity= 0.0;
+			APP.index.add(destinationView);
+			destinationView.animate({opacity:1.0, duration:200});
+			$.backButton.show();
 			APP.rightNav.show();
 		});
 		
-	});
-	//$.BackButton.show();
-
-	//APP.destinations = Alloy.createController('locations').getView();
-	//APP.index.add(Alloy.createController('locations').getView())   	
+	}); 	
 }
 
 function createTourClick(e){
 	
 }
 
-function addDestinationClick(e){
-	$.BackButton.show();
+function addClick(e){
+	$.backButton.show();
 	
-	APP.index.add(Alloy.createController('createDestination').getView())   	
+	if( APP.navTitle.text =='Available Destinations'){
+		APP.index.add(Alloy.createController('createDestination').getView())  
+	} else if ( APP.navTitle.text =='Available Tours' ){
+		APP.index.add(Alloy.createController('createTour').getView()) 
+	}	
 }
-$.index.open();
+$.container.open();

@@ -12,7 +12,7 @@ function Controller() {
         destinationData.custom_fields.details = e.source.value;
     }
     function orderChange(e) {
-        destinationData.custom_fields.order = e.source.value;
+        destinationData.custom_fields.order = parseInt(e.source.value);
     }
     function toursList(e) {
         Cloud.Objects.query({
@@ -28,7 +28,7 @@ function Controller() {
                 for (var i = 0, l = e.tour.length; i < l; i++) {
                     var row = Ti.UI.createTableViewRow({
                         title: e.tour[i].name,
-                        tag: e.tour[i].tags,
+                        id: e.tour[i].id,
                         hasCheck: !1,
                         font: {
                             fontSize: 14
@@ -45,16 +45,29 @@ function Controller() {
                     } else {
                         for (var i = 0, l = $.tours.data[0].rows.length; i < l; i++) $.tours.data[0].rows[i].hasCheck = !1;
                         e.rowData.hasCheck = !0;
-                        destinationData.custom_fields.tours = e.rowData.tag;
+                        destinationData.custom_fields.tours = e.rowData.id;
                     }
                 });
             } else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
         });
     }
     function submitDestination(e) {
+        var actInd = Ti.UI.createActivityIndicator({
+            message: "Loading...",
+            color: "#fff",
+            opacity: 0.8,
+            borderRadius: 20,
+            width: 200,
+            height: 150
+        });
+        $.container.add(actInd);
+        actInd.show();
         Ti.API.info("[ACS] Create Destination");
         Cloud.Places.create(destinationData, function(x) {
-            x.success ? alert(destinationData.name + " Added!") : alert("Error: " + x.message);
+            if (x.success) {
+                alert(destinationData.name + " Added!");
+                $.container.remove(actInd);
+            } else alert("Error: " + x.message);
         });
     }
     function photoClick(e) {

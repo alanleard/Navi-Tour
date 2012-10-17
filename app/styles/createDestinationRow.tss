@@ -7,7 +7,7 @@
 },
 "#rowImage":{
 	width:75,
-	defaultImage:'appicon@2x.png',
+	defaultImage:'imgDefault.png',
 	left:0
 },
 "#rowTitle":{

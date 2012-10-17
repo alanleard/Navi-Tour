@@ -1,0 +1,9 @@
+<Alloy>
+	<TableViewRow class="container" id="row" onClick="rowClick">
+		<Label id="distanceLabel"/>
+		<ImageView id="rowImage"/>
+		<Label id="rowTitle"/>
+		<Label id="notesLabel"/>
+		
+	</TableViewRow>
+</Alloy>

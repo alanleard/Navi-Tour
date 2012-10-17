@@ -1,0 +1,8 @@
+"#container": {
+	title: "Available Destinations",
+	backgroundColor: "#000"
+},
+"#tableView":{
+	backgroundColor: "#000",
+	title: "Available Destinations",
+}

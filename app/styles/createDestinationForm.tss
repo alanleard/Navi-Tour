@@ -1,4 +1,4 @@
-".container": {
+"#container": {
 	backgroundColor: "#000"
 },
 "#mainView":{

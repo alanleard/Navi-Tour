@@ -1,0 +1,13 @@
+<Alloy>
+	<View id="container">
+		<View id = "flipView">
+			<ScrollView id="details" onClick="flipImage">
+				<Label id="detailLabel"/>
+			</ScrollView>
+			<ImageView id="imageView" onClick="flipDetails"/>
+		</View>
+		<View ns="Ti.Map" id="mapView"/>
+		<Button id="driveNav" onClick = "driveClick"/>
+		<Button id="mapType" onClick = "mapClick"/>
+	</View>
+</Alloy>

@@ -1,4 +1,12 @@
 <Alloy>
-	<View class="container">
+	<View id = "container">
+	<ScrollView id="mainView" >
+		<TextField id="name" class="text" onChange="nameChange"/>
+		<TextField id="notes" class="text" onChange="notesChange"/>
+		<TextField id="time" class="text" onChange="timeChange"/>
+		<Button id="photo" class="button" onClick="photoClick"/>
+		<Button id="submit" class="button" onClick= "submitTour"/>
+	</ScrollView>
 	</View>
+	
 </Alloy>

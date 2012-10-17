@@ -1,5 +1,5 @@
 <Alloy>
-	<View id = "container" class="container">
+	<View id = "container">
 	<ScrollView id="mainView" >
 		<TextField id="name" class="text" onChange="nameChange"/>
 		<!--<TextField id="address" class="text" onChange="addressChange"/>
