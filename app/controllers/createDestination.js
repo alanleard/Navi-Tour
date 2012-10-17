@@ -5,6 +5,7 @@ APP.rightNav.hide();
 
 function searchWeb(e){
 $.searchBar.blur();	
+$.searchTable.setData([{title:'Searching...', color:'#fff'}]);
 var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?sensor=true&key=AIzaSyCRn6OD_Jn5hKyjI6Gs0cttF2W1C-jYzYw&query=";
 
  var client = Ti.Network.createHTTPClient({
@@ -23,11 +24,7 @@ var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?sensor=tru
 	         }
 	         $.searchTable.setData(tableData);
          } else {
-         	var row = Ti.UI.createTableViewRow({
-         		title:"No Results Found"
-         	});
-         	
-         	$.searchTable.setData([row]);
+         	$.searchTable.setData([{title:'No results found', color:'#fff'}]);
          }
      },
      // function called when an error occurs, including a timeout

@@ -24,7 +24,8 @@
 	backgroundColor:'#fff',
 	contentHeight:'auto',
 	contentWidth:'auto',
-	borderRadius:5
+	borderRadius:5,
+	visible:false
 },
 "#detailLabel":{
 	height:'size',

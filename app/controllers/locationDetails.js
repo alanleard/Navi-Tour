@@ -6,7 +6,7 @@ APP.navTitle.text = args.name;
 $.container.title = args.name;
 $.detailLabel.text = args.custom_fields.details?args.custom_fields.details:"There are no additonal details for "+args.name;
 
-$.Image.image = args.photo?args.photo.urls.original:"appicon.png";
+$.Image.image = args.photo?args.photo.urls.original:"default.png";
 var annotation = Ti.Map.createAnnotation({
 	title:args.name,
 	latitude:args.latitude,

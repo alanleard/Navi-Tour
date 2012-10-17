@@ -5,14 +5,17 @@ function Controller() {
             page: 1,
             per_page: 100
         }, function(e) {
-            if (e.success) {
+            if (e.success) if (e.tour.length > 0) {
                 var tableData = [];
                 for (var i = 0, l = e.tour.length; i < l; i++) {
                     var tour = e.tour[i], row = Alloy.createController("tourRow", tour).getView();
                     tableData.push(row);
                 }
                 $.table.setData(tableData);
-            } else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
+            } else $.table.setData([ {
+                title: "No tours found",
+                color: "#fff"
+            } ]); else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
@@ -32,6 +35,10 @@ function Controller() {
     _.extend($, $.__views);
     var Cloud = require("ti.cloud"), APP = require("alloy/controllers/core");
     APP.navTitle.text = $.container.title;
+    $.table.setData([ {
+        title: "Loading...",
+        color: "#fff"
+    } ]);
     getTours();
     _.extend($, exports);
 }

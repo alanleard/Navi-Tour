@@ -89,6 +89,7 @@ function detailsChange(e){
 }
 
 function orderChange(e){
+	
 	destinationData.custom_fields.order = e.source.value
 }
 
@@ -156,16 +157,16 @@ function toursList(e){
 
 function submitDestination(e){
 	
-		
+			
 		
 			Ti.API.info('[ACS] Create Destination')
 						
 	    	Cloud.Places.create(destinationData, function (x) {
 		    	if (x.success) {
 		    		alert(destinationData.name + " Added!");
-	
+					
 		    	} else {
-		    	
+		    		
 		        	alert("Error: "+x.message)
 		    	}
 			});

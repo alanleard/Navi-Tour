@@ -4,6 +4,7 @@ var APP = require('alloy/controllers/core');
 var args = arguments[0],
 tags = args?args.tags:null;
 APP.navTitle.text = $.container.title;
+$.table.setData([{title:'Loading...', color:'#fff'}]);
 getLocations(tags);
 //APP.navTitle.text = args.name + " Tour";
 function getLocations(tag){
@@ -11,7 +12,7 @@ function getLocations(tag){
 	Cloud.Places.query({
 	    page: 1,
 	    per_page: 100,
-	    order:'order',
+	    order:"order",
 	    where: tag?{
 	    	"tours":tag,
 	    	
@@ -23,7 +24,7 @@ function getLocations(tag){
 	}, function ( e ) {
 		
 	    if ( e.success ) {
-	    	
+	    	if( e.places.length>0){
 	    	var tableData = [];
 			
 			for ( var i = 0, l=e.places.length; i < l; i++ ) {
@@ -36,6 +37,9 @@ function getLocations(tag){
 	        }
 	        
 	        $.table.setData(tableData);
+	      } else {
+	      	$.table.setData([{title:'No destinations found', color:'#fff'}]);
+	      }
 	        
 	    } else {
 	        alert('Error:\\n' +
