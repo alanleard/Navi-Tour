@@ -56,11 +56,11 @@ function mapClick(){
 
 function mapSize(e){
 	if($.mapView.top ==0){
-		$.mapView.animate({top:"55%", duration:200},
-		function(){
+		// $.mapView.animate({top:"55%", duration:500},
+		// function(){
 			$.mapView.top = "55%";
 			e.source.transform = null;
-		});
+		//});
 		
 	} else {
 		$.mapView.animate({top:0, duration:200},

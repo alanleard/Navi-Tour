@@ -107,7 +107,7 @@ function photoClick(e){
 						a.show();
 					},
 
-					allowEditing:true
+					allowEditing:false
 			});
 		}
 		function gallery(){
@@ -132,7 +132,7 @@ function photoClick(e){
 					}
 					a.show();
 				},
-				allowEditing:true
+				allowEditing:false
 			});
 		}
 		

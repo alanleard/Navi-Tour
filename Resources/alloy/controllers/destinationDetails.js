@@ -39,13 +39,10 @@ function Controller() {
         }
     }
     function mapSize(e) {
-        $.mapView.top == 0 ? $.mapView.animate({
-            top: "55%",
-            duration: 200
-        }, function() {
+        if ($.mapView.top == 0) {
             $.mapView.top = "55%";
             e.source.transform = null;
-        }) : $.mapView.animate({
+        } else $.mapView.animate({
             top: 0,
             duration: 200
         }, function() {
@@ -73,7 +70,7 @@ function Controller() {
     $.__views.container.add($.__views.flipView);
     $.__views.details = A$(Ti.UI.createScrollView({
         top: 0,
-        bottom: 0,
+        bottom: 10,
         left: 0,
         right: 0,
         backgroundColor: "#fff",
@@ -98,6 +95,7 @@ function Controller() {
     $.__views.imageView = A$(Ti.UI.createImageView({
         width: "fill",
         height: "fill",
+        bottom: 10,
         defaultImage: "imgDefault.png",
         id: "imageView"
     }), "ImageView", $.__views.flipView);

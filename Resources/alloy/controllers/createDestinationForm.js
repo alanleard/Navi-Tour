@@ -88,7 +88,7 @@ function Controller() {
                         error.code == Titanium.Media.NO_CAMERA ? a.setMessage("Device does not have photo capabilities") : a.setMessage("Unexpected error: " + error.code);
                         a.show();
                     },
-                    allowEditing: !0
+                    allowEditing: !1
                 });
             }
             function gallery() {
@@ -105,7 +105,7 @@ function Controller() {
                         error.code == Titanium.Media.NO_CAMERA ? a.setMessage("Device does not have video recording capabilities") : a.setMessage("Unexpected error: " + error.code);
                         a.show();
                     },
-                    allowEditing: !0
+                    allowEditing: !1
                 });
             }
             if (Ti.Media.isCameraSupported) {

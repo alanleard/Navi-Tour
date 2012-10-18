@@ -84,13 +84,10 @@ function Controller() {
         }
     }
     function mapSize(e) {
-        $.mapView.top == 0 ? $.mapView.animate({
-            top: "55%",
-            duration: 200
-        }, function() {
+        if ($.mapView.top == 0) {
             $.mapView.top = "55%";
             e.source.transform = null;
-        }) : $.mapView.animate({
+        } else $.mapView.animate({
             top: 0,
             duration: 200
         }, function() {
