@@ -1,1 +1,11 @@
-Basic "Hello, World!" application using the Alloy MVC framework.
+Welcome to the Navi-Tour App.  This app is used to host and explore local tours via your iOS app, the Denso NaviBridge App and your Denso GPS unit.  
+
+This app was developed using Titanium Alloy, Appcelerator Cloud Services, NaviBridge Module, and the Google Places API.
+
+Use the App to explore either tours or destinations, add your own tour and then add great destinations to share day tours with friends and other users.
+
+To Use:
+
+-Download Code
+-Download the Denso NaviBride Module
+-Build App on Titanium Alloy using 2.1.3GA SDK
