@@ -9,32 +9,32 @@ function Controller() {
             } : {}
         }, function(e) {
             if (e.success) if (e.places.length > 0) {
-                var tableData = [];
                 for (var i = 0, l = e.places.length; i < l; i++) {
                     var row = Alloy.createController("destinationRow", e.places[i]).getView();
                     tableData.push(row);
                 }
                 $.destinationsTable.setData(tableData);
-                distanceDisplay(tableData);
                 mapLoad(tableData);
+                distanceDisplay();
             } else $.destinationsTable.setData([ {
                 title: "No destinations found",
                 color: "#fff"
             } ]); else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
         });
     }
-    function distanceDisplay(data) {
+    function distanceDisplay() {
         if (Ti.Geolocation.locationServicesEnabled) {
             Titanium.Geolocation.purpose = "Get Current Location";
             Titanium.Geolocation.getCurrentPosition(function(e) {
                 if (e.error) Ti.API.error("Error: " + e.error); else {
                     var cLat = e.coords.latitude, cLon = e.coords.longitude;
-                    for (var i = 0, l = data.length; i < l; i++) {
-                        var row = data[i], lt = row.args.latitude, ln = row.args.latitude, d = 3959 * Math.acos(Math.cos(cLat * Math.PI / 180) * Math.cos(lt * Math.PI / 180) * Math.cos(ln * Math.PI / 180 - cLon * Math.PI / 180) + Math.sin(cLat * Math.PI / 180) * Math.sin(lt * Math.PI / 180));
+                    for (var i = 0, l = tableData.length; i < l; i++) {
+                        var row = tableData[i], lt = row.args.latitude, ln = row.args.longitude, d = 3959 * Math.acos(Math.cos(cLat * Math.PI / 180) * Math.cos(lt * Math.PI / 180) * Math.cos(ln * Math.PI / 180 - cLon * Math.PI / 180) + Math.sin(cLat * Math.PI / 180) * Math.sin(lt * Math.PI / 180));
                         d = Math.round(d * 100) / 100;
                         row.children[0].text = d + " miles";
                         cLat = row.args.latitude;
                         cLon = row.args.longitude;
+                        $.destinationsTable.setData(tableData);
                     }
                 }
             });
@@ -133,6 +133,7 @@ function Controller() {
     destinationsTable = Alloy.createController("destinationsView", args).getView(), tourPointsArr = [];
     APP.rightNav.hide();
     getLocations(tags);
+    var tableData = [];
     _.extend($, exports);
 }
 

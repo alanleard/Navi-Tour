@@ -9,8 +9,19 @@ function Controller() {
         data.fields.time = e.source.value;
     }
     function submitTour(e) {
+        var loadView = Ti.UI.createView({
+            backgroundColor: "#000",
+            height: "fill",
+            width: "fill",
+            opacity: 0.8
+        }), actInd = Ti.UI.createActivityIndicator({
+            message: "Loading...",
+            color: "#fff"
+        });
+        loadView.add(actInd);
+        actInd.show();
+        $.container.add(loadView);
         Ti.API.info("[ACS] Create Destination");
-        alert(data);
         Cloud.Objects.create(data, function(x) {
             if (x.success) {
                 alert(data.fields.name + " Added!");

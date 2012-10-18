@@ -7,6 +7,7 @@ APP.navTitle.text = $.tableView.title;
 $.tableView.setData([{title:'Loading destinations...', color:'#fff'}]);
 getLocations(tags);
 //APP.navTitle.text = args.name + " Tour";
+var tableData = [];
 function getLocations(tag){
 	
 	Cloud.Places.query({
@@ -25,7 +26,7 @@ function getLocations(tag){
 		
 	    if ( e.success ) {
 	    	if( e.places.length>0){
-	    	var tableData = [];
+	    	
 			
 			for ( var i = 0, l=e.places.length; i < l; i++ ) {
 				
@@ -35,7 +36,8 @@ function getLocations(tag){
 	        }
 	        
 	        $.tableView.setData(tableData);
-	        distanceDisplay();
+	       
+	      	distanceDisplay()
 	        
 	      } else {
 	      	$.tableView.setData([{title:'No destinations found', color:'#fff'}]);
@@ -64,10 +66,10 @@ function distanceDisplay(){
 	            var 
 	            cLat = e.coords.latitude,
 				cLon = e.coords.longitude;
-				for( var i = 0, l = $.tableView.data[0].rows.length; i<l; i++ ){
+				for( var i = 0, l = tableData.length; i<l; i++ ){
 					
 					var 
-					row = $.tableView.data[0].rows[i],
+					row = tableData[i],
 					lt = row.args.latitude,
 					ln = row.args.longitude,
 					d = 3959 * Math.acos(Math.cos((cLat * Math.PI) / 180) * Math.cos((lt * Math.PI) / 180) * Math.cos((ln * Math.PI) / 180 - (cLon * Math.PI) / 180) + Math.sin((cLat * Math.PI) / 180) * Math.sin((lt * Math.PI) / 180));
@@ -75,6 +77,7 @@ function distanceDisplay(){
 			    	d = Math.round((d * 100)) / 100;
 			
 			   		row.children[0].text = d + " miles";
+			   		$.tableView.setData(tableData);
 				}
 				
 	        }

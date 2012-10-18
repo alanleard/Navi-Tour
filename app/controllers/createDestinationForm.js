@@ -110,23 +110,26 @@ function toursList(e){
 
 function submitDestination(e){
 	
+			var loadView = Ti.UI.createView({
+				backgroundColor:"#000",
+				height:'fill',
+				width:'fill',
+				opacity:0.8
+			});
 			var actInd = Ti.UI.createActivityIndicator({
 				message:'Loading...',
-				color:'#fff',
-				opacity:0.8,
-				borderRadius:20,
-				width:200,
-				height:150
+				color:'#fff'
 			});
-			$.container.add(actInd);
+			loadView.add(actInd);
 			actInd.show();
+			$.container.add(loadView);
 		
 			Ti.API.info('[ACS] Create Destination')
 						
 	    	Cloud.Places.create(destinationData, function (x) {
 		    	if (x.success) {
 		    		alert(destinationData.name + " Added!");
-					$.container.remove(actInd);
+					$.container.remove(loadView);
 		    	} else {
 		    		
 		        	alert("Error: "+x.message)
