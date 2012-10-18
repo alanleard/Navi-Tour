@@ -51,7 +51,6 @@
 "#mapView":{
 	top:"55%",
 	width:"fill",
-	regionFit:true,
 	mapType: Titanium.Map.STANDARD_TYPE,
 	regionFit:true,
 	animate:true,

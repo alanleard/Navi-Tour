@@ -3,7 +3,15 @@
 },
 "#mapView":{
 	bottom:0,
-	top:"55%"
+	left:0,
+	right:0,
+	top:"55%",
+	width:"fill",
+	mapType: Titanium.Map.STANDARD_TYPE,
+	regionFit:true,
+	animate:true,
+	userLocation:false,
+	
 },
 "#destinationsTable":{
 	top:0,
@@ -23,5 +31,5 @@
 	top:'56%',
 	left:5,
 	title:'Standard',
-	backgroundImage:'button.png'
+	backgroundImage:'button.png',
 }

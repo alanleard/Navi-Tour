@@ -101,7 +101,14 @@ function Controller() {
     var __alloyId5 = [];
     $.__views.mapView = A$(Ti.Map.createView({
         bottom: 0,
+        left: 0,
+        right: 0,
         top: "55%",
+        width: "fill",
+        mapType: Titanium.Map.STANDARD_TYPE,
+        regionFit: !0,
+        animate: !0,
+        userLocation: !1,
         annotations: __alloyId5,
         ns: "Ti.Map",
         id: "mapView"

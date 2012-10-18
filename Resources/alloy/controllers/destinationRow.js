@@ -15,7 +15,7 @@ function Controller() {
     $.__views.row.on("click", rowClick);
     $.__views.distanceLabel = A$(Ti.UI.createLabel({
         right: 5,
-        width: 60,
+        width: 50,
         color: "#fff",
         font: {
             fontSize: 12
@@ -44,7 +44,7 @@ function Controller() {
     $.__views.row.add($.__views.rowTitle);
     $.__views.notesLabel = A$(Ti.UI.createLabel({
         left: 85,
-        right: 65,
+        right: 55,
         top: 25,
         bottom: 5,
         color: "#fff",

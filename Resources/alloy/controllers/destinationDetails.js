@@ -90,8 +90,8 @@ function Controller() {
     $.__views.mapView = A$(Ti.Map.createView({
         top: "55%",
         width: "fill",
-        regionFit: !0,
         mapType: Titanium.Map.STANDARD_TYPE,
+        regionFit: !0,
         animate: !0,
         userLocation: !1,
         left: 0,

@@ -3,7 +3,7 @@ function Controller() {
         Cloud.Places.query({
             page: 1,
             per_page: 100,
-            order: "order",
+            order: "-order",
             where: tag ? {
                 tours: tag
             } : {}
