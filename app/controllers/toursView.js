@@ -10,6 +10,7 @@ function getTours(){
 	    classname: 'tour',
 	    page: 1,
 	    per_page: 100,
+	    order:"name",
 	    // where: {
 	        // color: 'blue'
 	    // }

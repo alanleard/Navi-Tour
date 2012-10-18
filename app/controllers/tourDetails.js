@@ -1,18 +1,24 @@
-var args = arguments[0],
-tags = args?args.id:null,
-APP = require('alloy/controllers/core'),
-Cloud = require('ti.cloud');
-destinationsTable = Alloy.createController('destinationsView', args).getView(),
-tourPointsArr = [];
+var 
+	args = arguments[0],
+	tags = args?args.id:null,
+	APP = require('alloy/controllers/core'),
+	Cloud = require('ti.cloud'),
+	//destinationsTable = Alloy.createController('destinationsView', args).getView(),
+	tourPointsArr = [],
+	tableData = [];
+
+$.tableView.setData([{title:'Loading destinations...', color:'#fff'}]);
+APP.navTitle.text = $.container.title;
 APP.rightNav.hide();
+
 getLocations(tags);
-var tableData = [];
+
 function getLocations(tag){
 	
 	Cloud.Places.query({
 	    page: 1,
 	    per_page: 100,
-	    order:"order",
+	    order:"tags_array",
 	    where: tag?{
 	    	"tours":tag
 	    }:{}
@@ -29,13 +35,13 @@ function getLocations(tag){
 	            tableData.push(row);
 	        }
 	        
-	        $.destinationsTable.setData(tableData);
+	        $.tableView.setData(tableData);
 	        
 	        mapLoad(tableData);
 	        distanceDisplay();
 	        
 	      } else {
-	      	$.destinationsTable.setData([{title:'No destinations found', color:'#fff'}]);
+	      	$.tableView.setData([{title:'No destinations found', color:'#fff'}]);
 	      }
 	        
 	    } else {
@@ -70,7 +76,7 @@ function distanceDisplay(){
 			   		row.children[0].text = d + " miles";
 			   		cLat = row.args.latitude;
 					cLon = row.args.longitude;
-					$.destinationsTable.setData(tableData);
+					$.tableView.setData(tableData);
 				}
 				
 	        }

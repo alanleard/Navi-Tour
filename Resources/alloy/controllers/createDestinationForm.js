@@ -12,7 +12,7 @@ function Controller() {
         destinationData.custom_fields.details = e.source.value;
     }
     function orderChange(e) {
-        destinationData.custom_fields.order = parseInt(e.source.value);
+        destinationData.tags = e.source.value;
     }
     function toursList(e) {
         Cloud.Objects.query({

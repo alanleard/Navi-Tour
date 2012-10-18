@@ -3,7 +3,7 @@ function Controller() {
         Cloud.Places.query({
             page: 1,
             per_page: 100,
-            order: "order",
+            order: "tags_array",
             where: tag ? {
                 tours: tag
             } : {}
@@ -13,10 +13,10 @@ function Controller() {
                     var row = Alloy.createController("destinationRow", e.places[i]).getView();
                     tableData.push(row);
                 }
-                $.destinationsTable.setData(tableData);
+                $.tableView.setData(tableData);
                 mapLoad(tableData);
                 distanceDisplay();
-            } else $.destinationsTable.setData([ {
+            } else $.tableView.setData([ {
                 title: "No destinations found",
                 color: "#fff"
             } ]); else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
@@ -34,7 +34,7 @@ function Controller() {
                         row.children[0].text = d + " miles";
                         cLat = row.args.latitude;
                         cLon = row.args.longitude;
-                        $.destinationsTable.setData(tableData);
+                        $.tableView.setData(tableData);
                     }
                 }
             });
@@ -87,23 +87,24 @@ function Controller() {
     var $ = this, exports = {};
     $.__views.container = A$(Ti.UI.createView({
         backgroundColor: "#000",
+        title: "Tour Destinations",
         id: "container"
     }), "View", null);
     $.addTopLevelView($.__views.container);
     var __alloyId4 = [];
-    $.__views.destinationsTable = A$(Ti.UI.createTableView({
+    $.__views.tableView = A$(Ti.UI.createTableView({
         top: 0,
         bottom: "50%",
         backgroundColor: "#000",
-        id: "destinationsTable"
+        id: "tableView"
     }), "TableView", $.__views.container);
-    $.__views.container.add($.__views.destinationsTable);
+    $.__views.container.add($.__views.tableView);
     var __alloyId5 = [];
     $.__views.mapView = A$(Ti.Map.createView({
         bottom: 0,
         left: 0,
         right: 0,
-        top: "55%",
+        top: "50%",
         width: "fill",
         mapType: Titanium.Map.STANDARD_TYPE,
         regionFit: !0,
@@ -136,11 +137,14 @@ function Controller() {
     $.__views.container.add($.__views.mapType);
     $.__views.mapType.on("click", mapClick);
     _.extend($, $.__views);
-    var args = arguments[0], tags = args ? args.id : null, APP = require("alloy/controllers/core"), Cloud = require("ti.cloud");
-    destinationsTable = Alloy.createController("destinationsView", args).getView(), tourPointsArr = [];
+    var args = arguments[0], tags = args ? args.id : null, APP = require("alloy/controllers/core"), Cloud = require("ti.cloud"), tourPointsArr = [], tableData = [];
+    $.tableView.setData([ {
+        title: "Loading destinations...",
+        color: "#fff"
+    } ]);
+    APP.navTitle.text = $.container.title;
     APP.rightNav.hide();
     getLocations(tags);
-    var tableData = [];
     _.extend($, exports);
 }
 

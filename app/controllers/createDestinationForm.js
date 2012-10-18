@@ -42,8 +42,8 @@ function detailsChange(e){
 }
 
 function orderChange(e){
-	//destinationData.tags = e.source.value
-	destinationData.custom_fields.order = parseInt(e.source.value);
+	destinationData.tags = e.source.value
+	//destinationData.custom_fields.order = parseInt(e.source.value);
 }
 
 // function toursChange(e){

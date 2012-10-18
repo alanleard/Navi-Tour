@@ -3,7 +3,8 @@ function Controller() {
         Cloud.Objects.query({
             classname: "tour",
             page: 1,
-            per_page: 100
+            per_page: 100,
+            order: "name"
         }, function(e) {
             if (e.success) if (e.tour.length > 0) {
                 var tableData = [];

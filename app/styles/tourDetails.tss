@@ -1,11 +1,12 @@
 "#container": {
-	backgroundColor: "#000"
+	backgroundColor: "#000",
+	title:"Tour Destinations"
 },
 "#mapView":{
 	bottom:0,
 	left:0,
 	right:0,
-	top:"55%",
+	top:"50%",
 	width:"fill",
 	mapType: Titanium.Map.STANDARD_TYPE,
 	regionFit:true,
@@ -13,7 +14,7 @@
 	userLocation:false,
 	
 },
-"#destinationsTable":{
+"#tableView":{
 	top:0,
 	bottom:"50%",
 	backgroundColor:'#000'

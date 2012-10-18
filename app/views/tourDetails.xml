@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="container">
-		<TableView id="destinationsTable"/>
+		<TableView id="tableView"/>
 		<View ns="Ti.Map" id="mapView"/>
 		<Button id="driveNav" onClick = "driveClick"/>
 		<Button id="mapType" onClick = "mapClick"/>
