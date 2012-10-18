@@ -38,7 +38,10 @@ function Controller() {
                 opacity: 1,
                 duration: 200
             });
-        }
+        } else APP.index.children[x - 2].animate({
+            opacity: 1,
+            duration: 200
+        });
     }
     function destinationsClick(e) {
         var destinationView = Alloy.createController("destinationsView").getView();
@@ -61,7 +64,6 @@ function Controller() {
             });
         });
     }
-    function createTourClick(e) {}
     function addClick(e) {
         $.backButton.show();
         APP.navTitle.text == "Available Destinations" ? APP.index.add(Alloy.createController("createDestination").getView()) : APP.navTitle.text == "Available Tours" && APP.index.add(Alloy.createController("createTour").getView());

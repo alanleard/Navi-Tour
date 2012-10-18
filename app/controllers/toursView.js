@@ -39,3 +39,14 @@ function getTours(){
 	    }
 	});
 }
+
+
+function rowClick( e ){
+	var view = Alloy.createController('tourDetails', e.rowData.args).getView();      
+	$.container.animate({opacity:0.0, duration:250}, function(){
+		view.opacity = 0.0;
+		APP.index.add(view);
+		view.animate({opacity:1.0, duration:100});
+	});
+	
+}

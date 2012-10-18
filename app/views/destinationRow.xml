@@ -1,5 +1,5 @@
 <Alloy>
-	<TableViewRow class="container" id="row" onClick="rowClick">
+	<TableViewRow class="container" id="row">
 		<Label id="distanceLabel"/>
 		<ImageView id="rowImage"/>
 		<Label id="rowTitle"/>

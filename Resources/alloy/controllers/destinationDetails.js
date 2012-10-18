@@ -38,6 +38,23 @@ function Controller() {
             $.mapType.title = "Standard";
         }
     }
+    function mapSize(e) {
+        $.mapView.top == 0 ? $.mapView.animate({
+            top: "55%",
+            duration: 200
+        }, function() {
+            $.mapView.top = "55%";
+            e.source.transform = null;
+        }) : $.mapView.animate({
+            top: 0,
+            duration: 200
+        }, function() {
+            $.mapView.top = 0;
+            e.source.transform = Ti.UI.create2DMatrix({
+                rotate: 180
+            });
+        });
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
     $.__views.container = A$(Ti.UI.createView({
@@ -47,7 +64,7 @@ function Controller() {
     $.addTopLevelView($.__views.container);
     $.__views.flipView = A$(Ti.UI.createView({
         top: 10,
-        bottom: "50%",
+        bottom: "45%",
         left: 10,
         right: 10,
         backgroundColor: "#000",
@@ -109,20 +126,30 @@ function Controller() {
         height: 30,
         image: "drive.png",
         id: "driveNav"
-    }), "Button", $.__views.container);
-    $.__views.container.add($.__views.driveNav);
+    }), "Button", $.__views.mapView);
+    $.__views.mapView.add($.__views.driveNav);
     $.__views.driveNav.on("click", driveClick);
     $.__views.mapType = A$(Ti.UI.createButton({
         height: 20,
         width: 80,
-        top: "56%",
+        top: "5",
         left: 5,
         title: "Standard",
         backgroundImage: "button.png",
         id: "mapType"
-    }), "Button", $.__views.container);
-    $.__views.container.add($.__views.mapType);
+    }), "Button", $.__views.mapView);
+    $.__views.mapView.add($.__views.mapType);
     $.__views.mapType.on("click", mapClick);
+    $.__views.mapSize = A$(Ti.UI.createButton({
+        height: 20,
+        width: 20,
+        top: "5",
+        right: 5,
+        backgroundImage: "sizeButton.png",
+        id: "mapSize"
+    }), "Button", $.__views.mapView);
+    $.__views.mapView.add($.__views.mapSize);
+    $.__views.mapSize.on("click", mapSize);
     _.extend($, $.__views);
     var APP = require("alloy/controllers/core"), args = arguments[0], annotation = Ti.Map.createAnnotation({
         title: args.name,

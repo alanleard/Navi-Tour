@@ -1,5 +1,5 @@
 <Alloy>
-	<TableViewRow class="container" id="row" onClick="rowClick">
+	<TableViewRow class="container" id="row">
 		<ImageView id="rowImage"/>
 		<Label id="rowTitle"/>
 		<Label id="tourTime"/>

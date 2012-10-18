@@ -110,6 +110,16 @@ function Controller() {
     }), "TextField", $.__views.mainView);
     $.__views.mainView.add($.__views.name);
     $.__views.name.on("change", nameChange);
+    $.__views.photo = A$(Ti.UI.createButton({
+        top: 10,
+        left: 40,
+        right: 40,
+        height: 30,
+        title: "Add a Photo",
+        id: "photo"
+    }), "Button", $.__views.mainView);
+    $.__views.mainView.add($.__views.photo);
+    $.__views.photo.on("click", photoClick);
     $.__views.notes = A$(Ti.UI.createTextField({
         top: 10,
         left: 20,
@@ -134,16 +144,6 @@ function Controller() {
     }), "TextField", $.__views.mainView);
     $.__views.mainView.add($.__views.time);
     $.__views.time.on("change", timeChange);
-    $.__views.photo = A$(Ti.UI.createButton({
-        top: 10,
-        left: 20,
-        right: 20,
-        height: 30,
-        title: "Add a Photo",
-        id: "photo"
-    }), "Button", $.__views.mainView);
-    $.__views.mainView.add($.__views.photo);
-    $.__views.photo.on("click", photoClick);
     $.__views.submit = A$(Ti.UI.createButton({
         top: 10,
         left: 20,

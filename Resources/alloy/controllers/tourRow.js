@@ -1,8 +1,4 @@
 function Controller() {
-    function rowClick(e) {
-        var tourView = Alloy.createController("tourDetails", e.rowData.args).getView();
-        APP.index.add(tourView);
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
     $.__views.row = A$(Ti.UI.createTableViewRow({
@@ -11,7 +7,6 @@ function Controller() {
         id: "row"
     }), "TableViewRow", null);
     $.addTopLevelView($.__views.row);
-    $.__views.row.on("click", rowClick);
     $.__views.rowImage = A$(Ti.UI.createImageView({
         left: 0,
         width: 75,

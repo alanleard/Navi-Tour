@@ -21,13 +21,16 @@
 	clearButtonMode:Ti.UI.INPUT_BUTTONMODE_ONFOCUS		         
 },
 ".button":{
-	top:10,
+	top:20,
 	left:20,
 	right:20,
 	height:30
 },
 "#photo":{
 	title:'Add a Photo',
+	left:40,
+	right:40,
+	bottom:10
 	
 },
 "#submit":{

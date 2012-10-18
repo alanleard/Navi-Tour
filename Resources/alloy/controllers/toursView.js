@@ -19,6 +19,20 @@ function Controller() {
             } ]); else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
         });
     }
+    function rowClick(e) {
+        var view = Alloy.createController("tourDetails", e.rowData.args).getView();
+        $.container.animate({
+            opacity: 0,
+            duration: 250
+        }, function() {
+            view.opacity = 0;
+            APP.index.add(view);
+            view.animate({
+                opacity: 1,
+                duration: 100
+            });
+        });
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
     $.__views.container = A$(Ti.UI.createView({
@@ -33,6 +47,7 @@ function Controller() {
         id: "tableView"
     }), "TableView", $.__views.container);
     $.__views.container.add($.__views.tableView);
+    $.__views.tableView.on("click", rowClick);
     _.extend($, $.__views);
     var Cloud = require("ti.cloud"), APP = require("alloy/controllers/core");
     APP.navTitle.text = $.container.title;

@@ -5,9 +5,3 @@ $.rowImage.image = args.icon?args.icon:"imgDefault.png";
 $.rowTitle.text = args.name;
 $.addressLabel.text = args.formatted_address;
 $.row.args = args;
-
-function rowClick(e){
-	APP.index.add(Alloy.createController('createDestinationForm', e.rowData.args).getView());
-}
-
-

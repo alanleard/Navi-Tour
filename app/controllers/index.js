@@ -39,6 +39,8 @@ function backClick( e ){
 		APP.rightNav.hide();
 		$.destinationButton.animate({opacity:1.0, duration:200});
 		$.tourButton.animate({opacity:1.0, duration:200})
+	} else {
+		APP.index.children[x-2].animate({opacity:1.0, duration:200})
 	}
 }
 
@@ -55,10 +57,6 @@ function destinationsClick( e ){
 		});
 		
 	}); 	
-}
-
-function createTourClick(e){
-	
 }
 
 function addClick(e){

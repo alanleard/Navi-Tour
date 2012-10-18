@@ -31,12 +31,26 @@ function Controller() {
                     for (var i = 0, l = tableData.length; i < l; i++) {
                         var row = tableData[i], lt = row.args.latitude, ln = row.args.longitude, d = 3959 * Math.acos(Math.cos(cLat * Math.PI / 180) * Math.cos(lt * Math.PI / 180) * Math.cos(ln * Math.PI / 180 - cLon * Math.PI / 180) + Math.sin(cLat * Math.PI / 180) * Math.sin(lt * Math.PI / 180));
                         d = Math.round(d * 100) / 100;
-                        row.children[0].text = d + " miles";
+                        row.children[0].text = d + " miles away";
                         $.tableView.setData(tableData);
                     }
                 }
             });
         }
+    }
+    function rowClick(e) {
+        var view = Alloy.createController("destinationDetails", e.rowData.args).getView();
+        $.tableView.animate({
+            opacity: 0,
+            duration: 250
+        }, function() {
+            view.opacity = 0;
+            APP.index.add(view);
+            view.animate({
+                opacity: 1,
+                duration: 100
+            });
+        });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {}, __alloyId3 = [];
@@ -46,6 +60,7 @@ function Controller() {
         id: "tableView"
     }), "TableView", null);
     $.addTopLevelView($.__views.tableView);
+    $.__views.tableView.on("click", rowClick);
     _.extend($, $.__views);
     var Cloud = require("ti.cloud"), APP = require("alloy/controllers/core"), args = arguments[0], tags = args ? args.tags : null;
     APP.navTitle.text = $.tableView.title;

@@ -1,8 +1,4 @@
 function Controller() {
-    function rowClick(e) {
-        var location = Alloy.createController("destinationDetails", e.rowData.args).getView();
-        APP.index.add(location);
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
     $.__views.row = A$(Ti.UI.createTableViewRow({
@@ -12,7 +8,6 @@ function Controller() {
         id: "row"
     }), "TableViewRow", null);
     $.addTopLevelView($.__views.row);
-    $.__views.row.on("click", rowClick);
     $.__views.distanceLabel = A$(Ti.UI.createLabel({
         right: 5,
         width: 50,

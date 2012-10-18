@@ -76,7 +76,7 @@ function distanceDisplay(){
 			    
 			    	d = Math.round((d * 100)) / 100;
 			
-			   		row.children[0].text = d + " miles";
+			   		row.children[0].text = d + " miles away";
 			   		$.tableView.setData(tableData);
 				}
 				
@@ -85,3 +85,13 @@ function distanceDisplay(){
 	} 
 }
 
+function rowClick(e){
+	var view = Alloy.createController('destinationDetails', e.rowData.args).getView();
+	$.tableView.animate({opacity:0.0, duration:250}, function(){
+		view.opacity = 0.0;
+		APP.index.add(view);
+		view.animate({opacity:1.0, duration:100});
+	});
+	
+	          
+}

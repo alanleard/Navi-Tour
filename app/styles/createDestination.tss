@@ -1,9 +1,7 @@
-".container": {
+"#container":{
+	title:'Add a Destination',
 	backgroundColor: "#000",
 	layout:'vertical'
-},
-"#container":{
-	title:'Add a Destination'
 },
 "#searchBar":{
 	hintText:"Destination, City and State or Zip",

@@ -29,12 +29,16 @@ function Controller() {
         client.open("GET", url + e.source.value);
         client.send();
     }
+    function rowClick(e) {
+        var view = Alloy.createController("createDestinationForm", e.rowData.args).getView();
+        APP.index.add(view);
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
     $.__views.container = A$(Ti.UI.createView({
+        title: "Add a Destination",
         backgroundColor: "#000",
         layout: "vertical",
-        title: "Add a Destination",
         id: "container"
     }), "View", null);
     $.addTopLevelView($.__views.container);
@@ -51,6 +55,7 @@ function Controller() {
         id: "searchTable"
     }), "TableView", $.__views.container);
     $.__views.container.add($.__views.searchTable);
+    $.__views.searchTable.on("click", rowClick);
     _.extend($, $.__views);
     var APP = require("alloy/controllers/core");
     APP.navTitle.text = $.container.title;

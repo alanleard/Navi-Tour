@@ -20,7 +20,8 @@
 },
 "#photo":{
 	title:'Add a Photo',
-	
+	left:40,
+	right:40	
 },
 "#submit":{
 	title:'Submit Tour'
