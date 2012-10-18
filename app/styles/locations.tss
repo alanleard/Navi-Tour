@@ -1,9 +1,0 @@
-".container": {
-	backgroundColor: "#000"
-},
-"#container": {
-	title: "Available Destinations"
-},
-"#table":{
-	backgroundColor: "#000"
-}
