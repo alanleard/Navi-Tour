@@ -62,14 +62,13 @@ function Controller() {
     $.addTopLevelView($.__views.tableView);
     $.__views.tableView.on("click", rowClick);
     _.extend($, $.__views);
-    var Cloud = require("ti.cloud"), APP = require("alloy/controllers/core"), args = arguments[0], tags = args ? args.tags : null;
+    var Cloud = require("ti.cloud"), APP = require("alloy/controllers/core"), args = arguments[0], tags = args ? args.tags : null, tableData = [];
     APP.navTitle.text = $.tableView.title;
     $.tableView.setData([ {
         title: "Loading destinations...",
         color: "#fff"
     } ]);
     getLocations(tags);
-    var tableData = [];
     _.extend($, exports);
 }
 

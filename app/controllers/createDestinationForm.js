@@ -13,11 +13,8 @@ destinationData = {
 	custom_fields:{reference:data.reference}
 };
 
-
 $.name.value = data.name;
-// $.address.value =address[0];
-// $.city.value =address[1];
-// $.state.value =address[2];
+
 Cloud.Users.login({
     login: 'testUser',
     password: 'NaviTour2012'
@@ -46,9 +43,6 @@ function orderChange(e){
 	//destinationData.custom_fields.order = parseInt(e.source.value);
 }
 
-// function toursChange(e){
-	// destinationData.custom_fields.tours = e.source.value
-// }
 toursList();
 function toursList(e){
 	
@@ -57,9 +51,7 @@ function toursList(e){
 	    page: 1,
 	    per_page: 100,
 	    response_json_depth:1
-	    // where: {
-	        // color: 'blue'
-	    // }
+
 	}, function ( e ) {
 		
 	    if ( e.success ) {
@@ -94,7 +86,7 @@ function toursList(e){
             		}
             		
             		e.rowData.hasCheck=true
-            		//var prevTag = destinationData.tags
+            	
             		destinationData.custom_fields.tours = e.rowData.id
             		
             	}
@@ -139,94 +131,90 @@ function submitDestination(e){
 
 function photoClick(e){
 
-			 	
-			 	//var photoObj = {};
-			 	//photoObj.require = data.required;
-			 	
-			 	function selectImage(){
+ 	function selectImage(){
 
-					if(Ti.Media.isCameraSupported){
-						var dialog = Ti.UI.createOptionDialog({
-							title: 'Start by selecting an image.',
-							options:['Camera', 'Photo Gallery', 'Cancel'],
-							buttonNames: ['Camera', 'Photo Gallery' ],
-							cancel:2
-						})
-						dialog.show();
-							
-						dialog.addEventListener('click', function(e){
-							switch(e.index)
-							{
-							case 0:
-								camera();
-							  break;
-							case 1:
-								gallery();
-							  break;
-							}
-						});
-					} else {
-						gallery();
-					}
-					
-					function camera(){
-						Ti.Media.showCamera({
-								success:function(event)
-									{
-										destinationData.photo = event.media;
-										photoButton.title = 'Change Photo';
-										
-								},
-								cancel:function(){},
-								error:function(error)
-								{
-									var a = Titanium.UI.createAlertDialog({title:'Camera'});
-							
-									// set message
-									if (error.code == Titanium.Media.NO_CAMERA)
-									{
-										a.setMessage('Device does not have photo capabilities');
-									}
-									else
-									{
-										a.setMessage('Unexpected error: ' + error.code);
-									}
-							
-									// show alert
-									a.show();
-								},
-
-								allowEditing:false
-						});
-					}
-					function gallery(){
+		if(Ti.Media.isCameraSupported){
+			var dialog = Ti.UI.createOptionDialog({
+				title: 'Start by selecting an image.',
+				options:['Camera', 'Photo Gallery', 'Cancel'],
+				buttonNames: ['Camera', 'Photo Gallery' ],
+				cancel:2
+			})
+			dialog.show();
 				
-						Ti.Media.openPhotoGallery({
-							success:function(event)
-								{
-									destinationData.photo = event.media;
-									e.source.title = 'Change Photo';
-							},
-							cancel:function(){},
-							error:function(error)
-							{
-								var a = Titanium.UI.createAlertDialog({title:'Camera'});
-								if (error.code == Titanium.Media.NO_CAMERA)
-								{
-									a.setMessage('Device does not have video recording capabilities');
-								}
-								else
-								{
-									a.setMessage('Unexpected error: ' + error.code);
-								}
-								a.show();
-							},
-							allowEditing:false
-						});
-					}
-					
+			dialog.addEventListener('click', function(e){
+				switch(e.index)
+				{
+				case 0:
+					camera();
+				  break;
+				case 1:
+					gallery();
+				  break;
 				}
-			 	
-			 	
-			 	selectImage();
+			});
+		} else {
+			gallery();
+		}
+		
+		function camera(){
+			Ti.Media.showCamera({
+					success:function(event)
+						{
+							destinationData.photo = event.media;
+							photoButton.title = 'Change Photo';
+							
+					},
+					cancel:function(){},
+					error:function(error)
+					{
+						var a = Titanium.UI.createAlertDialog({title:'Camera'});
+				
+						// set message
+						if (error.code == Titanium.Media.NO_CAMERA)
+						{
+							a.setMessage('Device does not have photo capabilities');
+						}
+						else
+						{
+							a.setMessage('Unexpected error: ' + error.code);
+						}
+				
+						// show alert
+						a.show();
+					},
+
+					allowEditing:false
+			});
+		}
+		function gallery(){
+	
+			Ti.Media.openPhotoGallery({
+				success:function(event)
+					{
+						destinationData.photo = event.media;
+						e.source.title = 'Change Photo';
+				},
+				cancel:function(){},
+				error:function(error)
+				{
+					var a = Titanium.UI.createAlertDialog({title:'Camera'});
+					if (error.code == Titanium.Media.NO_CAMERA)
+					{
+						a.setMessage('Device does not have video recording capabilities');
+					}
+					else
+					{
+						a.setMessage('Unexpected error: ' + error.code);
+					}
+					a.show();
+				},
+				allowEditing:false
+			});
+		}
+		
+	}
+ 	
+ 	
+ 	selectImage();
 }

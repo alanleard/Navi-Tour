@@ -1,17 +1,14 @@
 <Alloy>
 	<View id = "container">
-	<ScrollView id="mainView" >
-		<TableView id="tours"/>
-		<TextField id="name" class="text" onChange="nameChange"/>
-		<Button id="photo" class="button" onClick="photoClick"/>
-		<!--<TextField id="address" class="text" onChange="addressChange"/>
-		<TextField id="city" class="text" onChange="cityChange"/>
-		<TextField id="state" class="text" onChange="stateChange"/>-->
-		<TextField id="notes" class="text" onChange="notesChange"/>
-		<TextField id="details" class="text" onChange="detailsChange"/>
-		<TextField id="order" class="text" onChange="orderChange"/>
-		<Button id="submit" class="button" onClick= "submitDestination"/>
-	</ScrollView>
+		<ScrollView id="mainView" >
+			<TableView id="tours"/>
+			<TextField id="name" class="text" onChange="nameChange"/>
+			<Button id="photo" class="button" onClick="photoClick"/>
+			<TextField id="notes" class="text" onChange="notesChange"/>
+			<TextField id="details" class="text" onChange="detailsChange"/>
+			<TextField id="order" class="text" onChange="orderChange"/>
+			<Button id="submit" class="button" onClick= "submitDestination"/>
+		</ScrollView>
 	</View>
 	
 </Alloy>

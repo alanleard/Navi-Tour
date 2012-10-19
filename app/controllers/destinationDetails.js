@@ -10,6 +10,7 @@ annotation = Ti.Map.createAnnotation({
 
 APP.rightNav.hide();
 APP.navTitle.text = args.name;
+
 $.container.title = args.name;
 $.detailLabel.text = args.custom_fields.details?args.custom_fields.details:"There are no additonal details for "+args.name;
 $.imageView.image = args.photo?args.photo.urls.original:"imgDefault.png";
@@ -54,19 +55,14 @@ function mapClick(){
 	
 }
 
-function mapSize(e){
+function mapSize( e ){
 	if($.mapView.top ==0){
-		// $.mapView.animate({top:"55%", duration:500},
-		// function(){
-			$.mapView.top = "55%";
-			e.source.transform = null;
-		//});
-		
+		$.mapView.top = "55%";
+		e.source.transform = null;
 	} else {
 		$.mapView.animate({top:0, duration:200},
 		function(){
 			$.mapView.top = 0;
-			
 			e.source.transform = Ti.UI.create2DMatrix({rotate:180});
 		});
 	}

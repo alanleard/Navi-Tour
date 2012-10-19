@@ -1,11 +1,12 @@
 function Controller() {
     function searchWeb(e) {
+        var googleKey = "AIzaSyCRn6OD_Jn5hKyjI6Gs0cttF2W1C-jYzYw", url = "https://maps.googleapis.com/maps/api/place/textsearch/json?sensor=true&key=" + googleKey + "&query=";
         $.searchBar.blur();
         $.searchTable.setData([ {
             title: "Searching...",
             color: "#fff"
         } ]);
-        var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?sensor=true&key=AIzaSyCRn6OD_Jn5hKyjI6Gs0cttF2W1C-jYzYw&query=", client = Ti.Network.createHTTPClient({
+        var client = Ti.Network.createHTTPClient({
             onload: function(e) {
                 var returnData = JSON.parse(this.responseText), results = returnData.results;
                 if (results.length > 0) {

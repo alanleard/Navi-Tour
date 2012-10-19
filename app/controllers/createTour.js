@@ -51,9 +51,7 @@ function submitTour(e){
 };	
 
 function photoClick(e){
-	//var photoObj = {};
- 	//photoObj.require = data.required;
- 	
+
  	function selectImage(){
 
 		if(Ti.Media.isCameraSupported){

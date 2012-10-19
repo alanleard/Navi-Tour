@@ -1,8 +1,11 @@
 var 
 Cloud = require('ti.cloud'),
 APP = require('alloy/controllers/core');
+
 APP.navTitle.text = $.container.title;
+
 $.tableView.setData([{title:'Loading tours...', color:'#fff'}]);
+
 getTours()
 
 function getTours(){
@@ -10,10 +13,8 @@ function getTours(){
 	    classname: 'tour',
 	    page: 1,
 	    per_page: 100,
-	    order:"name",
-	    // where: {
-	        // color: 'blue'
-	    // }
+	    order:"name"
+
 	}, function ( e ) {
 		
 	    if ( e.success ) {
@@ -39,7 +40,6 @@ function getTours(){
 	    }
 	});
 }
-
 
 function rowClick( e ){
 	var view = Alloy.createController('tourDetails', e.rowData.args).getView();      

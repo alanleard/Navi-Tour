@@ -1,13 +1,16 @@
 var 
-Cloud = require('ti.cloud');
-var APP = require('alloy/controllers/core');
-var args = arguments[0],
-tags = args?args.tags:null;
+Cloud = require('ti.cloud'),
+APP = require('alloy/controllers/core'),
+args = arguments[0],
+tags = args?args.tags:null,
+tableData = [];
+
 APP.navTitle.text = $.tableView.title;
+
 $.tableView.setData([{title:'Loading destinations...', color:'#fff'}]);
+
 getLocations(tags);
-//APP.navTitle.text = args.name + " Tour";
-var tableData = [];
+
 function getLocations(tag){
 	
 	Cloud.Places.query({
@@ -15,12 +18,7 @@ function getLocations(tag){
 	    per_page: 100,
 	    order:"name",
 	    where: tag?{
-	    	"tours":tag,
-	    	
-	        // lnglat: {
-	            // '$nearSphere': [-122.23,37.12],
-	            // '$maxDistance': 0.00126
-	        // }
+	    	"tours":tag
 	    }:{}
 	}, function ( e ) {
 		

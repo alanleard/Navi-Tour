@@ -9,6 +9,8 @@ APP.navBar = $.navBar;
 APP.navTitle = $.navTitle;
 APP.rightNav = $.rightNav;
 
+$.container.open();
+
 function installClick( e ) {  
     APP.nav.installNavi(); 
 }
@@ -68,4 +70,4 @@ function addClick(e){
 		APP.index.add(Alloy.createController('createTour').getView()) 
 	}	
 }
-$.container.open();
+
