@@ -66,7 +66,7 @@ function Controller() {
     }
     function driveClick() {
         APP.nav.addMultiPOI({
-            poi: JSON.stringify(tourPointsArr),
+            poi: tourPointsArr,
             callbackURL: "navi-tour://",
             text: "Tour added successfully"
         });
@@ -177,12 +177,12 @@ function Controller() {
     $.__views.mapSize.on("click", mapSize);
     _.extend($, $.__views);
     var args = arguments[0], tags = args ? args.id : null, APP = require("alloy/controllers/core"), Cloud = require("ti.cloud"), tourPointsArr = [], tableData = [];
+    APP.navTitle.text = $.container.title;
+    APP.rightNav.hide();
     $.tableView.setData([ {
         title: "Loading destinations...",
         color: "#fff"
     } ]);
-    APP.navTitle.text = $.container.title;
-    APP.rightNav.hide();
     getLocations(tags);
     _.extend($, exports);
 }

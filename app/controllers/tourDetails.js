@@ -113,7 +113,7 @@ function mapLoad(data){
 function driveClick(){
 	
 	APP.nav.addMultiPOI({
-		poi:JSON.stringify(tourPointsArr),
+		poi:tourPointsArr,
 		callbackURL: "navi-tour://",
 	 	text: "Tour added successfully"
 	});
