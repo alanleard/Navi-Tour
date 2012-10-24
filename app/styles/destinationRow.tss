@@ -17,7 +17,6 @@
 	top:5,
 	color: "#fff",
 	verticalAlign:Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP
-
 },
 "#notesLabel":{
 	

@@ -7,4 +7,4 @@ $.rowTitle.text = args.name;
 $.tourTime.text = args.time;
 $.tourNotes.text = args.notes;
 $.row.args = args;
-
+$.row.searchFilter = args.name+' '+args.notes+' '+args.time;

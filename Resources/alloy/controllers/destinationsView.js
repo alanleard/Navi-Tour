@@ -54,9 +54,16 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {}, __alloyId2 = [];
+    $.__views.search = A$(Ti.UI.createSearchBar({
+        barColor: "#000",
+        id: "search"
+    }), "SearchBar", null);
     $.__views.tableView = A$(Ti.UI.createTableView({
         backgroundColor: "#000",
         title: "Available Destinations",
+        filterAttribute: "searchFilter",
+        searchHidden: !0,
+        search: $.__views.search,
         id: "tableView"
     }), "TableView", null);
     $.addTopLevelView($.__views.tableView);

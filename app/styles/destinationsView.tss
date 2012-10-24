@@ -5,4 +5,9 @@
 "#tableView":{
 	backgroundColor: "#000",
 	title: "Available Destinations",
+	filterAttribute:'searchFilter',
+	searchHidden:true
+},
+"#search":{
+	barColor:"#000"
 }

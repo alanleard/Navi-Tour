@@ -21,7 +21,7 @@ function Controller() {
     }
     function rowClick(e) {
         var view = Alloy.createController("tourDetails", e.rowData.args).getView();
-        $.container.animate({
+        $.tableView.animate({
             opacity: 0,
             duration: 250
         }, function() {
@@ -34,23 +34,24 @@ function Controller() {
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    var $ = this, exports = {};
-    $.__views.container = A$(Ti.UI.createView({
-        title: "Available Tours",
-        backgroundColor: "#000",
-        id: "container"
-    }), "View", null);
-    $.addTopLevelView($.__views.container);
-    var __alloyId5 = [];
+    var $ = this, exports = {}, __alloyId5 = [];
+    $.__views.search = A$(Ti.UI.createSearchBar({
+        barColor: "#000",
+        id: "search"
+    }), "SearchBar", null);
     $.__views.tableView = A$(Ti.UI.createTableView({
         backgroundColor: "#000",
+        filterAttribute: "searchFilter",
+        searchHidden: !0,
+        title: "Available Tours",
+        search: $.__views.search,
         id: "tableView"
-    }), "TableView", $.__views.container);
-    $.__views.container.add($.__views.tableView);
+    }), "TableView", null);
+    $.addTopLevelView($.__views.tableView);
     $.__views.tableView.on("click", rowClick);
     _.extend($, $.__views);
     var Cloud = require("ti.cloud"), APP = require("alloy/controllers/core");
-    APP.navTitle.text = $.container.title;
+    APP.navTitle.text = $.tableView.title;
     $.tableView.setData([ {
         title: "Loading tours...",
         color: "#fff"

@@ -1,7 +1,9 @@
-"#container":{
-	title:'Available Tours',
-	backgroundColor: "#000"
-},
 "#tableView": {
-	backgroundColor: "#000"
+	backgroundColor: "#000",
+	filterAttribute:'searchFilter',
+	searchHidden:true,
+	title:'Available Tours'
+},
+"#search":{
+	barColor:"#000"
 }

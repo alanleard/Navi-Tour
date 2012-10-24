@@ -1,7 +1,7 @@
 var 
 APP = require('alloy/controllers/core'),
 Cloud = require('ti.cloud');
-
+Ti.UI.backgroundColor = '#000';
 APP.nav = require('ti.navibridge');
 APP.nav.setApplicationId('ICiAV4Ay');
 APP.index = $.mainView;

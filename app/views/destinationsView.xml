@@ -1,5 +1,5 @@
 <Alloy>
-	<!--<View id= "container">-->
-		<TableView id="tableView" onClick="rowClick"/>
-	<!--</View>-->
+	<TableView id="tableView" onClick="rowClick">
+		<SearchBar id="search"/>
+	</TableView>
 </Alloy>

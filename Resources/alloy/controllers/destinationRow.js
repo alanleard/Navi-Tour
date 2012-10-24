@@ -56,6 +56,7 @@ function Controller() {
     $.rowTitle.text = args.name;
     $.notesLabel.text = args.custom_fields.notes ? args.custom_fields.notes : null;
     $.row.args = args;
+    $.row.searchFilter = args.name + " " + args.custom_fields.notes + " " + args.custom_fields.details;
     _.extend($, exports);
 }
 

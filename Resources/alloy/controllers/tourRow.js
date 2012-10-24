@@ -55,6 +55,7 @@ function Controller() {
     $.tourTime.text = args.time;
     $.tourNotes.text = args.notes;
     $.row.args = args;
+    $.row.searchFilter = args.name + " " + args.notes + " " + args.time;
     _.extend($, exports);
 }
 
