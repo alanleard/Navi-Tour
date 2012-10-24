@@ -1,4 +1,7 @@
 <Alloy>
-	<View class="container">
+	<View ns="Ti.Map" id="mapView">
+		<Button id="driveNav"/>
+		<Button id="mapType" onClick = "mapClick"/>
+		<Button id="mapSize" onClick="mapSize" />
 	</View>
 </Alloy>

@@ -41,7 +41,7 @@ function Controller() {
         id: "container"
     }), "View", null);
     $.addTopLevelView($.__views.container);
-    var __alloyId6 = [];
+    var __alloyId5 = [];
     $.__views.tableView = A$(Ti.UI.createTableView({
         backgroundColor: "#000",
         id: "tableView"

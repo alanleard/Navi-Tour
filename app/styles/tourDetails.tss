@@ -2,42 +2,8 @@
 	backgroundColor: "#000",
 	title:"Tour Destinations"
 },
-"#mapView":{
-	bottom:0,
-	left:0,
-	right:0,
-	top:"55%",
-	width:"fill",
-	mapType: Titanium.Map.STANDARD_TYPE,
-	regionFit:true,
-	animate:true,
-	userLocation:false,
-	
-},
 "#tableView":{
 	top:0,
 	bottom:"45%",
 	backgroundColor:'#000'
-},
-"#driveNav":{
-	right:5,
-	bottom:5,
-	width:'107',
-	height:30,
-	image:'drive.png'
-},
-"#mapType":{
-	height:20,
-	width:80,
-	top:5,
-	left:5,
-	title:'Standard',
-	backgroundImage:'button.png',
-},
-"#mapSize":{
-	height:20,
-	width:20,
-	top:'5',
-	right:5,
-	backgroundImage:'sizeButton.png'
 }

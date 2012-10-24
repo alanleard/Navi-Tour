@@ -6,10 +6,6 @@
 			</ScrollView>
 			<ImageView id="imageView" onClick="flipDetails"/>
 		</View>
-		<View ns="Ti.Map" id="mapView">
-			<Button id="driveNav" onClick = "driveClick"/>
-			<Button id="mapType" onClick = "mapClick"/>
-			<Button id="mapSize" onClick="mapSize" />
-		</View>
+		<Require src="map" id="map"/>
 	</View>
 </Alloy>

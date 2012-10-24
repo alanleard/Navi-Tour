@@ -49,7 +49,7 @@ function Controller() {
                 longitude: row.args.longitude,
                 animate: !0
             });
-            $.mapView.addAnnotation(annotation);
+            $.map.mapView.addAnnotation(annotation);
             i < 5 && tourPointsArr.push({
                 lat: row.args.latitude,
                 lon: row.args.longitude,
@@ -57,7 +57,7 @@ function Controller() {
             });
         }
         var cPoint = Math.floor(length / 2);
-        $.mapView.setRegion({
+        $.map.mapView.setRegion({
             latitude: tourPointsArr[cPoint].lat,
             longitude: tourPointsArr[cPoint].lon,
             latitudeDelta: 0.8,
@@ -69,32 +69,6 @@ function Controller() {
             poi: tourPointsArr,
             callbackURL: "navi-tour://",
             text: "Tour added successfully"
-        });
-    }
-    function mapClick() {
-        if ($.mapView.mapType == Titanium.Map.STANDARD_TYPE) {
-            $.mapView.mapType = Titanium.Map.SATELLITE_TYPE;
-            $.mapType.title = "Satellite";
-        } else if ($.mapView.mapType == Titanium.Map.SATELLITE_TYPE) {
-            $.mapView.mapType = Titanium.Map.HYBRID_TYPE;
-            $.mapType.title = "Hybrid";
-        } else if ($.mapView.mapType = Titanium.Map.HYBRID_TYPE) {
-            $.mapView.mapType = Titanium.Map.STANDARD_TYPE;
-            $.mapType.title = "Standard";
-        }
-    }
-    function mapSize(e) {
-        if ($.mapView.top == 0) {
-            $.mapView.top = "55%";
-            e.source.transform = null;
-        } else $.mapView.animate({
-            top: 0,
-            duration: 200
-        }, function() {
-            $.mapView.top = 0;
-            e.source.transform = Ti.UI.create2DMatrix({
-                rotate: 180
-            });
         });
     }
     function rowClick(e) {
@@ -128,53 +102,10 @@ function Controller() {
     }), "TableView", $.__views.container);
     $.__views.container.add($.__views.tableView);
     $.__views.tableView.on("click", rowClick);
-    var __alloyId5 = [];
-    $.__views.mapView = A$(Ti.Map.createView({
-        bottom: 0,
-        left: 0,
-        right: 0,
-        top: "55%",
-        width: "fill",
-        mapType: Titanium.Map.STANDARD_TYPE,
-        regionFit: !0,
-        animate: !0,
-        userLocation: !1,
-        annotations: __alloyId5,
-        ns: "Ti.Map",
-        id: "mapView"
-    }), "View", $.__views.container);
-    $.__views.container.add($.__views.mapView);
-    $.__views.driveNav = A$(Ti.UI.createButton({
-        right: 5,
-        bottom: 5,
-        width: "107",
-        height: 30,
-        image: "drive.png",
-        id: "driveNav"
-    }), "Button", $.__views.mapView);
-    $.__views.mapView.add($.__views.driveNav);
-    $.__views.driveNav.on("click", driveClick);
-    $.__views.mapType = A$(Ti.UI.createButton({
-        height: 20,
-        width: 80,
-        top: 5,
-        left: 5,
-        title: "Standard",
-        backgroundImage: "button.png",
-        id: "mapType"
-    }), "Button", $.__views.mapView);
-    $.__views.mapView.add($.__views.mapType);
-    $.__views.mapType.on("click", mapClick);
-    $.__views.mapSize = A$(Ti.UI.createButton({
-        height: 20,
-        width: 20,
-        top: "5",
-        right: 5,
-        backgroundImage: "sizeButton.png",
-        id: "mapSize"
-    }), "Button", $.__views.mapView);
-    $.__views.mapView.add($.__views.mapSize);
-    $.__views.mapSize.on("click", mapSize);
+    $.__views.map = Alloy.createController("map", {
+        id: "map"
+    });
+    $.__views.map.setParent($.__views.container);
     _.extend($, $.__views);
     var args = arguments[0], tags = args ? args.id : null, APP = require("alloy/controllers/core"), Cloud = require("ti.cloud"), tourPointsArr = [], tableData = [];
     APP.navTitle.text = $.container.title;
@@ -183,6 +114,7 @@ function Controller() {
         title: "Loading destinations...",
         color: "#fff"
     } ]);
+    $.map.driveNav.addEventListener("click", driveClick);
     getLocations(tags);
     _.extend($, exports);
 }

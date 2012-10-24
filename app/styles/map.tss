@@ -1,3 +1,33 @@
-".container": {
-	backgroundColor: "white"
+"#driveNav":{
+	right:5,
+	bottom:5,
+	width:107,
+	height:30,
+	image:'drive.png'
+},
+"#mapView":{
+	top:"55%",
+	width:"fill",
+	mapType: Titanium.Map.STANDARD_TYPE,
+	regionFit:true,
+	animate:true,
+	userLocation:false,
+	left:0,
+	bottom:0,
+	right:0
+},
+"#mapType":{
+	height:20,
+	width:80,
+	top:'5',
+	left:5,
+	title:'Standard',
+	backgroundImage:'button.png'
+},
+"#mapSize":{
+	height:20,
+	width:20,
+	top:5,
+	right:15,
+	backgroundImage:'sizeButton.png'
 }

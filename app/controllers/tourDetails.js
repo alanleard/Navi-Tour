@@ -11,6 +11,8 @@ APP.rightNav.hide();
 
 $.tableView.setData([{title:'Loading destinations...', color:'#fff'}]);
 
+$.map.driveNav.addEventListener('click', driveClick);
+
 getLocations(tags);
 
 function getLocations(tag){
@@ -86,7 +88,6 @@ function distanceDisplay(){
 	} 
 }
 
-
 function mapLoad(data){
 	var length = data.length
 	for( var i = 0; i<length; i++ ){
@@ -99,14 +100,14 @@ function mapLoad(data){
 			animate:true
 		});
 		
-		$.mapView.addAnnotation(annotation);
+		$.map.mapView.addAnnotation(annotation);
 		if(i<5){
 			tourPointsArr.push({ lat:row.args.latitude, lon:row.args.longitude, title:row.args.name})
 		}
 		
 	}
 	var cPoint = Math.floor(length/2);
-	$.mapView.setRegion({latitude:tourPointsArr[cPoint].lat, longitude:tourPointsArr[cPoint].lon, latitudeDelta:0.8, longitudeDelta:0.8});
+	$.map.mapView.setRegion({latitude:tourPointsArr[cPoint].lat, longitude:tourPointsArr[cPoint].lon, latitudeDelta:0.8, longitudeDelta:0.8});
 
 }
 
@@ -117,36 +118,6 @@ function driveClick(){
 		callbackURL: "navi-tour://",
 	 	text: "Tour added successfully"
 	});
-}
-
-function mapClick(){
-	if($.mapView.mapType==Titanium.Map.STANDARD_TYPE){
-		$.mapView.mapType = Titanium.Map.SATELLITE_TYPE;
-		$.mapType.title = 'Satellite';
-	} else if ( $.mapView.mapType==Titanium.Map.SATELLITE_TYPE ){
-		$.mapView.mapType = Titanium.Map.HYBRID_TYPE
-		$.mapType.title = 'Hybrid';
-	} else if ( $.mapView.mapType = Titanium.Map.HYBRID_TYPE ){
-		$.mapView.mapType = Titanium.Map.STANDARD_TYPE
-		$.mapType.title = 'Standard';
-	}
-	
-}
-function mapSize(e){
-	if($.mapView.top ==0){
-
-		$.mapView.top = "55%";
-		e.source.transform = null;
-		
-	} else {
-		$.mapView.animate({top:0, duration:200},
-		function(){
-			$.mapView.top = 0;
-			
-			e.source.transform = Ti.UI.create2DMatrix({rotate:180});
-		});
-	}
-	
 }
 
 function rowClick( e ){

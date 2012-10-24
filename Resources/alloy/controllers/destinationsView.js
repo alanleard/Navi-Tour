@@ -53,7 +53,7 @@ function Controller() {
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    var $ = this, exports = {}, __alloyId3 = [];
+    var $ = this, exports = {}, __alloyId2 = [];
     $.__views.tableView = A$(Ti.UI.createTableView({
         backgroundColor: "#000",
         title: "Available Destinations",
