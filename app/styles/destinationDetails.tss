@@ -25,7 +25,7 @@
 "#detailLabel":{
 	height:'size',
 	left:10,
-	right:10,
+	right:35,
 	top:5,
 	bottom:5,
 	verticalAlign:Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP
@@ -42,4 +42,16 @@
 	//backgroundColor:'#000',
 	//borderRadius:5
 	
+},
+"#videoPlayer":{
+	autoplay:true,
+    //height: 190,
+    //width: 310,
+    top:10,
+	height:190,
+	width:320,
+	right:10,
+	backgroundColor:'#000',
+    opacity:0.0,
+    expanded:true
 }

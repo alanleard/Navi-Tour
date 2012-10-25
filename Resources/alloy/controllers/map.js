@@ -30,7 +30,7 @@ function Controller() {
     $.__views.mapView = A$(Ti.Map.createView({
         top: "55%",
         width: "fill",
-        mapType: Titanium.Map.STANDARD_TYPE,
+        mapType: Titanium.Map.HYBRID_TYPE,
         regionFit: !0,
         animate: !0,
         userLocation: !1,
@@ -52,21 +52,21 @@ function Controller() {
     }), "Button", $.__views.mapView);
     $.__views.mapView.add($.__views.driveNav);
     $.__views.mapType = A$(Ti.UI.createButton({
-        height: 20,
+        height: 25,
         width: 80,
-        top: "5",
+        top: 5,
         left: 5,
-        title: "Standard",
+        title: "Hybrid",
         backgroundImage: "button.png",
         id: "mapType"
     }), "Button", $.__views.mapView);
     $.__views.mapView.add($.__views.mapType);
     $.__views.mapType.on("click", mapClick);
     $.__views.mapSize = A$(Ti.UI.createButton({
-        height: 20,
-        width: 20,
+        height: 25,
+        width: 25,
         top: 5,
-        right: 15,
+        right: 5,
         backgroundImage: "sizeButton.png",
         id: "mapSize"
     }), "Button", $.__views.mapView);

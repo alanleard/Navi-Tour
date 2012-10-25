@@ -1,8 +1,8 @@
-#appname: NaviTour
-#publisher: alanleard
-#url: http://appcelerator.com
-#image: appicon.png
-#appid: com.appcelerator.naviapp.alanleard
-#desc: undefined
-#type: ipad
-#guid: 03b36c39-ce95-4e98-9e53-efafdc3fbd60
+#appname:NaviTour
+#publisher:alanleard
+#url:http://appcelerator.com
+#image:appicon.png
+#appid:com.appcelerator.naviapp.alanleard
+#desc:not specified
+#type:ipad
+#guid:03b36c39-ce95-4e98-9e53-efafdc3fbd60

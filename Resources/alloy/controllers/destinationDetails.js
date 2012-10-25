@@ -26,6 +26,88 @@ function Controller() {
         });
         $.imageView.show();
     }
+    function playAudio() {
+        var startStopButton = Titanium.UI.createButton({
+            title: "Start/Stop Streaming",
+            top: 10,
+            width: 200,
+            height: 40
+        }), pauseResumeButton = Titanium.UI.createButton({
+            title: "Pause/Resume Streaming",
+            top: 10,
+            width: 200,
+            height: 40,
+            enabled: !1
+        });
+        $.container.add(startStopButton);
+        $.container.add(pauseResumeButton);
+        var audioPlayer = Ti.Media.createAudioPlayer({
+            url: "http://promodj.com/source/3441253/Example_Change_The_Way_You_Kiss_Me_Dj_Electric_Touch_Remix.mp3",
+            allowBackground: !1
+        });
+        startStopButton.addEventListener("click", function() {
+            if (audioPlayer.playing || audioPlayer.paused) {
+                audioPlayer.stop();
+                pauseResumeButton.enabled = !1;
+                Ti.Platform.name === "android" && audioPlayer.release();
+            } else {
+                audioPlayer.start();
+                pauseResumeButton.enabled = !0;
+            }
+        });
+        pauseResumeButton.addEventListener("click", function() {
+            audioPlayer.paused ? audioPlayer.start() : audioPlayer.pause();
+        });
+        audioPlayer.addEventListener("progress", function(e) {
+            Ti.API.info("Time Played: " + Math.round(e.progress) + " milliseconds");
+        });
+        audioPlayer.addEventListener("change", function(e) {
+            Ti.API.info("State: " + e.description + " (" + e.state + ")");
+        });
+        audioPlayer.start();
+    }
+    function playVideo() {
+        $.videoPlayer.animate({
+            opacity: 1,
+            duration: 500
+        });
+        $.flipView.animate({
+            opacity: 0,
+            duration: 500
+        });
+    }
+    function completeVideo() {
+        $.videoPlayer.pause();
+        $.videoPlayer.animate({
+            height: 30,
+            width: 40,
+            top: 5,
+            right: 5,
+            duration: 250
+        });
+        $.videoPlayer.expanded = !1;
+        $.flipView.animate({
+            opacity: 1,
+            duration: 500
+        });
+    }
+    function sizePlayer() {
+        if ($.videoPlayer.expanded) completeVideo(); else {
+            $.videoPlayer.animate({
+                top: 10,
+                right: 10,
+                height: 190,
+                width: 320,
+                duration: 500
+            });
+            $.videoPlayer.expanded = !0;
+            $.videoPlayer.start();
+            $.flipView.animate({
+                opacity: 0,
+                duration: 500
+            });
+        }
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     var $ = this, exports = {};
     $.__views.container = A$(Ti.UI.createView({
@@ -59,7 +141,7 @@ function Controller() {
     $.__views.detailLabel = A$(Ti.UI.createLabel({
         height: "size",
         left: 10,
-        right: 10,
+        right: 35,
         top: 5,
         bottom: 5,
         verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
@@ -75,6 +157,22 @@ function Controller() {
     }), "ImageView", $.__views.flipView);
     $.__views.flipView.add($.__views.imageView);
     $.__views.imageView.on("click", flipDetails);
+    $.__views.videoPlayer = A$(Ti.Media.createVideoPlayer({
+        autoplay: !0,
+        top: 10,
+        height: 190,
+        width: 320,
+        right: 10,
+        backgroundColor: "#000",
+        opacity: 0,
+        expanded: !0,
+        ns: "Ti.Media",
+        id: "videoPlayer"
+    }), "VideoPlayer", $.__views.container);
+    $.__views.container.add($.__views.videoPlayer);
+    $.__views.videoPlayer.on("load", playVideo);
+    $.__views.videoPlayer.on("complete", completeVideo);
+    $.__views.videoPlayer.on("click", sizePlayer);
     $.__views.map = Alloy.createController("map", {
         id: "map"
     });
@@ -88,6 +186,7 @@ function Controller() {
     });
     APP.rightNav.hide();
     APP.navTitle.text = args.name;
+    $.videoPlayer.url = args.website ? args.website : null;
     $.container.title = args.name;
     $.detailLabel.text = args.custom_fields.details ? args.custom_fields.details : "There are no additonal details for " + args.name;
     $.imageView.image = args.photo ? args.photo.urls.original : "imgDefault.png";
@@ -99,6 +198,7 @@ function Controller() {
     };
     $.map.mapView.addAnnotation(annotation);
     $.map.driveNav.addEventListener("click", driveClick);
+    playVideo();
     _.extend($, exports);
 }
 

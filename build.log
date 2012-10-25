@@ -1,0 +1,184 @@
+Logfile initialized
+[INFO] logfile = /Users/alanleard/TiApps/NaviTour/build.log
+[DEBUG] /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/builder.py simulator Navi-Tour /Applications/android-sdk-mac_x86 /Users/alanleard/TiApps/NaviTour com.appcelerator.naviapp.alanleard 8 WVGA854 
+[INFO] Building Navi-Tour for Android ... one moment
+[INFO] plugin=/Library/Application Support/Titanium/plugins/ti.alloy/1.0/plugin.py
+[INFO] Detected compiler plugin: ti.alloy/1.0
+[INFO] Titanium SDK version: 2.1.3 (10/02/12 16:16 15997d0)
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 0 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 50 seconds)
+[DEBUG] waited 51.265559 seconds on emulator to get ready
+[INFO] Waiting for the Android Emulator to become available
+[DEBUG] com.appcelerator.naviapp.alanleard installed? False
+[INFO] Fastdev server running, deploying in Fastdev mode
+[INFO] Copying CommonJS modules...
+[INFO] Copying project resources..
+[INFO] Detected change in tiapp.xml, or assets deleted. Forcing full re-build...
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/add.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/add.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/add@2x.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/add@2x.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/backbone.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/backbone.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/CFG.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/CFG.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/BaseController.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/BaseController.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/core.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/core.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/createDestination.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/createDestination.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/createDestinationForm.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/createDestinationForm.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/createDestinationRow.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/createDestinationRow.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/createTour.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/createTour.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/destinationDetails.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/destinationDetails.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/destinationRow.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/destinationRow.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/destinationsView.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/destinationsView.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/index.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/index.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/map.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/map.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/tourDetails.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/tourDetails.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/tourRow.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/tourRow.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/toursView.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/controllers/toursView.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/string.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/string.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/sync/localStorage.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/sync/localStorage.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/sync/properties.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/sync/properties.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/sync/sql.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/sync/sql.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy/underscore.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy/underscore.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/alloy.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/alloy.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/appicon-ipad.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/appicon-ipad.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/appicon-ipad@2x.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/appicon-ipad@2x.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/appicon.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/appicon.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/appicon@2x.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/appicon@2x.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/Default-568h@2x.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/Default-568h@2x.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/Default-Landscape.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/Default-Landscape.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/Default-Portrait.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/Default-Portrait.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/Default.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/Default.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/Default@2x.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/Default@2x.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/android/iTunesArtwork => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/iTunesArtwork
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/app.js => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/app.js
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/back.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/back.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/back@2x.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/back@2x.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/button.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/button.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/destination.jpg => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/destination.jpg
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/drive.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/drive.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/imgDefault.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/imgDefault.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/sizeButton.png => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/sizeButton.png
+[TRACE] COPYING CREATED FILE: /Users/alanleard/TiApps/NaviTour/Resources/tour.jpg => /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/tour.jpg
+[TRACE] Generating Java Classes
+[DEBUG] Processing Android resource drawables
+[DEBUG] app stylesheet => /Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/ApplicationStylesheet.java
+[DEBUG] copying app icon: /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/appicon.png
+[DEBUG] generating theme.xml
+[DEBUG] found splash screen at /Users/alanleard/TiApps/NaviTour/build/android/bin/assets/Resources/default.png
+[TRACE] Writing out AndroidManifest.xml
+[DEBUG] adding /Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/ApplicationStylesheet.java to javac build list
+[DEBUG] adding /Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/NaviTourActivity.java to javac build list
+[DEBUG] adding /Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/NaviTourAppInfo.java to javac build list
+[DEBUG] adding /Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/NaviTourApplication.java to javac build list
+[DEBUG] adding /Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/R.java to javac build list
+[DEBUG] Building Java Sources: "/Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/ApplicationStylesheet.java" "/Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/NaviTourActivity.java" "/Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/NaviTourAppInfo.java" "/Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/NaviTourApplication.java" "/Users/alanleard/TiApps/NaviTour/build/android/gen/com/appcelerator/naviapp/alanleard/R.java"
+[INFO] Waiting for SDCard to become available..
+[INFO] Compiling Android Resources... This could take some time
+[DEBUG] Android classes.dex built
+[DEBUG] creating unsigned apk: /Users/alanleard/TiApps/NaviTour/build/android/bin/app-unsigned.apk
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/BaseController.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/core.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/createDestination.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/createDestinationForm.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/createDestinationRow.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/createTour.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/destinationDetails.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/destinationRow.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/destinationsView.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/index.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/map.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/tourDetails.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/tourRow.js
+[DEBUG] from resource zip => assets/Resources/alloy/controllers/toursView.js
+[DEBUG] from resource zip => assets/Resources/alloy/sync/localStorage.js
+[DEBUG] from resource zip => assets/Resources/alloy/sync/properties.js
+[DEBUG] from resource zip => assets/Resources/alloy/sync/sql.js
+[DEBUG] from resource zip => assets/Resources/alloy/CFG.js
+[DEBUG] from resource zip => assets/Resources/alloy/backbone.js
+[DEBUG] from resource zip => assets/Resources/alloy/string.js
+[DEBUG] from resource zip => assets/Resources/alloy/underscore.js
+[DEBUG] from resource zip => assets/Resources/Default-568h@2x.png
+[DEBUG] from resource zip => assets/Resources/Default-Landscape.png
+[DEBUG] from resource zip => assets/Resources/Default-Portrait.png
+[DEBUG] from resource zip => assets/Resources/Default.png
+[DEBUG] from resource zip => assets/Resources/Default@2x.png
+[DEBUG] from resource zip => assets/Resources/add.png
+[DEBUG] from resource zip => assets/Resources/add@2x.png
+[DEBUG] from resource zip => assets/Resources/alloy.js
+[DEBUG] from resource zip => assets/Resources/app.js
+[DEBUG] from resource zip => assets/Resources/appicon-ipad.png
+[DEBUG] from resource zip => assets/Resources/appicon-ipad@2x.png
+[DEBUG] from resource zip => assets/Resources/appicon.png
+[DEBUG] from resource zip => assets/Resources/appicon@2x.png
+[DEBUG] from resource zip => assets/Resources/back.png
+[DEBUG] from resource zip => assets/Resources/back@2x.png
+[DEBUG] from resource zip => assets/Resources/button.png
+[DEBUG] from resource zip => assets/Resources/destination.jpg
+[DEBUG] from resource zip => assets/Resources/drive.png
+[DEBUG] from resource zip => assets/Resources/iTunesArtwork
+[DEBUG] from resource zip => assets/Resources/imgDefault.png
+[DEBUG] from resource zip => assets/Resources/sizeButton.png
+[DEBUG] from resource zip => assets/Resources/ti.cloud.js
+[DEBUG] from resource zip => assets/Resources/ti.navibridge.js
+[DEBUG] from resource zip => assets/Resources/tour.jpg
+[DEBUG] from resource zip => assets/app.json
+[DEBUG] from resource zip => assets/index.json
+[DEBUG] from resource zip => assets/tiapp.xml
+[DEBUG] from resource zip => res/drawable/appicon.png
+[DEBUG] from resource zip => res/drawable/background.png
+[DEBUG] from resource zip => res/drawable/close.png
+[DEBUG] from resource zip => res/drawable/facebook_login.png
+[DEBUG] from resource zip => res/drawable/facebook_login_down.png
+[DEBUG] from resource zip => res/drawable/facebook_login_wide.png
+[DEBUG] from resource zip => res/drawable/facebook_login_wide_down.png
+[DEBUG] from resource zip => res/drawable/facebook_logout.png
+[DEBUG] from resource zip => res/drawable/facebook_logout_down.png
+[DEBUG] from resource zip => res/layout/titanium_tabgroup.xml
+[DEBUG] from resource zip => AndroidManifest.xml
+[DEBUG] from resource zip => resources.arsc
+[DEBUG] from resource zip => res/drawable-hdpi/close.png
+[DEBUG] from resource zip => res/drawable-ldpi/close.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/thirdparty.jar => org/apache/Commons-NOTICE.txt
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/thirdparty.jar => org/apache/HttpComponents-NOTICE.txt
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/thirdparty.jar => org/apache/mime4j-NOTICE.txt
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.min.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/json2.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/polling.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/polling.min.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/modules/titanium-facebook.jar => ti/modules/titanium/facebook/LICENSE
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/build.properties
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/background.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on_18.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on_48.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_more.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_more_18.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_more_48.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_normal.9.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_pressed.9.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_selected.9.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/default_icon.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/android/titanium.jar => org/appcelerator/titanium/res/drawable/photoDefault.png
+[DEBUG] installing native lib: /Users/alanleard/TiApps/NaviTour/modules/android/ti.physicalsizecategory/1.0/libs/armeabi/libti.physicalSizeCategory.so
+[DEBUG] installing native lib: /Users/alanleard/TiApps/NaviTour/modules/android/ti.physicalsizecategory/1.0/libs/armeabi-v7a/libti.physicalSizeCategory.so
+[DEBUG] installing native lib: /Users/alanleard/TiApps/NaviTour/modules/android/ti.physicalsizecategory/1.0/libs/x86/libti.physicalSizeCategory.so
+[DEBUG] installing native SDK libs
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 0 seconds)
+[DEBUG] waited 0.016532 seconds on emulator to get ready
+[INFO] Installing application on emulator
+[INFO] Launching application ... Navi-Tour
+[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.appcelerator.naviapp.alanleard/.NaviTourActivity }
+
+[INFO] Deployed Navi-Tour ... Application should be running.

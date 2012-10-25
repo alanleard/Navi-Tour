@@ -8,7 +8,7 @@
 "#mapView":{
 	top:"55%",
 	width:"fill",
-	mapType: Titanium.Map.STANDARD_TYPE,
+	mapType: Titanium.Map.HYBRID_TYPE,
 	regionFit:true,
 	animate:true,
 	userLocation:false,
@@ -17,17 +17,17 @@
 	right:0
 },
 "#mapType":{
-	height:20,
+	height:25,
 	width:80,
-	top:'5',
+	top:5,
 	left:5,
-	title:'Standard',
+	title:'Hybrid',
 	backgroundImage:'button.png'
 },
 "#mapSize":{
-	height:20,
-	width:20,
+	height:25,
+	width:25,
 	top:5,
-	right:15,
+	right:5,
 	backgroundImage:'sizeButton.png'
 }

@@ -56,14 +56,14 @@ exports.A = function(t, type, parent) {
                 }
             };
             cbs[cb] = wcb;
-            al(e, wcb);
+            al.call(t, e, wcb);
             _.bind(oo, ctx, e, cb, context)();
         };
         t.off = function(e, cb, context) {
             var f = cbs[cb];
             if (f) {
                 _.bind(of, ctx, e, cb, context)();
-                rl(e, f);
+                rl.call(t, e, f);
                 delete cbs[cb];
                 f = null;
             }
@@ -109,7 +109,14 @@ exports.createCollection = function(name, args) {
 };
 
 exports.isTablet = function() {
-    return Ti.Platform.osname === "ipad";
+    try {
+        var psc = require("ti.physicalSizeCategory");
+        return psc.physicalSizeCategory === "large" || psc.physicalSizeCategory === "xlarge";
+    } catch (e) {
+        Ti.API.warn("Could not find ti.physicalSizeCategory module, using fallback for Alloy.isTablet");
+        return isTabletFallback();
+    }
+    return isTabletFallback();
 }();
 
 exports.isHandheld = !exports.isTablet;

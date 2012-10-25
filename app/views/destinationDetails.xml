@@ -5,7 +5,9 @@
 				<Label id="detailLabel"/>
 			</ScrollView>
 			<ImageView id="imageView" onClick="flipDetails"/>
+			
 		</View>
+		<VideoPlayer ns="Ti.Media" id = "videoPlayer" onLoad="playVideo" onComplete="completeVideo" onClick="sizePlayer"/>
 		<Require src="map" id="map"/>
 	</View>
 </Alloy>

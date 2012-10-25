@@ -22,13 +22,14 @@ function installClick( e ) {
 function closeAll(){
 	APP.backBtn.hide();
     APP.rightNav.hide();
-    APP.navTitle.text = APP.index.children[0].title;
+    APP.navTitle.text = APP.index.children[0].animate({zIndex:100, duration:500});
+    APP.destinationBtn.animate({opacity:1.0, duration:200});
+	APP.tourBtn.animate({opacity:1.0, duration:200});
 	for (var i = 0, l = APP.index.children.length; l>=i; l--){
 		if(l>=2){
 			APP.index.remove(APP.index.children[l-1]);
 		}else {
-			APP.destinationBtn.animate({opacity:1.0, duration:200});
-			APP.tourBtn.animate({opacity:1.0, duration:200});
+			
 		}
 	 }
 }
