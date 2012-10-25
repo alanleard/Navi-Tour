@@ -24,9 +24,18 @@ function Controller() {
         Ti.API.info("[ACS] Create Destination");
         Cloud.Objects.create(data, function(x) {
             if (x.success) {
-                var l = APP.index.children.length;
-                APP.index.children[0].opacity = 1;
-                for (var i = 2; l >= i; l--) APP.index.remove(APP.index.children[l - 1]);
+                APP.backBtn.hide();
+                for (var i = 0, l = APP.index.children.length; l >= i; l--) if (l >= 2) APP.index.remove(APP.index.children[l - 1]); else {
+                    APP.destinationBtn.animate({
+                        opacity: 1,
+                        duration: 200
+                    });
+                    APP.tourBtn.animate({
+                        opacity: 1,
+                        duration: 200
+                    });
+                }
+                alert("Tour Added!");
             } else alert("Error: " + x.message);
         });
     }

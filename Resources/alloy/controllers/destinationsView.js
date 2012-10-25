@@ -75,6 +75,7 @@ function Controller() {
     var $ = this, exports = {}, __alloyId2 = [];
     $.__views.search = A$(Ti.UI.createSearchBar({
         barColor: "#000",
+        backgroundColor: "#000",
         id: "search"
     }), "SearchBar", null);
     $.__views.tableView = A$(Ti.UI.createTableView({

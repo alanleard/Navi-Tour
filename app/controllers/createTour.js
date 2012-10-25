@@ -42,14 +42,16 @@ function submitTour(e){
 	
 	Cloud.Objects.create(data, function (x) {
     	if (x.success) {
-    		//
-			$.container.remove(loadView);
-			// var l = APP.index.children.length;
-			//	
-			// APP.index.children[0].opacity=1.0;
-			// for (var i = 2; l>=i; l--){
-				// APP.index.remove(APP.index.children[l-1]);
-			// }
+
+			APP.backBtn.hide();
+			for (var i = 0, l = APP.index.children.length; l>=i; l--){
+				if(l>=2){
+					APP.index.remove(APP.index.children[l-1]);
+				}else {
+					APP.destinationBtn.animate({opacity:1.0, duration:200});
+					APP.tourBtn.animate({opacity:1.0, duration:200});
+				}
+			 }
 			alert("Tour Added!");
 			
     	} else {

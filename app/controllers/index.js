@@ -8,6 +8,9 @@ APP.index = $.mainView;
 APP.navBar = $.navBar;
 APP.navTitle = $.navTitle;
 APP.rightNav = $.rightNav;
+APP.backBtn = $.backButton;
+APP.destinationBtn = $.destinationButton;
+APP.tourBtn = $.tourButton;
 
 $.container.open();
 
@@ -22,7 +25,7 @@ function toursClick( e ){
 			tourView.opacity= 0.0;
 			APP.index.add(tourView);
 			tourView.animate({opacity:1.0, duration:200});
-			$.backButton.show();
+			APP.backBtn.show();
 			APP.rightNav.show();
 		});
 		
@@ -54,7 +57,7 @@ function destinationsClick( e ){
 			destinationView.opacity= 0.0;
 			APP.index.add(destinationView);
 			destinationView.animate({opacity:1.0, duration:200});
-			$.backButton.show();
+			APP.backBtn.show();
 			APP.rightNav.show();
 		});
 		
@@ -62,7 +65,7 @@ function destinationsClick( e ){
 }
 
 function addClick(e){
-	$.backButton.show();
+	APP.backBtn.show();
 	
 	if( APP.navTitle.text =='Available Destinations'){
 		APP.index.add(Alloy.createController('createDestination').getView())  
@@ -70,4 +73,3 @@ function addClick(e){
 		APP.index.add(Alloy.createController('createTour').getView()) 
 	}	
 }
-

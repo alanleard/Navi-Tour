@@ -1,5 +1,6 @@
 var 
 Cloud = require('ti.cloud'),
+APP = require('alloy/controllers/core'),
 args = arguments[0],
 data = args,
 address = data.formatted_address.split(","),
@@ -120,8 +121,19 @@ function submitDestination(e){
 						
 	    	Cloud.Places.create(destinationData, function (x) {
 		    	if (x.success) {
+		    		
+				    APP.backBtn.hide();
+					for (var i = 0, l = APP.index.children.length; l>=i; l--){
+						if(l>=2){
+							APP.index.remove(APP.index.children[l-1]);
+						}else {
+							APP.destinationBtn.animate({opacity:1.0, duration:200});
+							APP.tourBtn.animate({opacity:1.0, duration:200});
+						}
+					 }
+
 		    		alert(destinationData.name + " Added!");
-					$.container.remove(loadView);
+					
 		    	} else {
 		    		
 		        	alert("Error: "+x.message)
