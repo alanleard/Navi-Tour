@@ -21,20 +21,10 @@ function Controller() {
         loadView.add(actInd);
         actInd.show();
         $.container.add(loadView);
-        Ti.API.info("[ACS] Create Destination");
+        Ti.API.info("[ACS] Create Tour");
         Cloud.Objects.create(data, function(x) {
             if (x.success) {
-                APP.backBtn.hide();
-                for (var i = 0, l = APP.index.children.length; l >= i; l--) if (l >= 2) APP.index.remove(APP.index.children[l - 1]); else {
-                    APP.destinationBtn.animate({
-                        opacity: 1,
-                        duration: 200
-                    });
-                    APP.tourBtn.animate({
-                        opacity: 1,
-                        duration: 200
-                    });
-                }
+                APP.closeAll();
                 alert("Tour Added!");
             } else alert("Error: " + x.message);
         });

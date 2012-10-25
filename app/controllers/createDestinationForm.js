@@ -122,16 +122,7 @@ function submitDestination(e){
 	    	Cloud.Places.create(destinationData, function (x) {
 		    	if (x.success) {
 		    		
-				    APP.backBtn.hide();
-					for (var i = 0, l = APP.index.children.length; l>=i; l--){
-						if(l>=2){
-							APP.index.remove(APP.index.children[l-1]);
-						}else {
-							APP.destinationBtn.animate({opacity:1.0, duration:200});
-							APP.tourBtn.animate({opacity:1.0, duration:200});
-						}
-					 }
-
+				    APP.closeAll();
 		    		alert(destinationData.name + " Added!");
 					
 		    	} else {

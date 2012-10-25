@@ -2,6 +2,21 @@ function Controller() {
     function installClick(e) {
         APP.nav.installNavi();
     }
+    function closeAll() {
+        APP.backBtn.hide();
+        APP.rightNav.hide();
+        APP.navTitle.text = APP.index.children[0].title;
+        for (var i = 0, l = APP.index.children.length; l >= i; l--) if (l >= 2) APP.index.remove(APP.index.children[l - 1]); else {
+            APP.destinationBtn.animate({
+                opacity: 1,
+                duration: 200
+            });
+            APP.tourBtn.animate({
+                opacity: 1,
+                duration: 200
+            });
+        }
+    }
     function toursClick(e) {
         var tourView = Alloy.createController("toursView").getView();
         $.destinationButton.animate({
@@ -210,6 +225,7 @@ function Controller() {
     APP.backBtn = $.backButton;
     APP.destinationBtn = $.destinationButton;
     APP.tourBtn = $.tourButton;
+    APP.closeAll = closeAll;
     $.container.open();
     _.extend($, exports);
 }
