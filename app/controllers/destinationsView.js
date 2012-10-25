@@ -12,44 +12,64 @@ $.tableView.setData([{title:'Loading destinations...', color:'#fff'}]);
 getLocations(tags);
 
 function getLocations(tag){
-	
-	Cloud.Places.query({
-	    page: 1,
-	    per_page: 100,
-	    order:"name",
-	    where: tag?{
-	    	"tours":tag
-	    }:{}
-	}, function ( e ) {
-		
-	    if ( e.success ) {
-	    	if( e.places.length>0){
-	    	
-			
-			for ( var i = 0, l=e.places.length; i < l; i++ ) {
-				
-	           var row = Alloy.createController('destinationRow', e.places[i]).getView()
-	            
-	            tableData.push(row);
-	        }
-	        
-	        $.tableView.setData(tableData);
-	       
-	      	distanceDisplay()
-	        
-	      } else {
-	      	$.tableView.setData([{title:'No destinations found', color:'#fff'}]);
-	      }
-	        
-	    } else {
-	        alert('Error:\\n' +
-	            ((e.error && e.message) || JSON.stringify(e)));
-	    }
-	});
+	if(APP.destinations){
+		$.tableView.setData(APP.destinations);
+		distanceDisplay();
+		updateCheck(tag);
+	} else {
+		queryDestinations(tag);
+	}
 }
-
-function startTour(locations){
-	
+function updateCheck(tag){
+	Cloud.Places.query({
+		    page: 1,
+		    per_page: 100,
+		    order:"name",
+		    where: tag?{
+		    	"tours":tag
+		    }:{}
+		}, function ( e ) {
+		if ( e.success ) {
+		    if(e.places.length!=APP.destinations.length){
+		    	queryDestinations(tag)
+		    }
+		}
+		});
+}
+function queryDestinations(tag){
+	Cloud.Places.query({
+		    page: 1,
+		    per_page: 100,
+		    order:"name",
+		    where: tag?{
+		    	"tours":tag
+		    }:{}
+		}, function ( e ) {
+			
+		    if ( e.success ) {
+		    	if( e.places.length>0){
+		    	
+				
+				for ( var i = 0, l=e.places.length; i < l; i++ ) {
+					
+		           var row = Alloy.createController('destinationRow', e.places[i]).getView()
+		            
+		            tableData.push(row);
+		        }
+		       	APP.destinations = tableData;
+		        $.tableView.setData(tableData);
+		       
+		      	distanceDisplay()
+		        
+		      } else {
+		      	$.tableView.setData([{title:'No destinations found', color:'#fff'}]);
+		      }
+		        
+		    } else {
+		        alert('Error:\\n' +
+		            ((e.error && e.message) || JSON.stringify(e)));
+		    }
+		});
 }
 
 function distanceDisplay(){

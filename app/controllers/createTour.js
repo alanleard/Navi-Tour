@@ -1,5 +1,6 @@
 var 
 Cloud = require('ti.cloud'),
+APP = require('alloy/controllers/core'),
 data = {classname:'tour', fields:{}};
 
 Cloud.Users.login({
@@ -41,8 +42,16 @@ function submitTour(e){
 	
 	Cloud.Objects.create(data, function (x) {
     	if (x.success) {
-    		alert(data.fields.name + " Added!");
-			$.container.remove(actInd);
+    		//
+			$.container.remove(loadView);
+			// var l = APP.index.children.length;
+			//	
+			// APP.index.children[0].opacity=1.0;
+			// for (var i = 2; l>=i; l--){
+				// APP.index.remove(APP.index.children[l-1]);
+			// }
+			alert("Tour Added!");
+			
     	} else {
     		
         	alert("Error: "+x.message)

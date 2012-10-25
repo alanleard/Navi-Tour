@@ -5,6 +5,7 @@ function Controller() {
         backgroundColor: "#000",
         height: 75,
         width: "fill",
+        className: "destination",
         id: "row"
     }), "TableViewRow", null);
     $.addTopLevelView($.__views.row);

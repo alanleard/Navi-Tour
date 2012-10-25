@@ -1,7 +1,8 @@
 ".container": {
 	backgroundColor: "#000",
 	height:75,
-	width:'fill'
+	width:'fill',
+	className:"destination"
 	//layout:'horizontal',
 	//hasCheck:true
 },

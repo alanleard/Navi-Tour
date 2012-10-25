@@ -1,5 +1,24 @@
 function Controller() {
     function getLocations(tag) {
+        if (APP.destinations) {
+            $.tableView.setData(APP.destinations);
+            distanceDisplay();
+            updateCheck(tag);
+        } else queryDestinations(tag);
+    }
+    function updateCheck(tag) {
+        Cloud.Places.query({
+            page: 1,
+            per_page: 100,
+            order: "name",
+            where: tag ? {
+                tours: tag
+            } : {}
+        }, function(e) {
+            e.success && e.places.length != APP.destinations.length && queryDestinations(tag);
+        });
+    }
+    function queryDestinations(tag) {
         Cloud.Places.query({
             page: 1,
             per_page: 100,
@@ -13,6 +32,7 @@ function Controller() {
                     var row = Alloy.createController("destinationRow", e.places[i]).getView();
                     tableData.push(row);
                 }
+                APP.destinations = tableData;
                 $.tableView.setData(tableData);
                 distanceDisplay();
             } else $.tableView.setData([ {
@@ -21,7 +41,6 @@ function Controller() {
             } ]); else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
         });
     }
-    function startTour(locations) {}
     function distanceDisplay() {
         if (Ti.Geolocation.locationServicesEnabled) {
             Titanium.Geolocation.purpose = "Get Current Location";

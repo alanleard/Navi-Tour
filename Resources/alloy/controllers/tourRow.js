@@ -4,6 +4,7 @@ function Controller() {
     $.__views.row = A$(Ti.UI.createTableViewRow({
         backgroundColor: "#000",
         height: 75,
+        className: "tour",
         id: "row"
     }), "TableViewRow", null);
     $.addTopLevelView($.__views.row);

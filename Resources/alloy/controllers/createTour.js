@@ -24,8 +24,9 @@ function Controller() {
         Ti.API.info("[ACS] Create Destination");
         Cloud.Objects.create(data, function(x) {
             if (x.success) {
-                alert(data.fields.name + " Added!");
-                $.container.remove(actInd);
+                var l = APP.index.children.length;
+                APP.index.children[0].opacity = 1;
+                for (var i = 2; l >= i; l--) APP.index.remove(APP.index.children[l - 1]);
             } else alert("Error: " + x.message);
         });
     }
@@ -155,7 +156,7 @@ function Controller() {
     $.__views.mainView.add($.__views.submit);
     $.__views.submit.on("click", submitTour);
     _.extend($, $.__views);
-    var Cloud = require("ti.cloud"), data = {
+    var Cloud = require("ti.cloud"), APP = require("alloy/controllers/core"), data = {
         classname: "tour",
         fields: {}
     };

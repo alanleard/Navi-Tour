@@ -1,5 +1,11 @@
 function Controller() {
     function getTours() {
+        if (APP.tours) {
+            $.tableView.setData(APP.tours);
+            updateCheck();
+        } else queryTours();
+    }
+    function queryTours() {
         Cloud.Objects.query({
             classname: "tour",
             page: 1,
@@ -13,10 +19,21 @@ function Controller() {
                     tableData.push(row);
                 }
                 $.tableView.setData(tableData);
+                APP.tours = tableData;
             } else $.tableView.setData([ {
                 title: "No tours found",
                 color: "#fff"
             } ]); else alert("Error:\\n" + (e.error && e.message || JSON.stringify(e)));
+        });
+    }
+    function updateCheck() {
+        Cloud.Objects.query({
+            classname: "tour",
+            page: 1,
+            per_page: 100,
+            order: "name"
+        }, function(e) {
+            e.success && e.tour.length != APP.tours.length && queryTours();
         });
     }
     function rowClick(e) {

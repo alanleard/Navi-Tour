@@ -1,6 +1,7 @@
 ".container": {
 	backgroundColor: "#000",
-	height:75
+	height:75,
+	className:"tour"
 },
 "#rowImage":{
 	left:0,
