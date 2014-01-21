@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -12,6 +12,7 @@
 #import "TiUtils.h"
 #import "TiFile.h"
 #import "TiMediaAudioSession.h"
+#import "TiFilesystemFileProxy.h"
 
 @implementation TiMediaAudioRecorderProxy
 
@@ -55,6 +56,11 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kTiMediaAudioSessionInterruptionBegin object:[TiMediaAudioSession sharedSession]];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kTiMediaAudioSessionInterruptionEnd object:[TiMediaAudioSession sharedSession]];
 	[super _destroy];
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.Media.AudioRecorder";
 }
 
 -(AQRecorder*)recorder
@@ -150,7 +156,7 @@
 			recorder->StopRecord();
 			[[TiMediaAudioSession sharedSession] stopAudioSession];
 		}
-		return file;
+		return [[[TiFilesystemFileProxy alloc] initWithFile:[file path]] autorelease];
 	}
 	
 	return nil;

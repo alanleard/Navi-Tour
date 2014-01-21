@@ -1,1 +1,1 @@
-/Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/createTour.js
+/Users/aleard/Apps/AppceleratorStudio/Navi-Tour/Resources/iphone/alloy/controllers/createTour.js

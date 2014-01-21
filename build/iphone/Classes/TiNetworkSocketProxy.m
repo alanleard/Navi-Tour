@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -16,6 +16,12 @@
 {
     return [[[TiNetworkSocketTCPProxy alloc] _initWithPageContext:[self executionContext] args:args] autorelease];
 }
+
+-(NSString*)apiName
+{
+    return @"Ti.Network.Socket";
+}
+
 
 MAKE_SYSTEM_PROP(INITIALIZED,SOCKET_INITIALIZED);
 MAKE_SYSTEM_PROP(CONNECTED,SOCKET_CONNECTED);

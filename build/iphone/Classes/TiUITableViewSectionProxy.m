@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -40,6 +40,11 @@
 	[super _initWithProperties:properties];
 	self.modelDelegate = self;
 }	
+
+-(NSString*)apiName
+{
+    return @"Ti.UI.TableViewSection";
+}
 
 -(void)reorderRows
 {
@@ -82,6 +87,7 @@
 {
 	ENSURE_SINGLE_ARG(proxy,TiUITableViewRowProxy);
 	[self rememberProxy:proxy];
+	[(TiUITableViewRowProxy *)proxy setSection:self];
 	if (rows==nil) 
 	{
 		rows = [[NSMutableArray array] retain];
@@ -93,6 +99,7 @@
 {
 	ENSURE_SINGLE_ARG(proxy,TiUITableViewRowProxy);
 	[self forgetProxy:proxy];
+	[(TiUITableViewRowProxy *)proxy setSection:nil];
 	if (rows!=nil)
 	{
 		[rows removeObject:proxy];

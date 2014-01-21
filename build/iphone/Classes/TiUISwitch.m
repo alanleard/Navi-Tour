@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -29,6 +29,11 @@
 		[self addSubview:switchView];
 	}
 	return switchView;
+}
+
+- (id)accessibilityElement
+{
+	return [self switchView];
 }
 
 -(BOOL)hasTouchableListener
@@ -90,10 +95,11 @@
 - (IBAction)switchChanged:(id)sender
 {
 	NSNumber * newValue = [NSNumber numberWithBool:[(UISwitch *)sender isOn]];
-	[self.proxy replaceValue:newValue forKey:@"value" notification:NO];
+	id current = [self.proxy valueForUndefinedKey:@"value"];
+    [self.proxy replaceValue:newValue forKey:@"value" notification:NO];
 	
 	//No need to setValue, because it's already been set.
-	if ([self.proxy _hasListeners:@"change"])
+	if ([self.proxy _hasListeners:@"change"] && (current != newValue) && ![current isEqual:newValue])
 	{
 		[self.proxy fireEvent:@"change" withObject:[NSDictionary dictionaryWithObject:newValue forKey:@"value"]];
 	}

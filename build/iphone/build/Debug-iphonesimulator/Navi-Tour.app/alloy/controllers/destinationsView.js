@@ -1,1 +1,1 @@
-/Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/destinationsView.js
+/Users/aleard/Apps/AppceleratorStudio/Navi-Tour/Resources/iphone/alloy/controllers/destinationsView.js

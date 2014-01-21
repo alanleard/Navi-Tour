@@ -53,5 +53,6 @@
 	right:10,
 	backgroundColor:'#000',
     opacity:0.0,
-    expanded:true
+    expanded:true,
+    visible:false
 }

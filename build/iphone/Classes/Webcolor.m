@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -89,13 +89,8 @@ int toASCIIHexValue(unichar c) {return (c & 0xF) + (c < 'A' ? 0 : 9); }
 					   black,@"ff000000",
 					   nil];
 	}
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
-	if ([TiUtils isIOS5OrGreater])
-	{
-		[colorLookup setObject:[UIColor underPageBackgroundColor] forKey:IOS_COLOR_UNDER_PAGE_BACKGROUND];
-	}
-#endif
-	if ([colorName hasPrefix:@"#"]) 
+	[colorLookup setObject:[UIColor underPageBackgroundColor] forKey:IOS_COLOR_UNDER_PAGE_BACKGROUND];
+	if ([colorName hasPrefix:@"#"])
 	{
 		colorName = [colorName substringFromIndex:1];
 	}

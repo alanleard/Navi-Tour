@@ -1,1 +1,1 @@
-/Users/alanleard/TiApps/NaviTour/Resources/alloy/controllers/BaseController.js
+/Users/aleard/Apps/AppceleratorStudio/Navi-Tour/Resources/iphone/alloy/controllers/BaseController.js

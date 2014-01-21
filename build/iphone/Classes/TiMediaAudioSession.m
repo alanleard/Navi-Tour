@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -281,6 +281,14 @@ void TiAudioSessionInputAvailableCallback(void* inUserData, AudioSessionProperty
 		DebugLog(@"[WARN] Setting audio mode while playing audio... changes will not take effect until audio is restarted.");
 	}
 	AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(mode), &mode);
+}
+
+-(void)setRouteOverride:(UInt32)mode
+{
+	if ([self isActive]) {
+		DebugLog(@"[WARN] Overriding audio route while playing audio... changes will not take effect until audio is restarted.");
+	}
+	AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(mode), &mode);
 }
 
 -(UInt32)sessionMode

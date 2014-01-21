@@ -19,10 +19,10 @@ $.map.mapView.region = {latitude:args.latitude, longitude:args.longitude, latitu
 $.map.mapView.addAnnotation(annotation);
 $.map.driveNav.addEventListener('click', driveClick);
 
-
 //playAudio();
-playVideo();
+//playVideo();
 function driveClick(){
+	APP.nav.Enabled = true;
 	APP.nav.addPOI({ 
 		lat:args.latitude, 
 		lon:args.longitude, 
@@ -33,16 +33,23 @@ function driveClick(){
 }
 
 function flipDetails(){
-	$.flipView.animate({view:$.details,transition:Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT}, function(){
-		$.imageView.hide();
-	}); 
-	$.details.show();	      	
+	if(OS_IOS){
+		$.flipView.animate({view:$.details,transition:Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT}, function(){
+			
+		}); 
+	}
+	$.imageView.hide();
+	$.details.show();      	
 }
 
 function flipImage(){
-	$.flipView.animate({view:$.imageView,transition:Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT}, function(){
-		$.details.hide();
-	}); 
+	if(OS_IOS){
+		$.flipView.animate({view:$.imageView,transition:Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT}, function(){
+			$.details.hide();
+		}); 
+		
+	}
+	$.details.hide();
 	$.imageView.show();
 }
 
@@ -138,7 +145,7 @@ function completeVideo(){
 
 function sizePlayer(){
 	if($.videoPlayer.expanded){
-		completeVideo()
+		completeVideo();
 	} else {
 		$.videoPlayer.animate({ 
 			top:10,

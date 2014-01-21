@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -67,7 +67,7 @@
 {
 	CGRect bounds = [self bounds];
 	[button setFrame:bounds];
-	if ((backgroundImageCache == nil) || CGSizeEqualToSize(bounds.size, CGSizeZero)) {
+	if ((backgroundImageCache == nil) || (bounds.size.width == 0) || (bounds.size.height == 0)) {
 		[button setBackgroundImage:nil forState:UIControlStateNormal];
 		return;
 	}
@@ -93,9 +93,9 @@
 	[button setBackgroundImage:backgroundImageUnstretchedCache forState:UIControlStateNormal];	
 }
 
--(void)layoutSubviews
+-(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
 {
-	[super layoutSubviews];
+	[super frameSizeChanged:frame bounds:bounds];
 	[self updateBackgroundImage];
 }
 
@@ -119,7 +119,7 @@
             touchStarted = NO;
             fireEvent = @"touchend";
             if (button.highlighted) {
-                fireActionEvent = [touch tapCount] < 2 ? @"click" : @"dblclick";
+                fireActionEvent = [touch tapCount] == 1 ? @"click" : ([touch tapCount] == 2 ? @"dblclick" : nil);
             }
             break;
         case UITouchPhaseCancelled:
@@ -162,6 +162,11 @@
 		[button addSubview:viewGroupWrapper];
 	}
 	return button;
+}
+
+- (id)accessibilityElement
+{
+	return [self button];
 }
 
 -(UIView *) viewGroupWrapper
@@ -209,28 +214,7 @@
 	if (image!=nil)
 	{
 		[[self button] setImage:image forState:UIControlStateNormal];
-		
-		// if the layout is undefined or auto, we need to take the size of the image
-		//TODO: Refactor. This will cause problems if there's multiple setImages called,
-		//Since we change the values of the proxy.
-		LayoutConstraint *layoutProperties = [(TiViewProxy *)[self proxy] layoutProperties];
-		BOOL reposition = NO;
-		
-		if (TiDimensionIsUndefined(layoutProperties->width) || TiDimensionIsAuto(layoutProperties->width))
-		{
-			layoutProperties->width.value = image.size.width;
-			layoutProperties->width.type = TiDimensionTypeDip;
-			reposition = YES;
-		}
-		if (TiDimensionIsUndefined(layoutProperties->height) || TiDimensionIsAuto(layoutProperties->height))
-		{
-			layoutProperties->height.value = image.size.height;
-			layoutProperties->height.type = TiDimensionTypeDip;
-		}
-		if (reposition)
-		{
-			[(TiViewProxy *)[self proxy] contentsWillChange];			
-		}
+		[(TiViewProxy *)[self proxy] contentsWillChange];
 	}
 	else
 	{
@@ -322,6 +306,34 @@
 			[b setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 		}
 	}
+}
+
+-(void)setDisabledColor_:(id)color
+{
+    if (color!=nil) {
+        TiColor *selColor = [TiUtils colorValue:color];
+        UIButton *b = [self button];
+        if (selColor!=nil) {
+            [b setTitleColor:[selColor _color] forState:UIControlStateDisabled];
+        }
+    }
+}
+
+-(void)setShadowColor_:(id)color
+{
+    if (color==nil) {
+        [[self button] setTitleShadowColor:nil forState:UIControlStateNormal];
+    } else {
+        color = [TiUtils colorValue:color];
+        [[self button] setTitleShadowColor:[color color] forState:UIControlStateNormal];
+    }
+}
+
+-(void)setShadowOffset_:(id)value
+{
+	CGPoint p = [TiUtils pointValue:value];
+	CGSize size = {p.x,p.y};
+	[[[self button] titleLabel] setShadowOffset:size];
 }
 
 -(void)setTextAlign_:(id)align

@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -31,8 +31,8 @@
  */
 -(UINavigationController*)controller;
 
--(void)open:(NSArray*)args;
--(void)close:(NSArray*)args;
+-(void)openWindow:(NSArray*)args;
+-(void)closeWindow:(NSArray*)args;
 
 /**
  Tells the tab that its associated window is closing.

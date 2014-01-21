@@ -1,17 +1,18 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2010 by Navi_Tour, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
  * WARNING: This is generated code. Modify at your own risk and without support.
  */
 
-#if defined(USE_TI_FILESYSTEM) || defined(USE_TI_DATABASE)
+#if defined(USE_TI_FILESYSTEM) || defined(USE_TI_DATABASE) || defined(USE_TI_MEDIA)
 
 #import "TiStreamProxy.h"
 #import "TiFilesystemFileStreamProxy.h"
 #import "TiFilesystemFileProxy.h"
+#import "TiUtils.h"
 
 @interface TiFilesystemFileStreamProxy (Private)
 
@@ -95,6 +96,11 @@
 	[super dealloc];
 }
 
+-(NSString*)apiName
+{
+    return @"Ti.Filesystem.FileStream";
+}
+
 #define THROW_IF_HANDLE_NIL(loc) \
 if(fileHandle == nil) {\
 	[self throwException:TiExceptionInternalInconsistency subreason:@"File handle has already been closed." location:loc];\
@@ -118,7 +124,10 @@ if(fileHandle == nil) {\
 	if([[buffer data] length] == 0 && length != 0) {
 		NSString *errorMessage = @"Buffer length is zero"; 
 		if(callback != nil) {
-			NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:NUMINT(0), @"bytesProcessed", errorMessage, @"errorMessage", NUMINT(0), @"errorCode", nil];
+			NSMutableDictionary* event = [TiUtils dictionaryWithCode:-1 message:errorMessage];
+			[event setObject:NUMINT(0) forKey:@"bytesProcessed"];
+			[event setObject:errorMessage forKey:@"errorMessage"];
+			[event setObject:NUMINT(0) forKey:@"errorCode"];
 			[self _fireEventToListener:@"read" withObject:event listener:callback thisObject:nil];
 		} else {
 			[self throwException:TiExceptionRangeError
@@ -183,13 +192,21 @@ if(fileHandle == nil) {\
 			[fileHandle synchronizeFile]; //force immediate save to disk
 			
 			if(callback != nil) {
-				NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:self, @"source", NUMINT([slicedData length]), @"bytesProcessed", NUMINT(0), @"errorState", @"", @"errorDescription", nil];
+				NSMutableDictionary* event = [TiUtils dictionaryWithCode:0 message:nil];
+				[event setObject:self forKey:@"source"];
+				[event setObject:NUMINT([slicedData length]) forKey:@"bytesProcessed"];
+				[event setObject:NUMINT(0) forKey:@"errorState"];
+				[event setObject:@"" forKey:@"errorDescription"];
 				[self _fireEventToListener:@"writeToStream" withObject:event listener:callback thisObject:nil];
 			}
 		}
 		@catch (NSException * e) {
 			if(callback != nil) {
-				NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:self, @"source", NUMINT(0), @"bytesProcessed", [e reason], @"errorDescription", NUMINT(-1), @"errorState",nil];
+				NSMutableDictionary* event = [TiUtils dictionaryWithCode:-1 message:[e reason]];
+				[event setObject:self forKey:@"source"];
+				[event setObject:NUMINT(0) forKey:@"bytesProcessed"];
+				[event setObject:[e reason] forKey:@"errorDescription"];
+				[event setObject:NUMINT(-1) forKey:@"errorState"];
                 [self _fireEventToListener:@"writeToStream" withObject:event listener:callback thisObject:nil];
 			} else {
 				@throw e;
@@ -228,7 +245,12 @@ if(fileHandle == nil) {\
 				
 				//call callback
 				if(callback != nil) {
-					NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:self, @"fromStream", output, @"toStream", NUMINT(bytesWritten), @"bytesProcessed", NUMINT(0), @"errorState", @"", @"errorDescription", nil];
+					NSMutableDictionary* event = [TiUtils dictionaryWithCode:0 message:nil];
+					[event setObject:self forKey:@"fromStream"];
+					[event setObject:output forKey:@"toStream"];
+					[event setObject:NUMINT(bytesWritten) forKey:@"bytesProcessed"];
+					[event setObject:NUMINT(0) forKey:@"errorState"];
+					[event setObject:@"" forKey:@"errorDescription"];
 					[self _fireEventToListener:@"writeToStream" withObject:event listener:callback thisObject:nil];
 				}
 			} else {
@@ -238,7 +260,12 @@ if(fileHandle == nil) {\
         }
         @catch (NSException* e) {
             if (callback != nil) {
-                NSDictionary* event = [NSDictionary dictionaryWithObjectsAndKeys:self,@"fromStream",output,@"toStream", [e reason],@"errorDescription", NUMINT(-1),@"errorState",nil];
+				NSMutableDictionary* event = [TiUtils dictionaryWithCode:-1 message:[e reason]];
+				[event setObject:self forKey:@"fromStream"];
+				[event setObject:output forKey:@"toStream"];
+				[event setObject:NUMINT(0) forKey:@"bytesProcessed"];
+				[event setObject:[e reason] forKey:@"errorDescription"];
+				[event setObject:NUMINT(-1) forKey:@"errorState"];
                 [self _fireEventToListener:@"writeToStream" withObject:event listener:callback thisObject:nil];
             }
             else {
@@ -257,7 +284,12 @@ if(fileHandle == nil) {\
 	}	
     
     if (callback != nil) {
-        NSDictionary* event = [NSDictionary dictionaryWithObjectsAndKeys:self,@"fromStream",output,@"toStream",NUMINT(totalBytes),@"bytesProcessed",NUMINT(0),@"errorState",@"",@"errorDescription",nil];
+		NSMutableDictionary* event = [TiUtils dictionaryWithCode:0 message:nil];
+		[event setObject:self forKey:@"fromStream"];
+		[event setObject:output forKey:@"toStream"];
+		[event setObject:NUMINT(totalBytes) forKey:@"bytesProcessed"];
+		[event setObject:NUMINT(0) forKey:@"errorState"];
+		[event setObject:@"" forKey:@"errorDescription"];
         [self _fireEventToListener:@"writeToStream" withObject:event listener:callback thisObject:nil];
     }
     
@@ -292,7 +324,11 @@ if(fileHandle == nil) {\
 		VerboseLog(@"pumping data: %@", buffer);
 		
 		//invoke callback, passing the chunked data
-		NSDictionary* event = [NSDictionary dictionaryWithObjectsAndKeys:self,@"source", buffer, @"buffer", NUMINT([chunkedData length]), @"bytesProcessed", NUMINT(totalBytes),@"totalBytesProcessed", nil];
+		NSMutableDictionary* event = [TiUtils dictionaryWithCode:0 message:nil];
+		[event setObject:self forKey:@"source"];
+		[event setObject:buffer forKey:@"buffer"];
+		[event setObject:NUMINT([chunkedData length]) forKey:@"bytesProcessed"];
+		[event setObject:NUMINT(totalBytes) forKey:@"totalBytesProcessed"];
 		[self _fireEventToListener:@"pump" withObject:event listener:callback thisObject:nil];
 		
 		remaining = [self currentFileSize] - [fileHandle offsetInFile];
@@ -302,7 +338,7 @@ if(fileHandle == nil) {\
 		
 		//are we going to hit EOF? if so, invoke the callback with a -1 bytesProcessed event dict
 		if(remaining == 0) {
-			NSDictionary* event = [NSDictionary dictionaryWithObjectsAndKeys:self,@"source", buffer, @"buffer", NUMINT(-1), @"bytesProcessed", NUMINT(totalBytes),@"totalBytesProcessed", nil];
+			[event setObject:NUMINT(-1) forKey:@"bytesProcessed"];
 			[self _fireEventToListener:@"pump" withObject:event listener:callback thisObject:nil];
 			break;
 		}

@@ -3,12 +3,12 @@
 	bottom:5,
 	width:107,
 	height:30,
-	image:'drive.png'
+	backgroundImage:'/drive.png'
 },
 "#mapView":{
 	top:"55%",
 	width:"fill",
-	mapType: Titanium.Map.HYBRID_TYPE,
+	mapType: Titanium.Map.SATELLITE_TYPE,
 	regionFit:true,
 	animate:true,
 	userLocation:false,
@@ -18,16 +18,17 @@
 },
 "#mapType":{
 	height:25,
-	width:80,
-	top:5,
+	width:60,
+	top:"56%",
 	left:5,
-	title:'Hybrid',
-	backgroundImage:'button.png'
+	title:'Satellite',
+	backgroundImage:'/button.png',
+	font:{fontSize:12}
 },
 "#mapSize":{
 	height:25,
 	width:25,
-	top:5,
+	top:"56%",
 	right:5,
-	backgroundImage:'sizeButton.png'
+	backgroundImage:'/sizeButton.png'
 }

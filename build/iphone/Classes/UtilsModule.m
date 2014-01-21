@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -30,6 +30,12 @@
 	}
 	THROW_INVALID_ARG(@"invalid type");
 }
+
+-(NSString*)apiName
+{
+    return @"Ti.Utils";
+}
+
 
 #pragma mark Public API
 
@@ -72,7 +78,7 @@
 	const char *data = [str UTF8String];
 	size_t len = [str length];
 	
-	size_t outsize = EstimateBas64DecodedDataSize(len);
+	size_t outsize = TI_EstimateBas64DecodedDataSize(len);
 	char *base64Result = NULL;
 	if(len>0){
 		base64Result = malloc(sizeof(char)*outsize);
@@ -83,7 +89,7 @@
 	}
 
 	size_t theResultLength = outsize;	
-	bool result = Base64DecodeData(data, len, base64Result, &theResultLength);
+	bool result = TI_Base64DecodeData(data, len, base64Result, &theResultLength);
 	if (result)
 	{
 		NSData *theData = [NSData dataWithBytes:base64Result length:theResultLength];

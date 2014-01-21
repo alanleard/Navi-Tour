@@ -1,11 +1,12 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
  * WARNING: This is generated code. Modify at your own risk and without support.
  */
+#import "TiProxy.h"
 #import "TiUtils.h"
 #import "TiEvaluator.h"
 
@@ -35,6 +36,7 @@
 -(NSString*)moduleId;
 -(BOOL)isJSModule;
 -(NSData*)moduleJS;
+-(NSData*)loadModuleAsset:(NSString*)fromPath;
 
 /*
  Converts a resource name in to a URL.

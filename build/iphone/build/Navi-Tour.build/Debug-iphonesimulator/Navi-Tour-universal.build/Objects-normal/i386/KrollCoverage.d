@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/KrollCoverage.m
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/KrollCoverage.m

@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ApplicationMods.m \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ApplicationMods.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ApplicationMods.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ApplicationMods.h

@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -16,9 +16,13 @@
 #import "TiApp.h"
 #import "TiUITextWidget.h"
 
+#ifdef USE_TI_UIIOSATTRIBUTEDSTRING
+#import "TiUIiOSAttributedStringProxy.h"
+#endif
+
 @implementation TiTextField
 
-@synthesize leftButtonPadding, rightButtonPadding, paddingLeft, paddingRight, becameResponder, maxLength;
+@synthesize leftButtonPadding, rightButtonPadding, paddingLeft, paddingRight, becameResponder;
 
 -(void)configure
 {
@@ -29,7 +33,6 @@
 	rightButtonPadding = 0;
 	paddingLeft = 0;
 	paddingRight = 0;
-    maxLength = -1;
 	[super setLeftViewMode:UITextFieldViewModeAlways];
 	[super setRightViewMode:UITextFieldViewModeAlways];	
 }
@@ -41,6 +44,35 @@
 	RELEASE_TO_NIL(leftView);
 	RELEASE_TO_NIL(rightView);
 	[super dealloc];
+}
+
+-(void)setTouchHandler:(TiUIView*)handler
+{
+    //Assign only. No retain
+    touchHandler = handler;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    [touchHandler processTouchesBegan:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
+}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    [touchHandler processTouchesMoved:touches withEvent:event];
+    [super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    [touchHandler processTouchesEnded:touches withEvent:event];
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    [touchHandler processTouchesCancelled:touches withEvent:event];
+    [super touchesCancelled:touches withEvent:event];
 }
 
 -(UIView*)newPadView:(CGFloat)width height:(CGFloat)height
@@ -166,7 +198,7 @@
 
 -(BOOL)canBecomeFirstResponder
 {
-	return YES;
+    return self.isEnabled;
 }
 
 -(BOOL)resignFirstResponder
@@ -183,15 +215,17 @@
 
 -(BOOL)becomeFirstResponder
 {
-	becameResponder = YES;
-	
-	if ([super becomeFirstResponder])
-	{
-		[self repaintMode];
-		return YES;
-	}
-	return NO;
+    if (self.canBecomeFirstResponder) {
+        if ([super becomeFirstResponder])
+        {
+            becameResponder = YES;
+            [self repaintMode];
+            return YES;
+        }
+    }
+    return NO;
 }
+
 
 -(BOOL)isFirstResponder
 {
@@ -268,6 +302,7 @@
 		((TiTextField *)textWidgetView).textAlignment = UITextAlignmentLeft;
 		((TiTextField *)textWidgetView).contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		[(TiTextField *)textWidgetView configure];
+		[(TiTextField *)textWidgetView setTouchHandler:self];
 		[self addSubview:textWidgetView];
 		self.clipsToBounds = YES;
 		WARN_IF_BACKGROUND_THREAD_OBJ;	//NSNotificationCenter is not threadsafe!
@@ -300,10 +335,18 @@
 	[self textWidgetView].rightButtonPadding = [TiUtils floatValue:value];
 }
 
+-(void)setEditable_:(id)value
+{
+    BOOL _trulyEnabled = ([TiUtils boolValue:value def:YES] && [TiUtils boolValue:[[self proxy] valueForUndefinedKey:@"enabled"] def:YES]);
+    [[self textWidgetView] setEnabled:_trulyEnabled];
+}
+
 -(void)setEnabled_:(id)value
 {
-	[[self textWidgetView] setEnabled:[TiUtils boolValue:value]];
+    BOOL _trulyEnabled = ([TiUtils boolValue:value def:YES] && [TiUtils boolValue:[[self proxy] valueForUndefinedKey:@"editable"] def:YES]);
+    [[self textWidgetView] setEnabled:_trulyEnabled];
 }
+
 
 -(void)setBackgroundImage_:(id)image
 {
@@ -327,6 +370,15 @@
 -(void)setHintText_:(id)value
 {
 	[[self textWidgetView] setPlaceholder:[TiUtils stringValue:value]];
+}
+
+-(void)setAttributedHintText_:(id)value
+{
+#ifdef USE_TI_UIIOSATTRIBUTEDSTRING
+    ENSURE_SINGLE_ARG(value,TiUIiOSAttributedStringProxy);
+    [[self proxy] replaceValue:value forKey:@"attributedHintText" notification:NO];
+    [[self textWidgetView] setAttributedPlaceholder:[value attributedString]];
+#endif
 }
 
 -(void)setMinimumFontSize_:(id)value
@@ -419,24 +471,6 @@
 	}
 }
 
--(void)setValue_:(id)value
-{
-    NSString* string = [TiUtils stringValue:value];
-    NSInteger maxLength = [[self textWidgetView] maxLength];
-    if (maxLength > -1 && [string length] > maxLength) {
-        string = [string substringToIndex:maxLength];
-    }
-    [super setValue_:string];
-}
-
--(void)setMaxLength_:(id)value
-{
-    NSInteger maxLength = [TiUtils intValue:value def:-1];
-    [[self textWidgetView] setMaxLength:maxLength];
-    [self setValue_:[[self textWidgetView] text]];
-    [[self proxy] replaceValue:value forKey:@"maxLength" notification:NO];
-}
-
 #pragma mark Public Method
 
 -(BOOL)hasText
@@ -449,6 +483,14 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)tf
 {
+    TiUITextWidgetProxy * ourProxy = (TiUITextWidgetProxy *)[self proxy];
+    
+    //TIMOB-14563. Set the right text value.
+    if ([ourProxy suppressFocusEvents]) {
+        NSString* theText = [ourProxy valueForKey:@"value"];
+        [tf setText:theText];
+    }
+    
 	[self textWidget:tf didFocusWithText:[tf text]];
 	[self performSelector:@selector(textFieldDidChange:) onThread:[NSThread currentThread] withObject:nil waitUntilDone:NO];
 }
@@ -458,19 +500,24 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;        // return NO to disallow editing.
 {
-	return YES;
+    return YES;
 }
 
 - (BOOL)textField:(UITextField *)tf shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *curText = [[tf text] stringByReplacingCharactersInRange:range withString:string];
    
-    NSInteger maxLength = [[self textWidgetView] maxLength];    
     if ( (maxLength > -1) && ([curText length] > maxLength) ) {
+        [self setValue_:curText];
         return NO;
     }
 
-	[(TiUITextFieldProxy *)self.proxy noteValueChange:curText];
+    /*
+        Adding a small delay as `change` event can be fired even before the textfield text is actually updated by the system,
+        leading to race conditions. Refer to TIMOB-16014
+     */
+
+	[(TiUITextFieldProxy *)self.proxy performSelector:@selector(noteValueChange:) withObject:curText afterDelay:0.01];
 	return YES;
 }
 
@@ -481,7 +528,13 @@
 
 - (void)textFieldDidChange:(NSNotification *)notification
 {
-	[(TiUITextFieldProxy *)self.proxy noteValueChange:[(UITextField *)textWidgetView text]];
+    TiUITextWidgetProxy * ourProxy = (TiUITextWidgetProxy *)[self proxy];
+    
+    //TIMOB-14563. This is incorrect when passowrd mark is used. Just ignore.
+    if ([ourProxy suppressFocusEvents]) {
+        return;
+    }
+    [ourProxy noteValueChange:[(UITextField *)textWidgetView text]];
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)tf

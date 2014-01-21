@@ -1,1 +1,2 @@
-dependencies: /Users/alanleard/TiApps/NaviTour/build/iphone/main.m
+dependencies: \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/main.m

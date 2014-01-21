@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -15,14 +15,6 @@
 @class TiUITableView;
 @class TiUITableViewSectionProxy;
 
-typedef enum  
-{
-    TiCellBackgroundViewPositionTop, 
-    TiCellBackgroundViewPositionMiddle, 
-    TiCellBackgroundViewPositionBottom,
-	TiCellBackgroundViewPositionSingleLine
-} TiCellBackgroundViewPosition;
-
 @interface TiUITableViewRowProxy : TiViewProxy <TiProxyDelegate>
 {
 @private
@@ -30,6 +22,8 @@ typedef enum
 	TiUITableView *table;
 	TiUITableViewSectionProxy *section;
 	TiDimension height;
+	TiDimension leftCap;
+	TiDimension topCap;
 	BOOL configuredChildren;
 	int dirtyRowFlags;
 	BOOL subviewIsAnimating;
@@ -43,6 +37,7 @@ typedef enum
 #pragma mark Public APIs
 
 @property(nonatomic,readonly)	NSString *tableClass;
+@property(nonatomic, readonly) BOOL reusable; // Readonly until reproxy/reuse implemented properly
 
 #pragma mark Framework
 
@@ -51,7 +46,7 @@ typedef enum
 @property(nonatomic,readwrite,assign) NSInteger row;
 @property(nonatomic,readwrite,assign) TiUITableViewCell* callbackCell;
 
-+(void)clearTableRowCell:(UITableViewCell*)cell;
+-(void)prepareTableRowForReuse;
 -(void)initializeTableViewCell:(UITableViewCell*)cell;
 -(CGFloat)sizeWidthForDecorations:(CGFloat)oldWidth forceResizing:(BOOL)force;
 -(CGFloat)rowHeight:(CGFloat)width;
@@ -59,6 +54,8 @@ typedef enum
 -(id)createEventObject:(id)initialObject;
 -(void)triggerAttach;
 -(void)updateRow:(NSDictionary*)data withObject:(NSDictionary*)properties;
+-(UIView*) currentRowContainerView; //Private method :For internal use only.
+-(void)triggerLayout; //Private method :For internal use only. Called from layoutSubviews of the cell.
 
 @end
 

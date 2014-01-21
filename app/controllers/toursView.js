@@ -6,7 +6,7 @@ APP.navTitle.text = $.tableView.title;
 
 $.tableView.setData([{title:'Loading tours...', color:'#fff'}]);
 
-getTours()
+getTours();
 
 function getTours(){
 	if(APP.tours){
@@ -67,7 +67,7 @@ function updateCheck(){
 	});
 }
 function rowClick( e ){
-	var view = Alloy.createController('tourDetails', e.rowData.args).getView();      
+	var view = Alloy.createController('tourDetails', e.row.args).getView();      
 	$.tableView.animate({opacity:0.0, duration:250}, function(){
 		view.opacity = 0.0;
 		APP.index.add(view);

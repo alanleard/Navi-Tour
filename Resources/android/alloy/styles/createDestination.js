@@ -1,0 +1,1 @@
+module.exports = [{"isId":true,"priority":100000.0002,"key":"container","style":{title:"Add a Destination",backgroundColor:"#000",layout:"vertical",}},{"isId":true,"priority":100000.0003,"key":"searchBar","style":{hintText:"Destination, City and State or Zip",barColor:"#000",}},{"isId":true,"priority":100000.0004,"key":"searchTable","style":{backgroundColor:"#000",}}];

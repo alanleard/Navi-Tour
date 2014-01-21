@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -30,12 +30,19 @@
     return [NSMutableDictionary dictionaryWithObject:@"title" forKey:@"titleid"];
 }
 
+-(NSString*)apiName
+{
+    return @"Ti.UI.OptionDialog";
+}
+
 -(void)show:(id)args
 {
 	ENSURE_SINGLE_ARG_OR_NIL(args,NSDictionary);
 	[self rememberSelf];
 	ENSURE_UI_THREAD(show,args);
-	
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(suspended:) name:kTiSuspendNotification object:nil];
+
 	showDialog = YES;
 	NSMutableArray *options = [self valueForKey:@"options"];
 	if (options==nil)
@@ -43,7 +50,9 @@
 		options = [[[NSMutableArray alloc] initWithCapacity:2] autorelease];
 		[options addObject:NSLocalizedString(@"OK",@"Alert OK Button")];
 	}
-	
+
+    persistentFlag = [TiUtils boolValue:[self valueForKey:@"persistent"] def:YES];
+    forceOpaqueBackground = [TiUtils boolValue:[self valueForKey:@"opaquebackground"] def:NO];
 	if (actionSheet != nil) {
 		[actionSheet setDelegate:nil];
 		[actionSheet release];
@@ -97,7 +106,7 @@
                                    nil];
             [self fireEvent:@"click" withObject:event];
         }
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         [self forgetSelf];
         [self release];
     }
@@ -125,7 +134,27 @@
     }, NO);
 }
 
+-(void)suspended:(NSNotification*)note
+{
+    if (!persistentFlag) {
+        [self hide:[NSArray arrayWithObject: [NSDictionary dictionaryWithObject:NUMBOOL(NO) forKey:@"animated"]]];
+    }
+}
+
 #pragma mark AlertView Delegate
+
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet_
+{
+    //TIMOB-15939. Workaround rendering issue on iPAD on iOS7
+    if (actionSheet_ == actionSheet && forceOpaqueBackground &&[TiUtils isIOS7OrGreater] && [TiUtils isIPad]) {
+        NSArray* subviews = [actionSheet subviews];
+        
+        for (UIView* subview in subviews) {
+            [subview setBackgroundColor:[UIColor whiteColor]];
+        }
+        [actionSheet setBackgroundColor:[UIColor whiteColor]];
+    }
+}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet_ didDismissWithButtonIndex:(NSInteger)buttonIndex;
 {

@@ -1,0 +1,23 @@
+{
+	"target": "simulator",
+	"deployType": "development",
+	"deviceFamily": "universal",
+	"iosSdkPath": "/Users/aleard/Library/Application Support/Titanium/mobilesdk/osx/3.2.0.GA/iphone",
+	"tiCoreHash": "77157e1ffaec640cf559356a147b6a4c",
+	"modulesHash": "f0c82200e236296afdd8e84a344acff2",
+	"modulesNativeHash": "d0c42f98bdc134849f5c9f650c57727f",
+	"gitHash": "d9182d6",
+	"name": "Navi-Tour",
+	"id": "com.appcelerator.naviapp.alanleard",
+	"analytics": true,
+	"publisher": "alanleard",
+	"url": "http://appcelerator.com",
+	"version": "1.0",
+	"description": "not specified",
+	"copyright": "2012 by alanleard",
+	"guid": "03b36c39-ce95-4e98-9e53-efafdc3fbd60",
+	"skipJSMinification": true,
+	"forceCopy": false,
+	"forceCopyAll": false,
+	"encryptJS": false
+}

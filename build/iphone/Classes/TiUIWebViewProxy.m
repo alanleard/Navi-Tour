@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -43,6 +43,11 @@ static NSArray* webKeySequence;
         webKeySequence = [[NSArray arrayWithObjects:@"url",nil] retain];
     }
     return webKeySequence;
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.UI.WebView";
 }
 
 -(BOOL)shouldDetachViewForSpace
@@ -278,6 +283,20 @@ USE_VIEW_FOR_CONTENT_WIDTH
 
 DEFINE_DEF_PROP(scrollsToTop,[NSNumber numberWithBool:YES]);
 
+#pragma mark - Internal Use Only
+-(void)delayedLoad
+{
+    TiThreadPerformOnMainThread(^{
+        [self contentsWillChange];
+    }, NO);
+}
+
+-(void)webviewDidFinishLoad
+{
+    [self contentsWillChange];
+    //Do a delayed load as well if this one does not go through.
+    [self performSelector:@selector(delayedLoad) withObject:nil afterDelay:0.5];
+}
 @end
 
 #endif

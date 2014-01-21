@@ -1,1 +1,1 @@
-/Users/alanleard/TiApps/NaviTour/Resources/app.js
+/Users/aleard/Apps/AppceleratorStudio/Navi-Tour/Resources/iphone/app.js

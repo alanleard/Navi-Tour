@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -17,6 +17,7 @@
 #import "TiBlob.h"
 
 #define DEBUG_IMAGEVIEW
+#define DEFAULT_IMAGEVIEW_INTERVAL 200
 
 @implementation TiUIImageViewProxy
 @synthesize imageURL;
@@ -32,6 +33,11 @@ static NSArray* imageKeySequence;
 		imageKeySequence = [[NSArray arrayWithObjects:@"width",@"height",nil] retain];
 	}
 	return imageKeySequence;
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.UI.ImageView";
 }
 
 -(void)propagateLoadEvent:(NSString *)stateString
@@ -51,9 +57,12 @@ static NSArray* imageKeySequence;
 
 -(void)_configure
 {
-	[self replaceValue:NUMBOOL(NO) forKey:@"animating" notification:NO];
-	[self replaceValue:NUMBOOL(NO) forKey:@"paused" notification:NO];
-	[self replaceValue:NUMBOOL(NO) forKey:@"reverse" notification:NO];
+    [self replaceValue:NUMBOOL(NO) forKey:@"animating" notification:NO];
+    [self replaceValue:NUMBOOL(NO) forKey:@"paused" notification:NO];
+    [self replaceValue:NUMBOOL(NO) forKey:@"reverse" notification:NO];
+    [self replaceValue:NUMBOOL(YES) forKey:@"stopped" notification:YES];
+    [self replaceValue:NUMBOOL(YES) forKey:@"autorotate" notification:NO];
+    [self replaceValue:NUMFLOAT(DEFAULT_IMAGEVIEW_INTERVAL) forKey:@"duration" notification:NO];
 }
 
 -(void)start:(id)args
@@ -125,10 +134,6 @@ static NSArray* imageKeySequence;
 -(id)toBlob:(id)args
 {
 	id imageValue = [self valueForKey:@"image"];
-	if (imageValue == nil)
-	{
-		imageValue = [self valueForKey:@"url"];
-	}
 
 	if ([imageValue isKindOfClass:[TiBlob class]])
 	{
@@ -222,7 +227,7 @@ USE_VIEW_FOR_CONTENT_HEIGHT
 	{
 		if ([self _hasListeners:@"error"])
 		{
-			[self fireEvent:@"error" withObject:[NSDictionary dictionaryWithObjectsAndKeys:[request url], @"image", nil]];
+			[self fireEvent:@"error" withObject:[NSDictionary dictionaryWithObject:[request url] forKey:@"image"] errorCode:[error code] message:[TiUtils messageFromError:error]];
 		}
 		RELEASE_TO_NIL(urlRequest);
 	}

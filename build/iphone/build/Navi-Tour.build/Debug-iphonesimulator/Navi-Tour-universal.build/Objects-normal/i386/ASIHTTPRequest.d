@@ -1,12 +1,12 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIHTTPRequest.m \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIHTTPRequest.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIHTTPRequestConfig.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIHTTPRequestDelegate.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIProgressDelegate.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASICacheDelegate.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/Reachability.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIAuthenticationDialog.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIInputStream.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIDataDecompressor.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/ASI/ASIDataCompressor.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIHTTPRequest.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIHTTPRequest.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIHTTPRequestConfig.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIHTTPRequestDelegate.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIProgressDelegate.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASICacheDelegate.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/Reachability.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIAuthenticationDialog.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIInputStream.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIDataDecompressor.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/ASI/ASIDataCompressor.h

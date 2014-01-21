@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -12,17 +12,18 @@
 
 @interface TiUILabel : TiUIView<LayoutAutosizing> {
 @private
-	UILabel *label;
-    UIImageView* backgroundView;
-	BOOL requiresLayout;
+    UILabel *label;
+    UIView* wrapperView;
+    CALayer* bgdLayer;
+    BOOL requiresLayout;
     CGRect padding;
-    BOOL repad;
-	
-	CGRect initialLabelFrame;
+    CGRect textPadding;
+    UIControlContentVerticalAlignment verticalAlign;
+    CGRect initialLabelFrame;
 }
 
 @property(nonatomic,getter=isHighlighted) BOOL     highlighted;          // default is NO
-
+-(UILabel*)label;
 @end
 
 #endif

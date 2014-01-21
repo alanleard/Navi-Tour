@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -19,6 +19,8 @@
 #import "Mimetypes.h"
 #import "TiFile.h"
 #import "ASIDownloadCache.h"
+
+extern NSString * const TI_APPLICATION_GUID;
 
 int CaselessCompare(const char * firstString, const char * secondString, int size)
 {
@@ -111,7 +113,11 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 	{
 		readyState = NetworkClientStateUnsent;
 		autoRedirect = [[NSNumber alloc] initWithBool:YES];
-		validatesSecureCertificate = [[NSNumber alloc] initWithBool:NO];
+#if defined(DEBUG) || defined(DEVELOPER)
+			validatesSecureCertificate = [[NSNumber alloc] initWithBool:NO];
+#else
+			validatesSecureCertificate = [[NSNumber alloc] initWithBool:YES];
+#endif
 	}
 	return self;
 }
@@ -119,6 +125,11 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 -(void)_configure
 {
     [self initializeProperty:@"cache" defaultValue:NUMBOOL(NO)];
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.Network.HTTPClient";
 }
 
 -(void)setOnload:(KrollCallback *)callback
@@ -342,11 +353,15 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 		int responseCode = [request responseStatusCode];
 		if (hasOnerror && (responseCode >= 400) && (responseCode <= 599))
 		{
-			[self fireCallback:@"onerror" withArg:[NSDictionary dictionaryWithObject:@"error" forKey:@"type"] withSource:thisPointer];
+			NSMutableDictionary * event = [TiUtils dictionaryWithCode:responseCode message:@"HTTP error"];
+			[event setObject:@"error" forKey:@"type"];
+			[self fireCallback:@"onerror" withArg:event withSource:thisPointer];
 		}
 		else if(hasOnload)
 		{
-			[self fireCallback:@"onload" withArg:[NSDictionary dictionaryWithObject:@"load" forKey:@"type"] withSource:thisPointer];
+			NSMutableDictionary * event = [TiUtils dictionaryWithCode:0 message:nil];
+			[event setObject:@"load" forKey:@"type"];
+			[self fireCallback:@"onload" withArg:event withSource:thisPointer];
 		}		
 	}
 }
@@ -403,6 +418,8 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 	
 	[request addRequestHeader:@"User-Agent" value:[[TiApp app] userAgent]];
 	
+    [request addRequestHeader:[NSString stringWithFormat:@"%s-%s%s-%s", "X","Tita","nium","Id"] value:TI_APPLICATION_GUID];
+    
 	// twitter specifically disallows X-Requested-With so we only add this normal
 	// XHR header if not going to twitter. however, other services generally expect
 	// this header to indicate an XHR request (such as RoR)
@@ -423,6 +440,28 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 	[request setShouldAttemptPersistentConnection:keepAlive];
 	//handled in send, as now optional
 	//[request setShouldRedirect:YES];
+    
+    //TIMOB-11728. Expose setClientCertificates and setClientCertificateIdentity for HTTPClient
+    id clientCerts = [self valueForKey:@"clientCertificates"];
+    ENSURE_TYPE_OR_NIL(clientCerts, NSArray);
+    if (clientCerts != nil) {
+        [request setClientCertificates:clientCerts];
+    }
+    id certIdentity = [self valueForKey:@"clientCertificateIdentity"];
+    ENSURE_SINGLE_ARG_OR_NIL(certIdentity,NSObject);
+    if (certIdentity != nil) {
+        if ([certIdentity isKindOfClass:[NSArray class]]) {
+            [request setClientCertificateIdentity:(SecIdentityRef)[certIdentity objectAtIndex:0]];
+        }
+        else {
+            [request setClientCertificateIdentity:(SecIdentityRef)certIdentity];
+        }
+    }
+	//TIMOB-5435 NTLM support
+	[request setUsername:[TiUtils stringValue:[self valueForKey:@"username"]]];
+	[request setPassword:[TiUtils stringValue:[self valueForKey:@"password"]]];
+	[request setDomain:[TiUtils stringValue:[self valueForKey:@"domain"]]];
+    
 	[self _fireReadyStateChange:NetworkClientStateOpened failed:NO];
 	[self _fireReadyStateChange:NetworkClientStateHeaders failed:NO];
 }
@@ -535,9 +574,10 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 					}
 				}
 			}
-			else if ([arg isKindOfClass:[TiBlob class]])
+			else if ([arg isKindOfClass:[TiBlob class]]
+					 || [arg isKindOfClass:[TiFile class]])
 			{
-				TiBlob *blob = (TiBlob*)arg;
+				TiBlob *blob = [arg isKindOfClass:[TiBlob class]] ? (TiBlob *)arg : [(TiFile *)arg blob];
 				if ([blob type] == TiBlobTypeFile)
 				{
 					// could be large if file so let's tell the 
@@ -550,7 +590,6 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 					[request appendPostData:data];
 				}
 			}
-			//TODO: support TiFile post 1.4
 		}
 	}
 	
@@ -651,7 +690,8 @@ extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 	if (hasOnerror)
 	{
 		TiNetworkHTTPClientResultProxy *thisPointer = [[[TiNetworkHTTPClientResultProxy alloc] initWithDelegate:self] autorelease];
-		NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:[error description],@"error",@"error",@"type",nil];
+		NSMutableDictionary * event = [TiUtils dictionaryWithCode:[error code] message:[TiUtils messageFromError:error]];
+		[event setObject:@"error" forKey:@"type"];
 		[self fireCallback:@"onerror" withArg:event withSource:thisPointer];
 	}
 	[self forgetSelf];

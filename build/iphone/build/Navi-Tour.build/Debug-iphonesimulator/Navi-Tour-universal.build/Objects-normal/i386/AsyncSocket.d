@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/AsyncSocket.m \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/AsyncSocket.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/AsyncSocket.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/AsyncSocket.h

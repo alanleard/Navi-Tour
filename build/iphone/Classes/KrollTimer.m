@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -11,6 +11,7 @@
 #import "KrollObject.h"
 #import "TiUtils.h"
 #import "TiBase.h"
+#import "TiExceptionHandler.h"
 
 @implementation KrollTimer
 
@@ -69,7 +70,7 @@
 	if (exception!=NULL)
 	{
 		id excm = [KrollObject toID:kroll value:exception];
-		DebugLog(@"[ERROR] While executing Timer, received script error. '%@'",[TiUtils exceptionMessage:excm]);
+		[[TiExceptionHandler defaultExceptionHandler] reportScriptError:[TiUtils scriptErrorValue:excm]];
 	}
 	[invokeCond unlockWithCondition:1];
 }

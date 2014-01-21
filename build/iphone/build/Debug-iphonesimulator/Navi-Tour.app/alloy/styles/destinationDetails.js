@@ -1,0 +1,1 @@
+/Users/aleard/Apps/AppceleratorStudio/Navi-Tour/Resources/iphone/alloy/styles/destinationDetails.js

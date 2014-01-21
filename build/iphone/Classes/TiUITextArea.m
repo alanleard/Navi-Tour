@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -15,7 +15,67 @@
 #import "Webcolor.h"
 #import "TiApp.h"
 
+@implementation TiUITextViewImpl
+
+-(void)setTouchHandler:(TiUIView*)handler
+{
+    //Assign only. No retain
+    touchHandler = handler;
+}
+
+- (BOOL)touchesShouldBegin:(NSSet *)touches withEvent:(UIEvent *)event inContentView:(UIView *)view
+{
+    //If the content view is of type TiUIView touch events will automatically propagate
+    //If it is not of type TiUIView we will fire touch events with ourself as source
+    if ([view isKindOfClass:[TiUIView class]]) {
+        touchedContentView= view;
+    }
+    else {
+        touchedContentView = nil;
+    }
+    return [super touchesShouldBegin:touches withEvent:event inContentView:view];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    //When userInteractionEnabled is false we do nothing since touch events are automatically
+    //propagated. If it is dragging do not do anything.
+    //The reason we are not checking tracking (like in scrollview) is because for some 
+    //reason UITextView always returns true for tracking after the initial focus
+    if (!self.dragging && self.userInteractionEnabled && (touchedContentView == nil) ) {
+        [touchHandler processTouchesBegan:touches withEvent:event];
+ 	}		
+	[super touchesBegan:touches withEvent:event];
+}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    if (!self.dragging && self.userInteractionEnabled && (touchedContentView == nil) ) {
+        [touchHandler processTouchesMoved:touches withEvent:event];
+    }		
+	[super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    if (!self.dragging && self.userInteractionEnabled && (touchedContentView == nil) ) {
+        [touchHandler processTouchesEnded:touches withEvent:event];
+    }		
+	[super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+    if (!self.dragging && self.userInteractionEnabled && (touchedContentView == nil) ) {
+        [touchHandler processTouchesCancelled:touches withEvent:event];
+    }
+    [super touchesCancelled:touches withEvent:event];
+}
+@end
+
+
 @implementation TiUITextArea
+
+@synthesize becameResponder;
 
 #pragma mark Internal
 
@@ -27,17 +87,42 @@
 
 -(UIView<UITextInputTraits>*)textWidgetView
 {
-	if (textWidgetView==nil)
-	{
-		textWidgetView = [[UITextView alloc] initWithFrame:CGRectZero];
-		((UITextView *)textWidgetView).delegate = self;
-		[self addSubview:textWidgetView];
-		[(UITextView *)textWidgetView setContentInset:UIEdgeInsetsZero];
-		self.clipsToBounds = YES;
-        ((UITextView *)textWidgetView).text = @""; //Setting TextArea text to empty string 
-		WARN_IF_BACKGROUND_THREAD_OBJ;	//NSNotificationCenter is not threadsafe!
-	}
-	return textWidgetView;
+    if (textWidgetView==nil)
+    {
+        TiUITextViewImpl *textViewImpl = [[TiUITextViewImpl alloc] initWithFrame:CGRectZero];
+        textViewImpl.delaysContentTouches = NO;
+        [textViewImpl setTouchHandler:self];
+        textViewImpl.delegate = self;
+        [self addSubview:textViewImpl];
+        [textViewImpl setContentInset:UIEdgeInsetsZero];
+        self.clipsToBounds = YES;
+        
+        lastSelectedRange.location = 0;
+        lastSelectedRange.length = 0;
+        //Temporarily setting text to a blank space, to set the editable property [TIMOB-10295]
+        //This is a workaround for a Apple Bug.
+        textViewImpl.text = @" ";
+        textViewImpl.editable = YES;
+        
+        textViewImpl.text = @""; //Setting TextArea text to empty string
+        
+        textWidgetView = textViewImpl;
+        
+    }
+    return textWidgetView;
+}
+
+-(void)adjustOffsetIfRequired:(UITextView*)tv
+{
+    CGFloat contentHeight = tv.contentSize.height;
+    CGFloat boundsHeight = tv.bounds.size.height;
+    CGFloat lineHeight = tv.font.lineHeight;
+    
+    if (contentHeight >= (boundsHeight - lineHeight)) {
+        CGPoint curOffset = tv.contentOffset;
+        curOffset.y = curOffset.y + lineHeight;
+        [tv setContentOffset:curOffset animated:NO];
+    }
 }
 
 #pragma mark Public APIs
@@ -84,21 +169,51 @@
 	return [(UITextView *)[self textWidgetView] hasText];
 }
 
+-(BOOL)resignFirstResponder
+{
+    becameResponder = NO;
+    return [textWidgetView resignFirstResponder];
+}
+
 -(BOOL)becomeFirstResponder
 {
-	if ([textWidgetView isFirstResponder])
-	{
-		return NO;
-	}
-
-	[self makeRootViewFirstResponder];
-	BOOL result = [super becomeFirstResponder];
-	return result;
+    UITextView* ourView = (UITextView*)[self textWidgetView];
+    if (ourView.isEditable) {
+        becameResponder = YES;
+        
+        if ([textWidgetView isFirstResponder])
+        {
+            return NO;
+        }
+        
+        [self makeRootViewFirstResponder];
+        BOOL result = [super becomeFirstResponder];
+        return result;
+    }
+    return NO;
+}
+-(BOOL)isFirstResponder
+{
+    if (becameResponder)
+        return YES;
+    return [super isFirstResponder];
 }
 
 //TODO: scrollRangeToVisible
 
 #pragma mark UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    if([(TiViewProxy*)[self proxy] _hasListeners:@"link" checkParent:NO]) {
+        NSDictionary *eventDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [URL absoluteString], @"url",
+                                   [NSArray arrayWithObjects:NUMINT(characterRange.location), NUMINT(characterRange.length),nil],@"range",
+                                   nil];
+        [[self proxy] fireEvent:@"link" withObject:eventDict propagate:NO reportSuccess:NO errorCode:0 message:nil];
+    }
+    return handleLinks;
+}
 
 - (void)textViewDidBeginEditing:(UITextView *)tv
 {
@@ -134,6 +249,12 @@
 		NSDictionary *event = [NSDictionary dictionaryWithObject:rangeDict forKey:@"range"];
 		[self.proxy fireEvent:@"selected" withObject:event];
 	}
+    //TIMOB-15401. Workaround for UI artifact
+    if ((tv == textWidgetView) && (!NSEqualRanges(tv.selectedRange, lastSelectedRange))) {
+        lastSelectedRange.location = tv.selectedRange.location;
+        lastSelectedRange.length = tv.selectedRange.length;
+        [tv scrollRangeToVisible:lastSelectedRange];
+    }
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)tv
@@ -154,8 +275,28 @@
 		}
 	}
 	
+    if ( (maxLength > -1) && ([curText length] > maxLength) ) {
+        [self setValue_:curText];
+        return NO;
+    }
+    
+    //TIMOB-15401. Workaround for UI artifact
+    if ([tv isScrollEnabled] && [text isEqualToString:@"\n"]) {
+        if (curText.length - tv.selectedRange.location == 1) {
+            //Last line. Adjust
+            [self adjustOffsetIfRequired:tv];
+        }
+    }
+
 	[(TiUITextAreaProxy *)self.proxy noteValueChange:curText];
 	return TRUE;
+}
+
+-(void)setHandleLinks_:(id)args
+{
+    ENSURE_SINGLE_ARG(args, NSNumber);
+    handleLinks = [TiUtils boolValue:args];
+    [[self proxy] replaceValue:NUMBOOL(handleLinks) forKey:@"handleLinks" notification:NO];
 }
 
 /*

@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2011 by Navi_Tour, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -57,7 +57,10 @@
     
     if (offsetValue >= [[buffer data] length]) {
         NSString* errorStr = [NSString stringWithFormat:@"Offset %d is past buffer bounds (length %d)",offsetValue,[[buffer data] length]];
-        NSDictionary* event = [NSDictionary dictionaryWithObjectsAndKeys:stream,@"source",NUMINT(-1),@"bytesProcessed",errorStr,@"errorDescription", nil];
+		NSMutableDictionary * event = [TiUtils dictionaryWithCode:-1 message:errorStr];
+		[event setObject:stream forKey:@"source"];
+		[event setObject:NUMINT(-1) forKey:@"bytesProcessed"];
+		[event setObject:errorStr forKey:@"errorDescription"];
         [self _fireEventToListener:@"io" withObject:event listener:callback thisObject:nil];
         return;
     }
@@ -113,6 +116,11 @@
                    subreason:nil
                     location:CODELOCATION];
     }
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.Stream";
 }
 
 -(void)read:(id)args

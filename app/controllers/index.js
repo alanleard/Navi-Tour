@@ -35,7 +35,7 @@ function closeAll(){
 }
 
 function toursClick( e ){
-	var tourView = Alloy.createController('toursView').getView()
+	var tourView = Alloy.createController('toursView').getView();
 	$.destinationButton.animate({opacity:0.0, duration:100}, function(){
 		$.tourButton.animate({opacity:0.0, duration:500}, function(){
 			tourView.opacity= 0.0;
@@ -50,19 +50,19 @@ function toursClick( e ){
 function backClick( e ){
 	var x = APP.index.children.length;
 	APP.index.remove(APP.index.children[x-1]);
-	APP.navTitle.text = APP.index.children[x-2].title
+	APP.navTitle.text = APP.index.children[x-2].title;
 	if(x==2){
 		e.source.hide();
 		APP.rightNav.hide();
 		$.destinationButton.animate({opacity:1.0, duration:200});
-		$.tourButton.animate({opacity:1.0, duration:200})
+		$.tourButton.animate({opacity:1.0, duration:200});
 	} else {
-		APP.index.children[x-2].animate({opacity:1.0, duration:200})
+		APP.index.children[x-2].animate({opacity:1.0, duration:200});
 	}
 }
 
 function destinationsClick( e ){
-	var destinationView = Alloy.createController('destinationsView').getView()
+	var destinationView = Alloy.createController('destinationsView').getView();
 	$.tourButton.animate({opacity:0.0, duration:100}, function(){
 		$.destinationButton.animate({opacity:0.0, duration:500}, function(){
 			destinationView.opacity= 0.0;
@@ -77,8 +77,8 @@ function destinationsClick( e ){
 function addClick(e){
 	APP.backBtn.show();
 	if( APP.navTitle.text =='Available Destinations'){
-		APP.index.add(Alloy.createController('createDestination').getView())  
+		APP.index.add(Alloy.createController('createDestination').getView());
 	} else if ( APP.navTitle.text =='Available Tours' ){
-		APP.index.add(Alloy.createController('createTour').getView()) 
+		APP.index.add(Alloy.createController('createTour').getView());
 	}	
 }

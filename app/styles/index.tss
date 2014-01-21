@@ -5,14 +5,13 @@
 },
 "#container": {
 	backgroundColor:"#000",
-	height:'fill'
+	height:'fill',
+	top:20,
+	navBarHidden:true
 },
 "#mainView":{
 	top:50,
 	title:'Navi-Tours'
-},
-"#installButton": { 
-
 },
 "#backButton":{
 	visible:false,
@@ -20,7 +19,7 @@
 	height:30,
 	top:10,
 	width:50,
-	image:'back.png'
+	backgroundImage:'/back.png'
 },
 "#rightNav":{
 	visible:false,
@@ -28,7 +27,7 @@
 	height:30,
 	top:10,
 	width:30,
-	image:'add.png'
+	backgroundImage:'/add.png'
 },
 "#navBar":{
 	height:50,
@@ -39,15 +38,15 @@
 "#navTitle":{
 	text:'Navi-Tour',
 	width:'fill',
-	height:50,
+	height:40,
 	textAlign:'center',
 	color:'#fff',
-	font:{fontFamily:'Zapfino', fontSize:22, fontWeight:'bold'},
-	top:10,
+	font:{fontFamily:'Zapfino', fontSize:18, fontWeight:'bold'},
+	top:0,
 	left:65, 
 	right:45,
 	minimumFontSize:8,
-	verticalAlign:Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,	
+	verticalAlign:Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,	
 },
 "#line":{
 	height:2,
@@ -60,10 +59,10 @@
 	title:'Navi-Tours'
 },
 "#tourButton":{
-	backgroundImage:'tour.jpg'
+	backgroundImage:'/tour.jpg'
 },
 "#destinationButton":{
-	backgroundImage:'destination.jpg'
+	backgroundImage:'/destination.jpg'
 },
 "#tourLabel":{
 	text:'Explore Tours',

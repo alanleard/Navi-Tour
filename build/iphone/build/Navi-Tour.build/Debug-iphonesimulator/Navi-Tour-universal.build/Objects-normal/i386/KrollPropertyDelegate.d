@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/KrollPropertyDelegate.m \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/KrollPropertyDelegate.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/KrollPropertyDelegate.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/KrollPropertyDelegate.h

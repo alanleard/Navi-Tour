@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -52,6 +52,7 @@
 	UIInterfaceOrientation oldOrientation;
 	UIInterfaceOrientation newOrientation;
 	BOOL isPresenting;
+	BOOL isPopoverSpecified;
 }
 
 +(NSDictionary*)itemProperties;
@@ -138,6 +139,9 @@
 @property(nonatomic,readonly) NSNumber* AUDIO_SESSION_MODE_PLAYBACK;
 @property(nonatomic,readonly) NSNumber* AUDIO_SESSION_MODE_RECORD;
 @property(nonatomic,readonly) NSNumber* AUDIO_SESSION_MODE_PLAY_AND_RECORD;
+
+@property(nonatomic,readonly) NSNumber* AUDIO_SESSION_OVERRIDE_ROUTE_NONE;
+@property(nonatomic,readonly) NSNumber* AUDIO_SESSION_OVERRIDE_ROUTE_SPEAKER;
 
 @property(nonatomic,readonly) NSNumber* MUSIC_MEDIA_TYPE_MUSIC;
 @property(nonatomic,readonly) NSNumber* MUSIC_MEDIA_TYPE_PODCAST;

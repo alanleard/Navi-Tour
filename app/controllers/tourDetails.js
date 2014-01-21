@@ -32,7 +32,7 @@ function getLocations(tag){
 			
 			for ( var i = 0, l=e.places.length; i < l; i++ ) {
 				
-	           var row = Alloy.createController('destinationRow', e.places[i]).getView()
+	           var row = Alloy.createController('destinationRow', e.places[i]).getView();
 	            
 	            tableData.push(row);
 	        }
@@ -89,7 +89,7 @@ function distanceDisplay(){
 }
 
 function mapLoad(data){
-	var length = data.length
+	var length = data.length;
 	for( var i = 0; i<length; i++ ){
 		var 
 		row = data[i],
@@ -102,7 +102,7 @@ function mapLoad(data){
 		
 		$.map.mapView.addAnnotation(annotation);
 		if(i<5){
-			tourPointsArr.push({ lat:row.args.latitude, lon:row.args.longitude, title:row.args.name})
+			tourPointsArr.push({ lat:row.args.latitude, lon:row.args.longitude, title:row.args.name});
 		}
 		
 	}
@@ -112,7 +112,7 @@ function mapLoad(data){
 }
 
 function driveClick(){
-	
+	APP.nav.Enabled = true;
 	APP.nav.addMultiPOI({
 		poi:tourPointsArr,
 		callbackURL: "navi-tour://",

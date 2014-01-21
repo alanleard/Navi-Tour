@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -45,6 +45,11 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
 	[super dealloc];
 }
 
+-(NSString*)apiName
+{
+    return @"Ti.UI.TextWidget";
+}
+
 
 -(NSNumber*)hasText:(id)unused
 {
@@ -81,7 +86,7 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
 	}
 }
 
--(BOOL)focused
+-(BOOL)focused:(id)unused
 {
 	BOOL result=NO;
 	if ([self viewAttached])
@@ -96,10 +101,14 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
 {
 	if (![[self valueForKey:@"value"] isEqual:newValue])
 	{
-        [self contentsWillChange];
 		[self replaceValue:newValue forKey:@"value" notification:NO];
+		[self contentsWillChange];
 		[self fireEvent:@"change" withObject:[NSDictionary dictionaryWithObject:newValue forKey:@"value"]];
 	}
+    TiThreadPerformOnMainThread(^{
+        //Make sure the text widget is in view when editing.
+        [(TiUITextWidget*)[self view] updateKeyboardStatus];
+    }, NO);
 }
 
 #pragma mark Toolbar
@@ -127,7 +136,11 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
 	[self replaceValue:value forKey:@"keyboardToolbarColor" notification:YES];
 	if(keyboardUIToolbar != nil){ //It already exists, update it.
 		UIColor * newColor = [[TiUtils colorValue:value] _color];
-		[keyboardUIToolbar setTintColor:newColor];
+		if ([TiUtils isIOS7OrGreater]) {
+			[keyboardUIToolbar performSelector:@selector(setBarTintColor:) withObject:newColor];
+		} else {
+			[keyboardUIToolbar setTintColor:newColor];
+		}
 	}
 }
 
@@ -152,7 +165,11 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
 		keyboardUIToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320,[self keyboardAccessoryHeight])];
 		UIColor * newColor = [[TiUtils colorValue:[self valueForKey:@"keyboardToolbarColor"]] _color];
 		if(newColor != nil){
-			[keyboardUIToolbar setTintColor:newColor];
+			if ([TiUtils isIOS7OrGreater]) {
+				[keyboardUIToolbar performSelector:@selector(setBarTintColor:) withObject:newColor];
+			} else {
+				[keyboardUIToolbar setTintColor:newColor];
+			}
 		}
 		[self updateUIToolbar];
 	}
@@ -264,6 +281,18 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
     return TiDimensionAutoSize;
 }
 
+-(void)setSelection:(id)arg withObject:(id)property
+{
+    NSInteger start = [TiUtils intValue:arg def: -1];
+    NSInteger end = [TiUtils intValue:property def:-1];
+    NSString* curValue = [TiUtils stringValue:[self valueForKey:@"value"]];
+    NSInteger textLength = [curValue length];
+    if ((start < 0) || (start > textLength) || (end < 0) || (end > textLength)) {
+        DebugLog(@"Invalid range for text selection. Ignoring.");
+        return;
+    }
+    TiThreadPerformOnMainThread(^{[(TiUITextWidget*)[self view] setSelectionFrom:arg to:property];}, NO);
+}
 USE_VIEW_FOR_CONTENT_HEIGHT
 USE_VIEW_FOR_CONTENT_WIDTH
 

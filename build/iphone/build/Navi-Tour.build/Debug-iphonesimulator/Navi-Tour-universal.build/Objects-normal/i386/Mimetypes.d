@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/Mimetypes.m \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/Mimetypes.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/Mimetypes.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/Mimetypes.h

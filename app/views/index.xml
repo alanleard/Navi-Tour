@@ -2,7 +2,7 @@
 	<Window id="container">
 	
 		<View id="navBar">
-			<Button id="backButton" onClick="backClick">Back</Button>
+			<Button id="backButton" onClick="backClick"/>
 			<Label id ="navTitle"/>
 			<Button id="rightNav" onClick="addClick"/>
 			<View id="line"/>

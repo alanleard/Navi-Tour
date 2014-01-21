@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -22,6 +22,8 @@
     BOOL isItalicStyle;
     BOOL isNormalStyle;
 	UIFont *font;
+    
+    NSString* textStyle;
 }
 
 /**
@@ -67,6 +69,10 @@
 @property(nonatomic) BOOL isSemiboldWeight;
 
 /**
+ Provides access to the Text Style.
+ */
+@property(nonatomic, readonly) NSString *textStyle;
+/**
  Returns underlying font object.
  @return The font
  */
@@ -79,7 +85,12 @@
  @return _YES_ if the update operation succeeded, _NO_ otherwise.
  */
 -(BOOL)updateWithDict:(NSDictionary *)fontDict inherits:(WebFont *)inheritedFont;
-
+/**
+ Indicates if the style specified by the string is a valid value for textStyle
+ @param theStyle The String to check 
+ @return _YES_ is it is a valid value for textStyle, _NO_ otherwise
+ */
+-(BOOL)isValidTextStyle:(NSString*)theStyle;
 /**
  Returns table row font.
  @return The table row font.

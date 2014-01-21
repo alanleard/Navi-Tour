@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -34,6 +34,11 @@
 		[self setClipsToBounds:YES];
 	}
 	return toolBar;
+}
+
+- (id)accessibilityElement
+{
+	return [self toolBar];
 }
 
 -(void)layoutSubviews
@@ -145,9 +150,26 @@
 	TiColor * newBarColor = [TiUtils colorValue:value];
 	
 	[[self toolBar] setBarStyle:[TiUtils barStyleForColor:newBarColor]];
-	[toolBar setTintColor:[TiUtils barColorForColor:newBarColor]];
 	[toolBar setTranslucent:[TiUtils barTranslucencyForColor:newBarColor]];
+	UIColor* barColor = [TiUtils barColorForColor:newBarColor];
+
+	if ([TiUtils isIOS7OrGreater]) {
+		[toolBar performSelector:@selector(setBarTintColor:) withObject:barColor];
+	} else {
+		[toolBar setTintColor:barColor];
+	}
 }
+
+-(void)setTintColor_:(id)color
+{
+    if ([TiUtils isIOS7OrGreater]) {
+        TiColor *ticolor = [TiUtils colorValue:color];
+        UIColor* theColor = [ticolor _color];
+        [[self toolBar] performSelector:@selector(setTintColor:) withObject:theColor];
+        [self performSelector:@selector(setTintColor:) withObject:theColor];
+    }
+}
+
 
 -(void)setTranslucent_:(id)value
 {

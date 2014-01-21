@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/SCListener.m \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/SCListener.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/SCListener.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/SCListener.h

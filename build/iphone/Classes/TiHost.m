@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -25,6 +25,7 @@ extern NSString * const TI_APPLICATION_ID;
 
 @implementation TiHost
 @synthesize debugMode;
+@synthesize profileMode = _profileMode;
 
 +(NSString *)resourcePath
 {
@@ -84,6 +85,7 @@ extern NSString * const TI_APPLICATION_ID;
 		baseURL = [[NSURL fileURLWithPath:base] retain];
 		stylesheet = [[TiStylesheet alloc] init];
         debugMode = NO;
+		_profileMode = NO;
 	}
 	return self;
 }

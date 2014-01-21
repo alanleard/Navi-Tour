@@ -18,7 +18,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>navi-tour</string>
-				
 			</array>
 		</dict>
 	</array>
@@ -33,31 +32,34 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIRequiresPersistentWiFi</key>
+	<false/>
 	<key>UIPrerenderedIcon</key>
 	<true/>
-	<key>CFBundleIconFiles</key>
+	<key>UIStatusBarHidden</key>
+	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleBlackOpaque</string>
+	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>appicon.png</string>
-		<string>appicon@2x.png</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-
 	<key>UISupportedInterfaceOrientations~ipad</key>
-		<array>
+	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportedInterfaceOrientations</key>
-		<array>
-		<string>UIInterfaceOrientationPortrait</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>appicon.png</string>
+		<string>appicon@2x.png</string>
 	</array>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleBlackOpaque</string>
 </dict>
 </plist>

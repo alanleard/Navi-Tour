@@ -1,9 +1,9 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PLSqliteResultSet.m \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PlausibleDatabase.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PLResultSet.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PLPreparedStatement.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PLDatabase.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PLSqliteDatabase.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PLSqlitePreparedStatement.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/PlausibleDatabase/PLSqliteResultSet.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PLSqliteResultSet.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PlausibleDatabase.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PLResultSet.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PLPreparedStatement.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PLDatabase.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PLSqliteDatabase.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PLSqlitePreparedStatement.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/PlausibleDatabase/PLSqliteResultSet.h

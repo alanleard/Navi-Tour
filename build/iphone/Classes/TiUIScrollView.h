@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -14,6 +14,11 @@
 @private
     TiUIView * touchHandler;
     UIView * touchedContentView;
+    //TIMOB-12988 Additions
+    BOOL delay;
+    BOOL ignore;
+    BOOL offsetAnimated;
+    CGPoint offsetPoint;
 }
 -(void)setTouchHandler:(TiUIView*)handler;
 @end
@@ -42,6 +47,7 @@
 -(BOOL)handleContentSizeIfNeeded;
 -(void)handleContentSize;
 -(void)setContentOffset_:(id)value withObject:(id)property;
+-(void)setZoomScale_:(id)value withObject:(id)property;
 -(UIView *)wrapperView;
 -(void)scrollToBottom;
 

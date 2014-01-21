@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2011 by Navi_Tour, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -30,6 +30,11 @@ NSArray* bufferKeySequence = nil;
     RELEASE_TO_NIL(data);
     RELEASE_TO_NIL(byteOrder);
     [super dealloc];
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.Buffer";
 }
 
 -(NSArray *)keySequence

@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -27,6 +27,14 @@
 
 @implementation ContactsModule
 
+void CMExternalChangeCallback (ABAddressBookRef notifyAddressBook,CFDictionaryRef info,void *context)
+{
+    DebugLog(@"Got External Change Callback");
+    ContactsModule* theModule = (ContactsModule*) context;
+    theModule->reloadAddressBook = YES;
+    [theModule fireEvent:@"reload" withObject:nil];
+}
+
 // We'll force the address book to only be accessed on the main thread, for consistency.  Otherwise
 // we could run into cross-thread memory issues.
 -(ABAddressBookRef)addressBook
@@ -35,6 +43,12 @@
 		return NULL;
 	}
 	
+    if (reloadAddressBook && (addressBook != NULL) ) {
+        [self releaseAddressBook];
+        addressBook = NULL;
+    }
+    reloadAddressBook = NO;
+    
 	if (addressBook == NULL) {
 		if (iOS6API) {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
@@ -45,6 +59,8 @@
 		}
 		if (addressBook == NULL) {
 			DebugLog(@"[WARN] Could not create an address book. Make sure you have gotten permission first.");
+		} else {
+			ABAddressBookRegisterExternalChangeCallback(addressBook, CMExternalChangeCallback, self);
 		}
 	}
 	return addressBook;
@@ -52,7 +68,10 @@
 
 -(void)releaseAddressBook
 {
-	TiThreadPerformOnMainThread(^{CFRelease(addressBook);}, YES);
+	TiThreadPerformOnMainThread(^{
+        ABAddressBookUnregisterExternalChangeCallback(addressBook, CMExternalChangeCallback, self);
+        CFRelease(addressBook);
+    }, YES);
 }
 
 -(void)startup
@@ -78,6 +97,11 @@
 	[super dealloc];
 }
 
+-(NSString*)apiName
+{
+    return @"Ti.Contacts";
+}
+
 -(void)removeRecord:(ABRecordRef)record
 {
 	CFErrorRef error;
@@ -100,62 +124,47 @@
 {
 	ENSURE_SINGLE_ARG(args, KrollCallback);
 	KrollCallback * callback = args;
-	bool success = NO;
 	NSString * error = nil;
-	NSNumber * code = nil;
+	int code = 0;
 	bool doPrompt = NO;
 	
-	if(!iOS6API){
-		success = YES;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
-	} else {
+	if(iOS6API){
 		long int permissions = ABAddressBookGetAuthorizationStatus();
 		switch (permissions) {
 			case kABAuthorizationStatusNotDetermined:
 				doPrompt = YES;
 				break;
 			case kABAuthorizationStatusAuthorized:
-				success = YES;
 				break;
 			case kABAuthorizationStatusDenied:
-				code = [NSNumber numberWithInt:kABAuthorizationStatusDenied];
+				code = kABAuthorizationStatusDenied;
 				error = @"The user has denied access to the address book";
 			case kABAuthorizationStatusRestricted:
-				code = [NSNumber numberWithInt:kABAuthorizationStatusRestricted];
+				code = kABAuthorizationStatusRestricted;
 				error = @"The user is unable to allow access to the address book";
 			default:
 				break;
 		}
-#endif
 	}
+#endif
 	if (!doPrompt) {
-		NSDictionary * propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-										 [NSNumber numberWithBool:success],@"success",
-										 code,@"code", error,@"error", nil];
+		NSDictionary * propertiesDict = [TiUtils dictionaryWithCode:code message:error];
 		NSArray * invocationArray = [[NSArray alloc] initWithObjects:&propertiesDict count:1];
 
 		[callback call:invocationArray thisObject:self];
 		[invocationArray release];
-		[propertiesDict release];
 		return;
 	}
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
 	TiThreadPerformOnMainThread(^(){
 		ABAddressBookRef ourAddressBook = [self addressBook];
 		ABAddressBookRequestAccessWithCompletion(ourAddressBook, ^(bool granted, CFErrorRef error) {
-			NSString * errorString = nil;
-			NSNumber * code = nil;
-			if (error != NULL){
-				code = [NSNumber numberWithInt:CFErrorGetCode(error)];
-				errorString = [(NSString *)CFErrorCopyDescription(error) autorelease];
-			}
-			NSDictionary * propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-											 [NSNumber numberWithBool:granted],@"success",
-											 code,@"code", error,@"error", nil];
+			NSError * errorObj = (NSError *)error;
+			NSDictionary * propertiesDict = [TiUtils dictionaryWithCode:[errorObj code] message:[TiUtils messageFromError:errorObj]];
 			
 			KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
 			[[callback context] enqueue:invocationEvent];
-			[propertiesDict release];
 		});
 	}, NO);
 #endif
@@ -486,7 +495,7 @@
 -(void)removeGroup:(id)arg
 {
 	ENSURE_SINGLE_ARG(arg,TiContactsGroup)
-	ENSURE_UI_THREAD(removePerson,arg)
+	ENSURE_UI_THREAD(removeGroup,arg)
 	
 	[self removeRecord:[arg record]];
 }

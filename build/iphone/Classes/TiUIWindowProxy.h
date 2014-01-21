@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -15,13 +15,13 @@
 
 //TODO: we probably should split this ViewProxy into a a separate TiUIView like normal
 
-@interface TiUIWindowProxy : TiWindowProxy 
+@interface TiUIWindowProxy : TiWindowProxy
 {
 @private
 	KrollBridge *context;
 	BOOL hasToolbar;
 	BOOL contextReady;
-	BOOL animating;
+	BOOL shouldUpdateNavBar;
 	UIImageView *barImageView;
 	NSURL *oldBaseURL;
 	id latch;

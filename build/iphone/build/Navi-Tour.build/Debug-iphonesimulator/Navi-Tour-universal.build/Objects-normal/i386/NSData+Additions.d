@@ -1,4 +1,4 @@
 dependencies: \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/NSData+Additions.mm \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/NSData+Additions.h \
-  /Users/alanleard/TiApps/NaviTour/build/iphone/Classes/Base64Transcoder.h
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/NSData+Additions.m \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/NSData+Additions.h \
+  /Users/aleard/Apps/AppceleratorStudio/Navi-Tour/build/iphone/Classes/Base64Transcoder.h

@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2011 by Navi_Tour, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -27,7 +27,14 @@
 // Public API
 -(NSNumber*)append:(id)args;
 -(NSNumber*)insert:(id)args;
+
+//This API is meant for the Javascript, and because of ARC conflating this with
+//copy from NSObject(UIResponderStandardEditActions), we can't declare it here.
+//Note that this does not affect calling from JS.
+#if ! __has_feature(objc_arc)
 -(NSNumber*)copy:(id)args;
+#endif
+
 -(TiBuffer*)clone:(id)args;
 -(void)fill:(id)args;
 

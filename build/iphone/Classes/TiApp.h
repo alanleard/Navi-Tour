@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -30,10 +30,11 @@ TI_INLINE void waitForMemoryPanicCleared()   //WARNING: This must never be run o
  TiApp represents an instance of an application. There is always only one instance per application which could be accessed through <app> class method.
  @see app
  */
-@interface TiApp : TiHost <UIApplicationDelegate> 
+@interface TiApp : TiHost <UIApplicationDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 {
 	UIWindow *window;
 	UIImageView *loadView;
+	UIImageView *splashScreenImage;
 	BOOL loaded;
 
 	TiContextGroupRef contextGroup;
@@ -54,14 +55,19 @@ TI_INLINE void waitForMemoryPanicCleared()   //WARNING: This must never be run o
 	
 	id remoteNotificationDelegate;
 	NSDictionary* remoteNotification;
-	
+	NSMutableDictionary* pendingCompletionHandlers;
+    NSMutableDictionary* backgroundTransferCompletionHandlers;
+    BOOL appBooted;
+    
 	NSString *sessionId;
 
 	UIBackgroundTaskIdentifier bgTask;
 	NSMutableArray *backgroundServices;
 	NSMutableArray *runningServices;
-	UILocalNotification *localNotification;
+	NSDictionary *localNotification;
 }
+
+@property (nonatomic) BOOL forceSplashAsSnapshot;
 
 /**
  Returns application's primary window.
@@ -72,12 +78,24 @@ TI_INLINE void waitForMemoryPanicCleared()   //WARNING: This must never be run o
 
 @property (nonatomic, assign) id remoteNotificationDelegate;
 
+
+@property (nonatomic, readonly) NSMutableDictionary* pendingCompletionHandlers;
+@property (nonatomic, readonly) NSMutableDictionary* backgroundTransferCompletionHandlers;
+
 /**
  Returns details for the last remote notification.
  
  Dictionary containing details about remote notification, or _nil_.
  */
 @property (nonatomic, readonly) NSDictionary* remoteNotification;
+
+/**
+ Returns local notification that has bees sent on the application.
+ 
+ @return Dictionary containing details about local notification, or _nil_.
+ */
+
+@property (nonatomic, readonly) NSDictionary* localNotification;
 
 /**
  Returns the application's root view controller.
@@ -90,6 +108,11 @@ TI_INLINE void waitForMemoryPanicCleared()   //WARNING: This must never be run o
  Returns singleton instance of TiApp application object.
  */
 +(TiApp*)app;
+
+/**
+ * Returns a read-only dictionary from tiapp.xml properties
+ */
++(NSDictionary *)tiAppProperties;
 
 /*
  Convenience method to returns root view controller for TiApp instance.
@@ -183,16 +206,13 @@ TI_INLINE void waitForMemoryPanicCleared()   //WARNING: This must never be run o
 -(void)beginBackgrounding;
 -(void)endBackgrounding;
 
+@property(nonatomic,readonly) BOOL appBooted;
+
 -(void)registerBackgroundService:(TiProxy*)proxy;
 -(void)unregisterBackgroundService:(TiProxy*)proxy;
 -(void)stopBackgroundService:(TiProxy*)proxy;
-
-/**
- Returns local notification that has bees sent on the application.
- 
- @return The last local notification
- */
--(UILocalNotification*)localNotification;
+-(void)completionHandler:(id)key withResult:(int)result;
+-(void)completionHandlerForBackgroundTransfer:(id)key;
 
 @end
 

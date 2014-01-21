@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -73,8 +73,10 @@
 - (void)beginEditing;
 - (void)endEditing;
 - (void)recreateButtons;
+- (void)layoutButtons;
 
 - (LauncherItem*)itemForIndex:(NSInteger)index;
+- (NSArray*)launcheritems_;
 - (NSArray*)items;
 
 @end
@@ -101,6 +103,8 @@
 - (void)launcherViewDidEndEditing:(LauncherView*)launcher;
 
 - (BOOL)launcherViewShouldWobble:(LauncherView*)launcher;
+
+- (void)launcherView:(LauncherView*)launcher didChangePage:(NSNumber*)pageNo;
 
 @end
 

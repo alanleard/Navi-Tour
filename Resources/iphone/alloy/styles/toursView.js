@@ -1,0 +1,1 @@
+module.exports = [{"isId":true,"priority":100000.0071,"key":"tableView","style":{backgroundColor:"#000",filterAttribute:"searchFilter",searchHidden:true,title:"Available Tours",}},{"isId":true,"priority":100000.0072,"key":"search","style":{barColor:"#000",}}];

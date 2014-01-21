@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -17,6 +17,10 @@
 #import "TiAppiOSProxy.h"
 #endif
 
+#import <UIKit/UILocalNotification.h>
+#import <unistd.h>
+#import "TiLayoutQueue.h"
+
 extern NSString * const TI_APPLICATION_DEPLOYTYPE;
 extern NSString * const TI_APPLICATION_ID;
 extern NSString * const TI_APPLICATION_PUBLISHER;
@@ -30,6 +34,54 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
 
 @implementation AppModule
 
+#if defined(DEBUG) || defined(DEVELOPER)
+
+-(void)_restart:(id)unused
+{
+    TiThreadPerformOnMainThread(^{
+        [[[TiApp app] controller] shutdownUi:self];
+    }, NO);
+}
+
+-(void)_resumeRestart:(id)unused
+{
+    UIApplication * app = [UIApplication sharedApplication];
+    TiApp * appDelegate = [TiApp app];
+    [TiLayoutQueue resetQueue];
+    
+    /* Begin backgrounding simulation */
+    [appDelegate applicationWillResignActive:app];
+    [appDelegate applicationDidEnterBackground:app];
+    [appDelegate endBackgrounding];
+    /* End backgrounding simulation */
+    
+    /* Disconnect the old view system, intentionally leak controller and UIWindow */
+    [[appDelegate window] removeFromSuperview];
+    
+    /* Disconnect the old modules. */
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    NSMutableArray * delegateModules = (NSMutableArray *)[appDelegate valueForKey:@"modules"];
+    for (TiModule * thisModule in delegateModules) {
+        [nc removeObserver:thisModule];
+    }
+    /* Because of other issues, we must leak the modules as well as the runtime */
+    [delegateModules copy];
+    [delegateModules removeAllObjects];
+    
+    /* Disconnect the Kroll bridge, and spoof the shutdown */
+    [nc removeObserver:[appDelegate krollBridge]];
+    NSNotification *notification = [NSNotification notificationWithName:kTiContextShutdownNotification object:[appDelegate krollBridge]];
+    [nc postNotification:notification];
+    
+    /* Begin foregrounding simulation */
+    [appDelegate application:app didFinishLaunchingWithOptions:[appDelegate launchOptions]];
+    [appDelegate applicationWillEnterForeground:app];
+    [appDelegate applicationDidBecomeActive:app];
+    /* End foregrounding simulation */
+}
+
+#endif
+
 -(void)dealloc
 {
 	[appListeners removeAllObjects];
@@ -41,6 +93,18 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
 #endif	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
+}
+
+- (void)_configure
+{
+	[super _configure];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accessibilityVoiceOverStatusChanged:)
+										name:UIAccessibilityVoiceOverStatusChanged object:nil];
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.App";
 }
 
 -(void)addEventListener:(NSArray*)args
@@ -234,7 +298,7 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
 //To fire the keyboard frame change event.
 -(void)keyboardFrameChanged:(NSNotification*) notification
 {
-    if (![self _hasListeners:@"keyboardFrameChanged"])
+    if (![self _hasListeners:@"keyboardFrameChanged"] && ![self _hasListeners:@"keyboardframechanged"])
     {
         return;
     }
@@ -252,9 +316,15 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
                                 nil];
     
     [self fireEvent:@"keyboardFrameChanged" withObject:event]; 
-    
+    [self fireEvent:@"keyboardframechanged" withObject:event];     
 }
 
+- (void)timeChanged:(NSNotification*)notiication
+{
+    if ([self _hasListeners:@"significanttimechange"]) {
+        [self fireEvent:@"significanttimechange" withObject:nil];
+    }
+}
 
 #pragma mark Internal Memory Management
 
@@ -324,18 +394,8 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
     [nc addObserver:self selector:@selector(willShutdown:) name:kTiWillShutdownNotification object:nil];
     [nc addObserver:self selector:@selector(willShutdownContext:) name:kTiContextShutdownNotification object:nil];
 
-
-#if __IPHONE_OS_VERSION_MIN_ALLOWED >= __IPHONE_5_0
-    if ([TiUtils isIOS5OrGreater])
-    {
-        [nc addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardDidChangeFrameNotification object:nil];
-    }
-#else
-    
-    [nc addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardDidShowNotification object:nil];
-    [nc addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardDidHideNotification object:nil];
-
-#endif	
+    [nc addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardDidChangeFrameNotification object:nil];
+    [nc addObserver:self selector:@selector(timeChanged:) name:UIApplicationSignificantTimeChangeNotification object:nil];
     
     [super startup];
 }
@@ -404,6 +464,43 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
 		args = [args stringByReplacingOccurrencesOfString:@"app://" withString:@""];
 	}
 	return [[TiHost resourcePath] stringByAppendingPathComponent:args];
+}
+
+- (void)fireSystemEvent:(id)args
+{
+	NSString *eventName;
+	id argument = nil;
+	UIAccessibilityNotifications notification;
+	
+	ENSURE_ARG_COUNT(args, 1);
+	ENSURE_ARG_AT_INDEX(eventName, args, 0, NSString);
+	
+	if ([eventName isEqualToString:self.EVENT_ACCESSIBILITY_ANNOUNCEMENT]) {
+		notification = UIAccessibilityAnnouncementNotification;
+		ENSURE_ARG_COUNT(args, 2);
+		ENSURE_ARG_AT_INDEX(argument, args, 1, NSString);
+	} else if ([eventName isEqualToString:@"accessibilitylayoutchanged"]) {
+		notification = UIAccessibilityLayoutChangedNotification;
+	} else if ([eventName isEqualToString:@"accessibilityscreenchanged"]) {
+		notification = UIAccessibilityScreenChangedNotification;
+	} else {
+		NSLog(@"[WARN] unknown system event: %@",eventName);
+		return;
+	}
+	UIAccessibilityPostNotification(notification, argument);
+}
+
+- (NSNumber *)accessibilityEnabled
+{
+	return NUMBOOL(UIAccessibilityIsVoiceOverRunning());
+}
+
+- (void)accessibilityVoiceOverStatusChanged:(NSNotification *)notification
+{
+	if ([self _hasListeners:@"accessibilitychanged"]) {
+		NSDictionary *event = [NSDictionary dictionaryWithObject:[self accessibilityEnabled] forKey:@"enabled"];
+		[self fireEvent:@"accessibilitychanged" withObject:event];
+	}
 }
 
 -(id)arguments:(id)args
@@ -491,6 +588,14 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
     return NUMBOOL([[[TiApp app] controller] keyboardVisible]);
 }
 
+-(void)setForceSplashAsSnapshot:(id)args
+{
+    ENSURE_SINGLE_ARG(args, NSNumber)
+    [self replaceValue:args forKey:@"forceSplashAsSnapshot" notification:NO];
+    BOOL flag = [TiUtils boolValue:args def:NO];
+    [[TiApp app] setForceSplashAsSnapshot:flag];
+}
+
 #if defined(USE_TI_APPIOS)
 -(id)iOS
 {
@@ -503,6 +608,8 @@ extern BOOL const TI_APPLICATION_ANALYTICS;
 }
 #endif
 
+MAKE_SYSTEM_STR(EVENT_ACCESSIBILITY_ANNOUNCEMENT,@"accessibilityannouncement");
+MAKE_SYSTEM_STR(EVENT_ACCESSIBILITY_CHANGED,@"accessibilitychanged");
 
 @end
 

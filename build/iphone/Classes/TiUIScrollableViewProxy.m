@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -33,6 +33,11 @@
 	[viewProxies makeObjectsPerformSelector:@selector(setParent:) withObject:nil];
 	[viewProxies release];
 	[super dealloc];
+}
+
+-(NSString*)apiName
+{
+    return @"Ti.UI.ScrollableView";
 }
 
 -(void)lockViews
@@ -162,6 +167,16 @@
 	[self makeViewPerformSelector:@selector(scrollToView:) withObject:args createIfNeeded:YES waitUntilDone:NO];
 }
 
+-(void) willChangeSize
+{
+    //Ensure the size change signal goes to children 
+    NSArray *curViews = [self views];
+    for (TiViewProxy *child in curViews) {
+        [child parentSizeWillChange];
+    }
+    [super willChangeSize];
+}
+
 -(void)childWillResize:(TiViewProxy *)child
 {
 	BOOL hasChild = [[self children] containsObject:child];
@@ -212,6 +227,32 @@
 	}
 	//Adding the view to a scrollable view is invalid.
 	return nil;
+}
+
+-(CGFloat)autoWidthForSize:(CGSize)size
+{
+    CGFloat result = 0.0;
+    NSArray* theChildren = [self views];
+    for (TiViewProxy * thisChildProxy in theChildren) {
+        CGFloat thisWidth = [thisChildProxy minimumParentWidthForSize:size];
+        if (result < thisWidth) {
+            result = thisWidth;
+        }
+    }
+    return result;
+}
+
+-(CGFloat)autoHeightForSize:(CGSize)size
+{
+    CGFloat result = 0.0;
+    NSArray* theChildren = [self views];
+    for (TiViewProxy * thisChildProxy in theChildren) {
+        CGFloat thisHeight = [thisChildProxy minimumParentHeightForSize:size];
+        if (result < thisHeight) {
+            result = thisHeight;
+        }
+    }
+    return result;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

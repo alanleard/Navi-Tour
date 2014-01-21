@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -19,6 +19,8 @@
 	
 	BOOL propertiesConfigured; // We're order-dependent on type being configured first, so have to re-configure after the initial setup.  What a pain!
 }
+
+@property (nonatomic, readonly, copy) id value_;
 
 -(NSArray*)columns;
 -(void)reloadColumn:(id)column;

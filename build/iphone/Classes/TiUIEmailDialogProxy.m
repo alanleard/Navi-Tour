@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2014 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  * 
@@ -31,6 +31,11 @@
 	[super _destroy];
 }
 
+-(NSString*)apiName
+{
+    return @"Ti.UI.EmailDialog";
+}
+
 -(NSArray *)attachments
 {
 	return attachments;
@@ -58,7 +63,8 @@
 - (void)open:(id)args
 {
 	[self rememberSelf];
-	ENSURE_TYPE_OR_NIL(args,NSDictionary);
+	NSDictionary* properties = nil;
+	ENSURE_ARG_OR_NIL_AT_INDEX(properties, args, 0, NSDictionary);
 	Class arrayClass = [NSArray class];
 	NSArray * toArray = [self valueForUndefinedKey:@"toRecipients"];
 	ENSURE_CLASS_OR_NIL(toArray,arrayClass);
@@ -74,11 +80,8 @@
 
 	if (![MFMailComposeViewController canSendMail])
 	{
-		NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:NUMINT(MFMailComposeResultFailed),@"result",
-							   NUMBOOL(NO),@"success",
-							   @"system can't send email",@"error",
-							   nil];
-		[self fireEvent:@"complete" withObject:event];
+		NSDictionary *event = [NSDictionary dictionaryWithObject:NUMINT(MFMailComposeResultFailed) forKey:@"result"];
+		[self fireEvent:@"complete" withObject:event errorCode:MFMailComposeResultFailed message:@"system can't send email"];
 		return;
 	}
 
@@ -88,7 +91,11 @@
 	[composer setMailComposeDelegate:self];
 	if (barColor != nil)
 	{
-		[[composer navigationBar] setTintColor:barColor];
+		if([TiUtils isIOS7OrGreater]) {
+			[[composer navigationBar] performSelector:@selector(setBarTintColor:) withObject:barColor];
+		} else {
+			[[composer navigationBar] setTintColor:barColor];
+		}
 	}
 
 	[composer setSubject:subject];
@@ -131,7 +138,7 @@
 		}
 	}
 	
-	BOOL animated = [TiUtils boolValue:@"animated" properties:args def:YES];
+	BOOL animated = [TiUtils boolValue:@"animated" properties:properties def:YES];
 	[self retain];
 	[[TiApp app] showModalController:composer animated:animated];
 }
@@ -157,11 +164,8 @@ MAKE_SYSTEM_PROP(FAILED,MFMailComposeResultFailed);
 	composer = nil;
 	if ([self _hasListeners:@"complete"])
 	{
-		NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:NUMINT(result),@"result",
-							   NUMBOOL(result==MFMailComposeResultSent),@"success",
-							   error,@"error",
-							   nil];
-		[self fireEvent:@"complete" withObject:event];
+		NSDictionary *event = [NSDictionary dictionaryWithObject:NUMINT(result) forKey:@"result"];
+		[self fireEvent:@"complete" withObject:event errorCode:[error code] message:[TiUtils messageFromError:error]];
 	}
 	[self forgetSelf];
 	[self autorelease];

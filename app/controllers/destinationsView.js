@@ -31,7 +31,7 @@ function updateCheck(tag){
 		}, function ( e ) {
 		if ( e.success ) {
 		    if(e.places.length!=APP.destinations.length){
-		    	queryDestinations(tag)
+		    	queryDestinations(tag);
 		    }
 		}
 		});
@@ -52,14 +52,14 @@ function queryDestinations(tag){
 				
 				for ( var i = 0, l=e.places.length; i < l; i++ ) {
 					
-		           var row = Alloy.createController('destinationRow', e.places[i]).getView()
+		           var row = Alloy.createController('destinationRow', e.places[i]).getView();
 		            
 		            tableData.push(row);
 		        }
 		       	APP.destinations = tableData;
 		        $.tableView.setData(tableData);
 		       
-		      	distanceDisplay()
+		      	distanceDisplay();
 		        
 		      } else {
 		      	$.tableView.setData([{title:'No destinations found', color:'#fff'}]);
@@ -95,16 +95,16 @@ function distanceDisplay(){
 			    	d = Math.round((d * 100)) / 100;
 			
 			   		row.children[0].text = d + " miles away";
-			   		$.tableView.setData(tableData);
+			   		//$.tableView.updateRow(i,row);
 				}
-				
+				$.tableView.setData(tableData);
 	        }
 	    });
 	} 
 }
 
 function rowClick(e){
-	var view = Alloy.createController('destinationDetails', e.rowData.args).getView();
+	var view = Alloy.createController('destinationDetails', e.row.args).getView();
 	$.tableView.animate({opacity:0.0, duration:250}, function(){
 		view.opacity = 0.0;
 		APP.index.add(view);
